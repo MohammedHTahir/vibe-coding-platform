@@ -1,7 +1,9 @@
 'use client'
 
-import { useActionState } from 'react'
+import Link from 'next/link'
+import { useActionState, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { GithubIcon } from 'lucide-react'
@@ -10,6 +12,9 @@ import { signInWithGitHub, signUpWithPassword } from '@/app/login/actions'
 const initialState: { error?: string } = {}
 
 export function SignupForm() {
+  const [accepted, setAccepted] = useState(false)
+  const [showError, setShowError] = useState(false)
+
   const [pwState, pwAction, pwPending] = useActionState(
     signUpWithPassword,
     initialState
@@ -19,10 +24,20 @@ export function SignupForm() {
     initialState
   )
 
+  const guard = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!accepted) {
+      e.preventDefault()
+      setShowError(true)
+    }
+  }
+
+  const acceptedValue = accepted ? 'true' : ''
+
   return (
     <div className="space-y-4">
-      <form action={oauthAction}>
+      <form action={oauthAction} onSubmit={guard}>
         <input type="hidden" name="redirect" value="/dashboard" />
+        <input type="hidden" name="terms_accepted" value={acceptedValue} />
         <Button
           type="submit"
           variant="outline"
@@ -45,7 +60,8 @@ export function SignupForm() {
         <div className="h-px flex-1 bg-black/10" />
       </div>
 
-      <form action={pwAction} className="space-y-4">
+      <form action={pwAction} onSubmit={guard} className="space-y-4">
+        <input type="hidden" name="terms_accepted" value={acceptedValue} />
         <div className="space-y-1.5">
           <Label htmlFor="email" className="text-[12px] text-gray-700">
             Email
@@ -76,6 +92,48 @@ export function SignupForm() {
           <p className="text-[11px] text-gray-400">At least 8 characters.</p>
         </div>
 
+        <div className="flex items-start gap-2.5 pt-1">
+          <Checkbox
+            id="terms_accepted"
+            checked={accepted}
+            onCheckedChange={(v) => {
+              const next = v === true
+              setAccepted(next)
+              if (next) setShowError(false)
+            }}
+            aria-invalid={showError && !accepted ? true : undefined}
+            className="mt-0.5"
+          />
+          <Label
+            htmlFor="terms_accepted"
+            className="text-[12px] text-gray-600 leading-relaxed font-normal"
+          >
+            I agree to the{' '}
+            <Link
+              href="/terms"
+              target="_blank"
+              className="text-blue-500 hover:text-blue-600 transition-colors"
+            >
+              Terms and Conditions
+            </Link>{' '}
+            and{' '}
+            <Link
+              href="/privacy"
+              target="_blank"
+              className="text-blue-500 hover:text-blue-600 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            .
+          </Label>
+        </div>
+
+        {showError && !accepted ? (
+          <p className="text-[12px] text-red-600">
+            Please accept the Terms and Privacy Policy to continue.
+          </p>
+        ) : null}
+
         {pwState.error ? (
           <p className="text-[12px] text-red-600">{pwState.error}</p>
         ) : null}
@@ -83,7 +141,7 @@ export function SignupForm() {
         <Button
           type="submit"
           className="w-full h-11 bg-blue-500 hover:bg-blue-600"
-          disabled={pwPending}
+          disabled={pwPending || !accepted}
         >
           {pwPending ? 'Creating account…' : 'Create account'}
         </Button>
