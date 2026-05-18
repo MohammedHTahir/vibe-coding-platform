@@ -73,6 +73,19 @@ export function CookieConsent() {
     writeConsent(categories)
     setOpen(false)
     setShowDetails(false)
+    // Best-effort audit copy in the database. Banner state is governed by
+    // the browser cookie above; this just gives us a server-side record.
+    void fetch('/api/consent', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        preferences: categories.preferences,
+        analytics: categories.analytics,
+      }),
+      keepalive: true,
+    }).catch(() => {
+      // Silently ignored — the cookie is still set and the banner is gone.
+    })
   }, [])
 
   if (!mounted || !open) return null

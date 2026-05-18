@@ -34,6 +34,105 @@ export type Database = {
   }
   public: {
     Tables: {
+      cookie_consents: {
+        Row: {
+          analytics: boolean
+          created_at: string
+          id: string
+          ip: unknown | null
+          necessary: boolean
+          policy_version: number
+          preferences: boolean
+          updated_at: string
+          user_agent: string | null
+          user_id: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          analytics?: boolean
+          created_at?: string
+          id?: string
+          ip?: unknown | null
+          necessary?: boolean
+          policy_version?: number
+          preferences?: boolean
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          analytics?: boolean
+          created_at?: string
+          id?: string
+          ip?: unknown | null
+          necessary?: boolean
+          policy_version?: number
+          preferences?: boolean
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: []
+      }
+      legal_acceptances: {
+        Row: {
+          accepted_at: string
+          document: string
+          document_version: string
+          id: string
+          ip: unknown | null
+          source: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          accepted_at?: string
+          document: string
+          document_version: string
+          id?: string
+          ip?: unknown | null
+          source?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          accepted_at?: string
+          document?: string
+          document_version?: string
+          id?: string
+          ip?: unknown | null
+          source?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      legal_documents: {
+        Row: {
+          document: string
+          effective_at: string
+          id: string
+          url: string | null
+          version: string
+        }
+        Insert: {
+          document: string
+          effective_at?: string
+          id?: string
+          url?: string | null
+          version: string
+        }
+        Update: {
+          document?: string
+          effective_at?: string
+          id?: string
+          url?: string | null
+          version?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

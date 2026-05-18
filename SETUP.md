@@ -27,7 +27,7 @@ Copy `.env.example` to `.env.local` and fill in:
 | `AI_GATEWAY_API_KEY` | Yes for agent | Vercel AI Gateway key |
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes for auth | Project REST URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes for auth | Anon (publishable) key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Optional | Only for server-side admin tasks |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Used server-side to record cookie consent and Terms/Privacy acceptance audit rows |
 | `NEXT_PUBLIC_SITE_URL` | Yes | Public origin used by auth redirects (`http://localhost:3000` locally, `https://sprintbuild.ai` in prod) |
 
 The marketing site renders even when Supabase env vars are empty — the layout
@@ -61,6 +61,7 @@ automatically on first start. It creates:
 
 - `public.profiles` table (one row per `auth.users`, auto-created via trigger)
 - `public.projects` table (per-user project metadata)
+- `public.legal_documents`, `public.legal_acceptances`, `public.cookie_consents` tables (Terms/Privacy versioning, signup acceptance audit log, and cookie-consent records)
 - `avatars` storage bucket (public read, owner-only write)
 - `project-files` storage bucket (private, owner-only)
 - RLS policies on every table and bucket so users only see their own data
@@ -110,6 +111,7 @@ automatically on Vercel deployments. Set these env vars in the Vercel project:
 AI_GATEWAY_API_KEY
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
 NEXT_PUBLIC_SITE_URL=https://sprintbuild.ai
 ```
 
