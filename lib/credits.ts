@@ -2,6 +2,7 @@ import 'server-only'
 
 import { Models } from '@/ai/constants'
 import { createAdminClient } from '@/lib/supabase/admin'
+import type { Json } from '@/types/supabase'
 
 export const FREE_PLAN_ID = 'free'
 export const FREE_PLAN_GRANT = 50
@@ -95,7 +96,7 @@ export async function debitCredits(args: {
   amount: number
   agentRunId: string | null
   model: string
-  metadata?: Record<string, unknown>
+  metadata?: Json
 }): Promise<{ balance: number }> {
   if (args.amount <= 0) {
     return { balance: await getBalance(args.userId) }
@@ -125,7 +126,7 @@ export async function grantMonthly(args: {
   userId: string
   amount: number
   stripeInvoiceId: string
-  metadata?: Record<string, unknown>
+  metadata?: Json
 }): Promise<void> {
   if (args.amount <= 0) return
   const admin = createAdminClient()
@@ -149,7 +150,7 @@ export async function grantTopup(args: {
   userId: string
   amount: number
   stripePaymentIntentId: string
-  metadata?: Record<string, unknown>
+  metadata?: Json
 }): Promise<void> {
   if (args.amount <= 0) return
   const admin = createAdminClient()
