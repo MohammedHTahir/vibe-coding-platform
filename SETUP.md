@@ -6,11 +6,15 @@ layer (`@supabase/ssr`), and Vercel Sandbox + AI Gateway for the agent runtime.
 ## Routes
 
 - `/` — marketing landing page (hero with autoplay video, features, models, FAQ, CTA, footer)
+- `/pricing` — public pricing page (subscription Checkout)
 - `/login` — email + GitHub sign-in
 - `/signup` — email + GitHub sign-up
 - `/auth/callback` — OAuth and email-confirmation exchange handler
 - `/auth/signout` — POST endpoint to sign out
 - `/dashboard` — the existing AI agent UI, gated behind Supabase auth
+- `/account` — display name + avatar
+- `/account/billing` — current plan, credit balance, top-ups, Stripe portal
+- `/api/stripe/webhook` — Stripe webhook receiver (subscription, invoice, top-up events)
 
 ## Prerequisites
 
@@ -27,8 +31,8 @@ Copy `.env.example` to `.env.local` and fill in:
 | `AI_GATEWAY_API_KEY` | Yes for agent | Vercel AI Gateway key |
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes for auth | Project REST URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes for auth | Anon (publishable) key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Optional | Only for server-side admin tasks |
-| `NEXT_PUBLIC_SITE_URL` | Yes | Public origin used by auth redirects (`http://localhost:3000` locally, `https://sprintbuild.ai` in prod) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Yes | Used server-side to record cookie consent and Terms/Privacy acceptance audit rows |
+| `NEXT_PUBLIC_SITE_URL` | Yes | Public origin used by auth redirects (`http://localhost:3000` locally, `https://trendweaver.ai` in prod) |
 
 The marketing site renders even when Supabase env vars are empty — the layout
 gates auth checks behind a presence test. Hitting `/dashboard` without env vars
@@ -61,6 +65,7 @@ automatically on first start. It creates:
 
 - `public.profiles` table (one row per `auth.users`, auto-created via trigger)
 - `public.projects` table (per-user project metadata)
+- `public.legal_documents`, `public.legal_acceptances`, `public.cookie_consents` tables (Terms/Privacy versioning, signup acceptance audit log, and cookie-consent records)
 - `avatars` storage bucket (public read, owner-only write)
 - `project-files` storage bucket (private, owner-only)
 - RLS policies on every table and bucket so users only see their own data
@@ -76,7 +81,7 @@ supabase gen types typescript --local > types/supabase.ts
 ### Option B · Hosted Supabase project (production)
 
 1. Create a project at https://supabase.com.
-2. In the Auth settings, set the Site URL to `https://sprintbuild.ai` and add `https://sprintbuild.ai/auth/callback` as an additional redirect URL.
+2. In the Auth settings, set the Site URL to `https://trendweaver.ai` and add `https://trendweaver.ai/auth/callback` as an additional redirect URL.
 3. Enable the GitHub provider (optional) with `https://<project>.supabase.co/auth/v1/callback` as the OAuth callback URL on GitHub.
 4. From the project root, link the CLI and push the migrations:
 
@@ -110,7 +115,8 @@ automatically on Vercel deployments. Set these env vars in the Vercel project:
 AI_GATEWAY_API_KEY
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
-NEXT_PUBLIC_SITE_URL=https://sprintbuild.ai
+SUPABASE_SERVICE_ROLE_KEY
+NEXT_PUBLIC_SITE_URL=https://trendweaver.ai
 ```
 
 Then `vc deploy` (or `vercel --prod`).

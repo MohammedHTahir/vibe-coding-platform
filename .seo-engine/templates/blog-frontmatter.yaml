@@ -39,7 +39,7 @@ optional:
     default: false
   canonical:
     type: string
-    description: Override canonical URL. Default is https://sprintbuild.ai/blog/{slug}.
+    description: Override canonical URL. Default is https://trendweaver.ai/blog/{slug}.
   cluster_id:
     type: string
     description: tc_* id from topic-clusters.yaml. Required for pillar/cluster posts.

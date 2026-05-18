@@ -7,7 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { GithubIcon } from 'lucide-react'
-import { signInWithGitHub, signUpWithPassword } from '@/app/login/actions'
+import { signUpWithGitHub, signUpWithPassword } from '@/app/login/actions'
 
 const initialState: { error?: string } = {}
 
@@ -20,7 +20,7 @@ export function SignupForm() {
     initialState
   )
   const [oauthState, oauthAction, oauthPending] = useActionState(
-    signInWithGitHub,
+    signUpWithGitHub,
     initialState
   )
 

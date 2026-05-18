@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { SprintBuildWordmark } from '@/components/marketing/logo'
 import { Footer } from '@/components/marketing/footer'
+import { CONTACT_EMAILS } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Terms and Conditions',
@@ -220,10 +221,10 @@ export default function TermsPage() {
             <p>
               Questions about these Terms? Email{' '}
               <a
-                href="mailto:hello@sprintbuild.ai"
+                href={`mailto:${CONTACT_EMAILS.general}`}
                 className="text-blue-500 hover:text-blue-600 transition-colors"
               >
-                hello@sprintbuild.ai
+                {CONTACT_EMAILS.general}
               </a>
               .
             </p>

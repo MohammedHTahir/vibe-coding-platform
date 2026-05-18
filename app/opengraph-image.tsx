@@ -1,8 +1,9 @@
 import { ImageResponse } from 'next/og'
+import { BRAND_NAME, siteHost } from '@/lib/site'
 
 // Generates /opengraph-image (1200x630) used in Twitter / OG previews.
 
-export const alt = 'SprintBuild — AI coding platform'
+export const alt = `${BRAND_NAME} — AI coding platform`
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -57,7 +58,7 @@ export default function OG() {
               letterSpacing: '-0.02em',
             }}
           >
-            sprintbuild
+            {BRAND_NAME.toLowerCase()}
           </div>
         </div>
 
@@ -104,7 +105,7 @@ export default function OG() {
         >
           <span>Claude · GPT · Grok via Vercel AI Gateway</span>
           <span style={{ color: '#1F1F1F', fontWeight: 500 }}>
-            sprintbuild.ai
+            {siteHost()}
           </span>
         </div>
       </div>

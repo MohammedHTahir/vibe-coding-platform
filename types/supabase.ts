@@ -34,6 +34,216 @@ export type Database = {
   }
   public: {
     Tables: {
+      plans: {
+        Row: {
+          id: string
+          name: string
+          monthly_credits: number
+          amount_cents: number
+          is_public: boolean
+          sort_order: number
+          description: string | null
+          created_at: string
+        }
+        Insert: {
+          id: string
+          name: string
+          monthly_credits?: number
+          amount_cents?: number
+          is_public?: boolean
+          sort_order?: number
+          description?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          monthly_credits?: number
+          amount_cents?: number
+          is_public?: boolean
+          sort_order?: number
+          description?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          user_id: string
+          plan_id: string
+          stripe_customer_id: string
+          stripe_subscription_id: string | null
+          status: string
+          current_period_start: string | null
+          current_period_end: string | null
+          cancel_at_period_end: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          user_id: string
+          plan_id: string
+          stripe_customer_id: string
+          stripe_subscription_id?: string | null
+          status: string
+          current_period_start?: string | null
+          current_period_end?: string | null
+          cancel_at_period_end?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          user_id?: string
+          plan_id?: string
+          stripe_customer_id?: string
+          stripe_subscription_id?: string | null
+          status?: string
+          current_period_start?: string | null
+          current_period_end?: string | null
+          cancel_at_period_end?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      credit_ledger: {
+        Row: {
+          id: string
+          user_id: string
+          amount: number
+          reason: string
+          stripe_invoice_id: string | null
+          stripe_payment_intent_id: string | null
+          agent_run_id: string | null
+          model: string | null
+          metadata: Json | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          amount: number
+          reason: string
+          stripe_invoice_id?: string | null
+          stripe_payment_intent_id?: string | null
+          agent_run_id?: string | null
+          model?: string | null
+          metadata?: Json | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          amount?: number
+          reason?: string
+          stripe_invoice_id?: string | null
+          stripe_payment_intent_id?: string | null
+          agent_run_id?: string | null
+          model?: string | null
+          metadata?: Json | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      cookie_consents: {
+        Row: {
+          analytics: boolean
+          created_at: string
+          id: string
+          ip: unknown | null
+          necessary: boolean
+          policy_version: number
+          preferences: boolean
+          updated_at: string
+          user_agent: string | null
+          user_id: string | null
+          visitor_id: string | null
+        }
+        Insert: {
+          analytics?: boolean
+          created_at?: string
+          id?: string
+          ip?: unknown | null
+          necessary?: boolean
+          policy_version?: number
+          preferences?: boolean
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string | null
+        }
+        Update: {
+          analytics?: boolean
+          created_at?: string
+          id?: string
+          ip?: unknown | null
+          necessary?: boolean
+          policy_version?: number
+          preferences?: boolean
+          updated_at?: string
+          user_agent?: string | null
+          user_id?: string | null
+          visitor_id?: string | null
+        }
+        Relationships: []
+      }
+      legal_acceptances: {
+        Row: {
+          accepted_at: string
+          document: string
+          document_version: string
+          id: string
+          ip: unknown | null
+          source: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          accepted_at?: string
+          document: string
+          document_version: string
+          id?: string
+          ip?: unknown | null
+          source?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          accepted_at?: string
+          document?: string
+          document_version?: string
+          id?: string
+          ip?: unknown | null
+          source?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      legal_documents: {
+        Row: {
+          document: string
+          effective_at: string
+          id: string
+          url: string | null
+          version: string
+        }
+        Insert: {
+          document: string
+          effective_at?: string
+          id?: string
+          url?: string | null
+          version: string
+        }
+        Update: {
+          document?: string
+          effective_at?: string
+          id?: string
+          url?: string | null
+          version?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -96,7 +306,15 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      user_credit_balance: {
+        Row: {
+          user_id: string | null
+          balance: number | null
+        }
+        Insert: { user_id?: string | null; balance?: number | null }
+        Update: { user_id?: string | null; balance?: number | null }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never

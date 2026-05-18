@@ -4,7 +4,7 @@ SprintBuild is an end-to-end AI coding platform where you describe what you
 want, and an agent generates a full-stack application in a sandboxed
 environment with live preview, file explorer, and command logs.
 
-Production domain: [sprintbuild.ai](https://sprintbuild.ai)
+Production domain: [trendweaver.ai](https://trendweaver.ai)
 
 ## Features
 
