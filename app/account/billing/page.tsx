@@ -37,7 +37,9 @@ export default async function BillingPage({
     await Promise.all([
       admin
         .from('subscriptions')
-        .select('plan_id, status, current_period_end, cancel_at_period_end')
+        .select(
+          'plan_id, status, stripe_customer_id, current_period_end, cancel_at_period_end'
+        )
         .eq('user_id', user.id)
         .maybeSingle(),
       getBalance(user.id),
@@ -151,7 +153,7 @@ export default async function BillingPage({
             <Button asChild variant="outline">
               <Link href="/pricing">Change plan</Link>
             </Button>
-            {subscription?.stripe_customer_id ?? planId !== 'free' ? (
+            {subscription?.stripe_customer_id || planId !== 'free' ? (
               <PortalButton />
             ) : null}
           </section>
