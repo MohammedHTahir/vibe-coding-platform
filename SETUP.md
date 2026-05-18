@@ -6,11 +6,15 @@ layer (`@supabase/ssr`), and Vercel Sandbox + AI Gateway for the agent runtime.
 ## Routes
 
 - `/` — marketing landing page (hero with autoplay video, features, models, FAQ, CTA, footer)
+- `/pricing` — public pricing page (subscription Checkout)
 - `/login` — email + GitHub sign-in
 - `/signup` — email + GitHub sign-up
 - `/auth/callback` — OAuth and email-confirmation exchange handler
 - `/auth/signout` — POST endpoint to sign out
 - `/dashboard` — the existing AI agent UI, gated behind Supabase auth
+- `/account` — display name + avatar
+- `/account/billing` — current plan, credit balance, top-ups, Stripe portal
+- `/api/stripe/webhook` — Stripe webhook receiver (subscription, invoice, top-up events)
 
 ## Prerequisites
 

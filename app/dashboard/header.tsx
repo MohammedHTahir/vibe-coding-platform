@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { FolderIcon, LogOutIcon, UserIcon } from 'lucide-react'
 import { signOut } from '@/app/login/actions'
 import { cn } from '@/lib/utils'
+import { CreditsPill } from './credits-pill'
 
 interface Props {
   className?: string
@@ -24,6 +25,7 @@ export async function Header({ className }: Props) {
         </span>
       </Link>
       <div className="flex items-center ml-auto space-x-1.5">
+        <CreditsPill />
         <ToggleWelcome />
         <Button asChild variant="outline" size="sm" className="cursor-pointer">
           <Link href="/dashboard/projects">

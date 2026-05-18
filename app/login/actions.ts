@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { recordLegalAcceptance } from '@/lib/legal-server'
+import { grantWelcomeIfNeeded } from '@/lib/credits'
 import { siteUrl } from '@/lib/site'
 
 interface ActionState {
@@ -85,6 +86,7 @@ export async function signUpWithPassword(
       userId: data.user.id,
       source: 'signup_password',
     })
+    await grantWelcomeIfNeeded(data.user.id)
   }
 
   redirect('/login?signup=check-email')

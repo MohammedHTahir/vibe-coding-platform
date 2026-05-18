@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { recordLegalAcceptance } from '@/lib/legal-server'
+import { grantWelcomeIfNeeded } from '@/lib/credits'
 
 const OAUTH_TERMS_COOKIE = 'sb_oauth_terms_accept'
 
@@ -31,6 +32,7 @@ export async function GET(request: NextRequest) {
             userId: data.user.id,
             source: 'signup_oauth',
           })
+          await grantWelcomeIfNeeded(data.user.id)
         }
         cookieStore.delete(OAUTH_TERMS_COOKIE)
       }

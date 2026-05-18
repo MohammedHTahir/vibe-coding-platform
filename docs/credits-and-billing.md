@@ -1,7 +1,9 @@
 # Credits and billing — design
 
-> Status: **Planning**. No code shipped yet. This doc captures the design
-> so we can review tradeoffs before spending Stripe webhook time.
+> Status: **Shipped (v1)**. Database, Stripe webhook, pricing page,
+> billing page, and chat-route credit gate are live behind feature
+> flags driven by env vars. This doc describes the implemented system
+> and the bits still TODO.
 
 The goal is a Lovable-style credit subscription:
 
@@ -309,17 +311,53 @@ For previews and local dev, the test-mode equivalents (`sk_test_…`).
 
 ## Rollout
 
-1. Land migrations and `lib/site.ts`/`lib/credits.ts` skeleton (no UI).
-2. Wire the webhook and Stripe products in test mode. Verify each event
-   produces the correct ledger row.
-3. Add `/pricing` + `/account/billing` UI.
-4. Add the credit-balance pill and the "out of credits" inline CTA in the
-   dashboard.
-5. Gate the chat route on `assertCredits`. Soft launch — log every
-   debit and watch for overcharges.
-6. Flip Stripe to live mode. Announce.
+1. ~~Land migrations and `lib/site.ts`/`lib/credits.ts` skeleton (no UI).~~ Done.
+2. ~~Wire the webhook and Stripe products in test mode. Verify each event
+   produces the correct ledger row.~~ Code is in place at
+   `app/api/stripe/webhook/route.ts`. **You** still need to create
+   Products/Prices in the Stripe dashboard and copy the price ids into
+   env vars (see `.env.example`).
+3. ~~Add `/pricing` + `/account/billing` UI.~~ Done.
+4. ~~Add the credit-balance pill and the "out of credits" inline CTA in the
+   dashboard.~~ Done. The pill is in `app/dashboard/credits-pill.tsx`,
+   the toast handler is in `lib/chat-context.tsx`.
+5. ~~Gate the chat route on `assertCredits`.~~ Done in
+   `app/api/chat/route.ts`. Free users without a `subscriptions` row get
+   their welcome grant of 50 credits at signup.
+6. **TODO** — flip Stripe to live mode and announce.
 
-Steps 1–5 are independently mergeable.
+### Still TODO
+
+- **Cron for monthly rollover trim.** The "credits roll over up to 2× the
+  monthly grant" rule is documented but not enforced yet. Add a Vercel
+  Cron at 02:00 UTC on the 1st that walks subscribers and inserts
+  `monthly_trim` rows. Keep this in code rather than the DB so we can
+  tune the cap easily.
+- **Per-IP signup throttle.** The cookie consent and BotID checks are in
+  place, but a free-tier-only IP throttle hasn't been added.
+- **Disposable-mail allowlist.** Defer until the first wave of abuse
+  shows up — it's easy to ship reactively.
+- **Annual plans / per-seat Team pricing.** v2 once monthly is stable.
+- **Stripe Tax.** Toggle on in the dashboard before the first paid
+  customer.
+
+### Required env vars
+
+See `.env.example`. The minimum to enable billing is:
+
+```
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+STRIPE_PRICE_HOBBY=price_...
+STRIPE_PRICE_PRO=price_...
+STRIPE_PRICE_TEAM=price_...
+STRIPE_TOPUP_PACKS={"price_xxx":500,"price_yyy":1500}
+```
+
+Without `STRIPE_SECRET_KEY` the pricing page still renders, but the
+upgrade buttons return an error. Without `STRIPE_PRICE_HOBBY` etc., the
+corresponding plan can't be checked out (the button still shows but the
+server action fails fast).
 
 ---
 
