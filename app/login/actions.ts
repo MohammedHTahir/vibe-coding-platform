@@ -41,9 +41,16 @@ export async function signUpWithPassword(
 ): Promise<ActionState> {
   const email = String(formData.get('email') ?? '').trim()
   const password = String(formData.get('password') ?? '')
+  const termsAccepted = String(formData.get('terms_accepted') ?? '') === 'true'
 
   if (!email || !password) {
     return { error: 'Email and password are required.' }
+  }
+
+  if (!termsAccepted) {
+    return {
+      error: 'You must accept the Terms and Privacy Policy to create an account.',
+    }
   }
 
   const supabase = await createClient()

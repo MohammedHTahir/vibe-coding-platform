@@ -1,5 +1,6 @@
 import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Toaster } from '@/components/ui/sonner'
+import { CookieConsent } from '@/components/consent/cookie-consent'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
@@ -45,6 +46,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <NuqsAdapter>{children}</NuqsAdapter>
         </Suspense>
+        <CookieConsent />
         <Toaster />
       </body>
     </html>
