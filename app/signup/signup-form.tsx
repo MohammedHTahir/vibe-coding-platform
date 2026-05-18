@@ -92,7 +92,7 @@ export function SignupForm() {
           <p className="text-[11px] text-gray-400">At least 8 characters.</p>
         </div>
 
-        <div className="flex items-start gap-2.5 pt-1">
+        <div className="flex items-start gap-3 pt-1">
           <Checkbox
             id="terms_accepted"
             checked={accepted}
@@ -102,27 +102,27 @@ export function SignupForm() {
               if (next) setShowError(false)
             }}
             aria-invalid={showError && !accepted ? true : undefined}
-            className="mt-0.5"
+            className="mt-1 shrink-0"
           />
           <Label
             htmlFor="terms_accepted"
-            className="text-[12px] text-gray-600 leading-relaxed font-normal"
+            className="text-[12px] sm:text-[13px] text-gray-600 leading-[1.6] font-normal"
           >
             I agree to the{' '}
             <Link
               href="/terms"
               target="_blank"
-              className="text-blue-500 hover:text-blue-600 transition-colors"
+              className="text-blue-500 hover:text-blue-600 transition-colors underline underline-offset-2"
             >
-              Terms and Conditions
+              Terms&nbsp;and&nbsp;Conditions
             </Link>{' '}
             and{' '}
             <Link
               href="/privacy"
               target="_blank"
-              className="text-blue-500 hover:text-blue-600 transition-colors"
+              className="text-blue-500 hover:text-blue-600 transition-colors underline underline-offset-2"
             >
-              Privacy Policy
+              Privacy&nbsp;Policy
             </Link>
             .
           </Label>
