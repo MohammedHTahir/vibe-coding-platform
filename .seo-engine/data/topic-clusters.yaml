@@ -1,0 +1,202 @@
+last_updated: "2026-05-18"
+
+# Pillar pages need real SERP data before their structure is finalised.
+# Each cluster's `pillar` block below is a working draft only — do NOT
+# write the pillar blog until SERP intent has been classified per the
+# SERP Intent Interpretation Rules in CLAUDE.md.
+
+clusters:
+  - cluster_id: "tc_ai_coding_platform"
+    name: "AI coding platform"
+    description: "Top-of-funnel discovery and evaluation for buyers shopping AI-driven coding platforms."
+
+    pillar:
+      title: "AI Coding Platform: How They Work and How to Choose One"
+      target_keyword: "ai coding platform"
+      slug: "ai-coding-platform"
+      status: "planned"
+      blog_slug: ""
+      serp_analyzed: false
+
+    cluster_pages:
+      - title: "Best AI Coding Platforms in 2026"
+        target_keyword: "best ai coding platform"
+        slug: "best-ai-coding-platforms"
+        angle: "Curated 2026 list with side-by-side comparison; lead with picks for distinct personas (solo, startup, agency)."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "AI Coding Platforms for Startups"
+        target_keyword: "ai coding platform for startups"
+        slug: "ai-coding-platforms-startups"
+        angle: "Buyer's guide framed around startup constraints (speed, cost, control)."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Sandboxed vs Local AI Coding: Why Execution Matters"
+        target_keyword: "ai coding sandbox"
+        slug: "ai-coding-sandbox-vs-local"
+        angle: "Argues the sandboxed-execution category. Uses Vercel Sandbox / SprintBuild as the worked example."
+        status: "planned"
+        blog_slug: ""
+
+    linking_rules:
+      - "Every cluster page MUST link to pillar"
+      - "Pillar MUST link to all published cluster pages"
+      - "Cluster pages MAY cross-link when relevant"
+
+  - cluster_id: "tc_ai_app_generator"
+    name: "AI app generator"
+    description: "How-to and evaluation content for users wanting to generate working apps from prompts."
+
+    pillar:
+      title: "AI App Generators: Turn Prompts into Production Apps"
+      target_keyword: "ai app generator"
+      slug: "ai-app-generator"
+      status: "planned"
+      blog_slug: ""
+      serp_analyzed: false
+
+    cluster_pages:
+      - title: "How to Generate an App with AI in Under 10 Minutes"
+        target_keyword: "how to generate apps with ai"
+        slug: "how-to-generate-apps-with-ai"
+        angle: "Step-by-step walkthrough, end with a real shipped output, time-to-preview metric."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "AI App Generators for Non-Technical Founders"
+        target_keyword: "ai app generator for non technical founders"
+        slug: "ai-app-generators-non-technical"
+        angle: "Persona-driven guide; emphasises live preview, error monitoring, hand-off to a real engineer."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Are AI-Generated Apps Production-Ready?"
+        target_keyword: "are ai generated apps production ready"
+        slug: "ai-generated-apps-production-ready"
+        angle: "Honest take with checklist, includes drawbacks; gates the question on what 'production' means."
+        status: "planned"
+        blog_slug: ""
+
+    linking_rules:
+      - "Every cluster page MUST link to pillar"
+      - "Pillar MUST link to all published cluster pages"
+      - "Cluster pages MAY cross-link when relevant"
+
+  - cluster_id: "tc_vibe_coding"
+    name: "Vibe coding"
+    description: "Owns the emerging 'vibe coding' category. Definitional + evaluation content."
+
+    pillar:
+      title: "Vibe Coding: A Practical Guide to AI-Driven Build Sessions"
+      target_keyword: "vibe coding"
+      slug: "vibe-coding"
+      status: "planned"
+      blog_slug: ""
+      serp_analyzed: false
+
+    cluster_pages:
+      - title: "What Is Vibe Coding?"
+        target_keyword: "what is vibe coding"
+        slug: "what-is-vibe-coding"
+        angle: "Definitional answer + the cultural origin (Karpathy term), mapped to today's tooling."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Vibe Coding Tools: A 2026 Comparison"
+        target_keyword: "vibe coding tools"
+        slug: "vibe-coding-tools"
+        angle: "Comparative roundup; classify by execution model (sandbox vs local vs hosted)."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "A Vibe Coding Workflow That Actually Ships"
+        target_keyword: "vibe coding workflow"
+        slug: "vibe-coding-workflow"
+        angle: "Process article: prompt → preview → fix loop → deploy. Focus on the agent feedback loop."
+        status: "planned"
+        blog_slug: ""
+
+    linking_rules:
+      - "Every cluster page MUST link to pillar"
+      - "Pillar MUST link to all published cluster pages"
+      - "Cluster pages MAY cross-link when relevant"
+
+  - cluster_id: "tc_prompt_to_app"
+    name: "Prompt to app"
+    description: "Tutorial-driven cluster on going from prompt to a running application."
+
+    pillar:
+      title: "Prompt to App: From Idea to Live Preview"
+      target_keyword: "prompt to app"
+      slug: "prompt-to-app"
+      status: "planned"
+      blog_slug: ""
+      serp_analyzed: false
+
+    cluster_pages:
+      - title: "Prompt to Full-Stack App: What's Realistic Today"
+        target_keyword: "prompt to full stack app"
+        slug: "prompt-to-full-stack-app"
+        angle: "Stack-specific guide with worked example (Next.js + Supabase)."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Prompt Engineering for App Generation"
+        target_keyword: "prompt engineering for app generation"
+        slug: "prompt-engineering-for-app-generation"
+        angle: "Tactical patterns (constraints, anchors, refusal signals) with before/after examples."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Prompt Templates for Common App Types"
+        target_keyword: "prompt templates for apps"
+        slug: "prompt-templates-for-apps"
+        angle: "Library of prompt starters (CRUD app, dashboard, marketplace, scheduler) with downloadable formats."
+        status: "planned"
+        blog_slug: ""
+
+    linking_rules:
+      - "Every cluster page MUST link to pillar"
+      - "Pillar MUST link to all published cluster pages"
+      - "Cluster pages MAY cross-link when relevant"
+
+  - cluster_id: "tc_nextjs_ai_agent"
+    name: "Next.js AI agent"
+    description: "Engineering-focused cluster targeting developers who want to build agentic Next.js apps."
+
+    pillar:
+      title: "Building an AI Agent with Next.js: Architecture and Patterns"
+      target_keyword: "nextjs ai agent"
+      slug: "nextjs-ai-agent"
+      status: "planned"
+      blog_slug: ""
+      serp_analyzed: false
+
+    cluster_pages:
+      - title: "How to Build an AI Agent with Next.js"
+        target_keyword: "build ai agent with nextjs"
+        slug: "build-ai-agent-with-nextjs"
+        angle: "Implementation tutorial — App Router routes, streaming UI, tool calls."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Running Agent Code Inside a Next.js Sandbox"
+        target_keyword: "nextjs ai sandbox"
+        slug: "nextjs-ai-sandbox"
+        angle: "Vercel Sandbox primer with worked example."
+        status: "planned"
+        blog_slug: ""
+
+      - title: "Streaming Tool Calls in Next.js with the AI SDK"
+        target_keyword: "ai sdk streaming tool calls nextjs"
+        slug: "streaming-tool-calls-nextjs-ai-sdk"
+        angle: "Deep dive on UIMessageStream, data parts, and writer patterns."
+        status: "planned"
+        blog_slug: ""
+
+    linking_rules:
+      - "Every cluster page MUST link to pillar"
+      - "Pillar MUST link to all published cluster pages"
+      - "Cluster pages MAY cross-link when relevant"

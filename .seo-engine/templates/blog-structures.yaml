@@ -1,0 +1,129 @@
+# Blog structures by type.
+# Each structure dictates section order, voice, and where to inject E-E-A-T
+# signals (testimonial, metric, experience, review link).
+
+# Universal rules (applied on top of every structure):
+# - Primary keyword in: title, first paragraph, one H2, description, slug.
+# - Internal links: at least 2 to existing blogs; cluster pages MUST link to
+#   their pillar; pillar pages MUST link to all published cluster pages.
+# - External links: 1-2 authoritative non-competitor sources.
+# - FAQ section sourced from real People Also Ask data, never invented.
+# - Inject at least one E-E-A-T signal from config.trust_signals. If none
+#   are configured yet, ask the user before publishing.
+
+structures:
+  comparison:
+    voice: "analytical, data-driven, neutral"
+    word_count: [2000, 3000]
+    sections:
+      - "Intro: who this is for and how we're scoring"
+      - "TL;DR verdict (one paragraph + winner-by-persona)"
+      - "Side-by-side feature matrix"
+      - "Pricing comparison"
+      - "Architecture / execution model differences"
+      - "When {Competitor} is the better choice"     # show respect first
+      - "When {Project} is the better choice"
+      - "Migration / switching considerations"
+      - "FAQ"
+      - "Soft CTA"
+    eeat_injection_points:
+      - section: "TL;DR verdict"
+        signal: "experience"
+        instruction: "One sentence: 'I've shipped X apps on both' or similar."
+      - section: "Architecture"
+        signal: "metric"
+        instruction: "Cite a measurable difference (build time, sandbox boot, model count)."
+      - section: "FAQ"
+        signal: "review_link"
+        instruction: "If config has a review link, include it; otherwise omit."
+
+  listicle:
+    voice: "helpful curator"
+    word_count: [2500, 4000]
+    sections:
+      - "Intro: criteria + how we picked"
+      - "Quick-pick table by use case"
+      - "Each entry: ~300-400 words covering best-for, pros, cons, pricing, link"
+      - "Honorable mentions"
+      - "How to choose (decision tree)"
+      - "FAQ"
+      - "Soft CTA"
+    eeat_injection_points:
+      - section: "Intro"
+        signal: "experience"
+        instruction: "Disclose evaluation experience; disclose if SprintBuild is one of the entries."
+      - section: "Each entry"
+        signal: "experience"
+        instruction: "Add a one-line 'tried it for X' note for entries we've actually used."
+
+  tutorial:
+    voice: "patient teacher; uses 'I' and shares experience"
+    word_count: [1500, 2500]
+    sections:
+      - "Intro: what you'll build + prerequisites + final result"
+      - "Setup"
+      - "Step-by-step body (numbered)"
+      - "Common pitfalls (call out the ones I hit)"
+      - "Going further"
+      - "FAQ"
+      - "Soft CTA"
+    eeat_injection_points:
+      - section: "Common pitfalls"
+        signal: "experience"
+        instruction: "Share at least one mistake I made and how I fixed it."
+      - section: "Going further"
+        signal: "metric"
+        instruction: "Optional: how long the full build took, sandbox count, etc."
+
+  how_to:
+    voice: "problem-solver; direct"
+    word_count: [1200, 2000]
+    sections:
+      - "Quick answer (2-3 sentences)"
+      - "Why this works"
+      - "Steps"
+      - "Edge cases / caveats"
+      - "FAQ"
+      - "Soft CTA"
+    eeat_injection_points:
+      - section: "Quick answer"
+        signal: "experience"
+        instruction: "Lead with what I'd actually do today."
+
+  review:
+    voice: "honest reviewer; admit drawbacks"
+    word_count: [2000, 3000]
+    sections:
+      - "TL;DR verdict (rating + when to use)"
+      - "What it's great at"
+      - "What it's not great at (genuine drawbacks)"
+      - "Pricing reality check"
+      - "Who should pick this vs alternatives"
+      - "FAQ"
+      - "Soft CTA"
+    eeat_injection_points:
+      - section: "What it's not great at"
+        signal: "experience"
+        instruction: "Real drawback, not a soft 'could be improved'."
+      - section: "Pricing reality check"
+        signal: "metric"
+        instruction: "Show actual cost over a typical month of use."
+
+  thought_leadership:
+    voice: "opinionated; takes a stand"
+    word_count: [1500, 2500]
+    sections:
+      - "Hook + opinion in one paragraph"
+      - "Context: how we got here"
+      - "Argument with at least 3 supporting points"
+      - "Counterarguments (steelman)"
+      - "Implications"
+      - "FAQ"
+      - "Soft CTA"
+    eeat_injection_points:
+      - section: "Argument"
+        signal: "experience"
+        instruction: "At least one supporting point from direct work, not theory."
+      - section: "Implications"
+        signal: "metric"
+        instruction: "If there's a number that supports the argument, use it."

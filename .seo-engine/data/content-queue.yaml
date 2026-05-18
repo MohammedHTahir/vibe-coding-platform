@@ -1,0 +1,200 @@
+last_updated: "2026-05-18"
+
+# Priority order: pillars first, then high-priority cluster pages and
+# competitor comparisons, then mid-priority cluster pages, then supporting
+# alternatives. Every queued idea must have a real `unique_angle` before
+# moving to status: in-progress.
+
+queue:
+  # ── Pillars (high) ──────────────────────────────────────────────────
+  - id: "q_001"
+    title: "Vibe Coding: A Practical Guide to AI-Driven Build Sessions"
+    blog_type: "thought_leadership"
+    content_type: "pillar"
+    cluster_id: "tc_vibe_coding"
+    target_keywords: ["vibe coding"]
+    target_features: ["feat_prompt_to_app", "feat_auto_fix_errors", "feat_sandbox_execution"]
+    unique_angle: "Treat vibe coding as a workflow with a feedback loop (prompt → preview → auto-fix → ship), grounded in a real shipped app, instead of a definitional explainer."
+    priority: "high"
+    priority_reason: "Cluster-defining pillar; vibe coding is a fast-emerging brand-friendly category."
+    status: "planned"
+    estimated_word_count: 2400
+    eeat_plan: "Walk through the SprintBuild build itself as the worked example; cite Karpathy's coinage; include time-to-preview metric once measured."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: "Requires SERP data before structure is finalised."
+    depends_on: []
+    internal_link_targets: ["what-is-vibe-coding", "vibe-coding-tools", "vibe-coding-workflow"]
+
+  - id: "q_002"
+    title: "AI Coding Platform: How They Work and How to Choose One"
+    blog_type: "thought_leadership"
+    content_type: "pillar"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["ai coding platform"]
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
+    unique_angle: "Group platforms by execution model (sandbox vs local vs hosted) — a buyer-relevant lens existing pillar pages don't lead with."
+    priority: "high"
+    priority_reason: "Cluster pillar covering broadest keyword in the topic set."
+    status: "planned"
+    estimated_word_count: 2600
+    eeat_plan: "Side-by-side execution-model comparison table; concrete example deploy from SprintBuild."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: "Requires SERP data before structure is finalised."
+    depends_on: []
+    internal_link_targets: ["best-ai-coding-platforms", "ai-coding-platforms-startups", "ai-coding-sandbox-vs-local"]
+
+  - id: "q_003"
+    title: "AI App Generators: Turn Prompts into Production Apps"
+    blog_type: "thought_leadership"
+    content_type: "pillar"
+    cluster_id: "tc_ai_app_generator"
+    target_keywords: ["ai app generator"]
+    target_features: ["feat_prompt_to_app", "feat_tool_generate_files", "feat_live_preview"]
+    unique_angle: "Frame production-readiness as a checklist (auth, RLS, deploy, error handling) — most existing posts dodge it."
+    priority: "high"
+    priority_reason: "Cluster pillar; high commercial intent."
+    status: "planned"
+    estimated_word_count: 2400
+    eeat_plan: "Reference Vercel Sandbox + Supabase combo; real shipped app screenshot."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: "Requires SERP data before structure is finalised."
+    depends_on: []
+    internal_link_targets: ["how-to-generate-apps-with-ai", "ai-app-generators-non-technical", "ai-generated-apps-production-ready"]
+
+  - id: "q_004"
+    title: "Prompt to App: From Idea to Live Preview"
+    blog_type: "tutorial"
+    content_type: "pillar"
+    cluster_id: "tc_prompt_to_app"
+    target_keywords: ["prompt to app"]
+    target_features: ["feat_prompt_to_app", "feat_live_preview", "feat_command_logs"]
+    unique_angle: "Walk through what's actually happening on every keystroke in the agent → sandbox → preview loop, not just the user-facing UI."
+    priority: "high"
+    priority_reason: "Cluster pillar."
+    status: "planned"
+    estimated_word_count: 2200
+    eeat_plan: "Annotated screenshots of the SprintBuild build pipeline."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: "Requires SERP data before structure is finalised."
+    depends_on: []
+    internal_link_targets: ["prompt-to-full-stack-app", "prompt-engineering-for-app-generation", "prompt-templates-for-apps"]
+
+  - id: "q_005"
+    title: "Building an AI Agent with Next.js: Architecture and Patterns"
+    blog_type: "tutorial"
+    content_type: "pillar"
+    cluster_id: "tc_nextjs_ai_agent"
+    target_keywords: ["nextjs ai agent"]
+    target_features: ["feat_prompt_to_app", "feat_session_proxy", "feat_tool_create_sandbox"]
+    unique_angle: "Architecture-first: data parts, UIMessageStream, proxy-driven session refresh — patterns most tutorials skip."
+    priority: "high"
+    priority_reason: "Cluster pillar; engineering audience."
+    status: "planned"
+    estimated_word_count: 2800
+    eeat_plan: "Reference real SprintBuild route handlers and the proxy refresh pattern."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: "Requires SERP data before structure is finalised."
+    depends_on: []
+    internal_link_targets: ["build-ai-agent-with-nextjs", "nextjs-ai-sandbox", "streaming-tool-calls-nextjs-ai-sdk"]
+
+  # ── Competitor comparisons (high) ───────────────────────────────────
+  - id: "q_006"
+    title: "SprintBuild vs Lovable: Which AI App Generator Fits You?"
+    blog_type: "comparison"
+    content_type: "supporting"
+    cluster_id: ""
+    target_keywords: ["sprintbuild vs lovable", "lovable alternative"]
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
+    unique_angle: "Compare execution models (Vercel Sandbox vs Lovable hosted runtime) and model-choice flexibility — most comparisons just rehash UI."
+    priority: "high"
+    priority_reason: "High-intent decision keyword; competitor brand traffic."
+    status: "planned"
+    estimated_word_count: 2200
+    eeat_plan: "Lead with Lovable's strengths; cite their public docs; note 'verified date' on every claim."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: ""
+    depends_on: []
+    internal_link_targets: ["best-ai-coding-platforms"]
+
+  - id: "q_007"
+    title: "SprintBuild vs Bolt.new: Sandbox vs WebContainer"
+    blog_type: "comparison"
+    content_type: "supporting"
+    cluster_id: ""
+    target_keywords: ["sprintbuild vs bolt new", "bolt new alternative"]
+    target_features: ["feat_sandbox_execution", "feat_live_preview"]
+    unique_angle: "Architectural comparison: cloud sandbox vs in-browser WebContainer — performance, environment fidelity, deploy story."
+    priority: "high"
+    priority_reason: "High-intent decision keyword."
+    status: "planned"
+    estimated_word_count: 2200
+    eeat_plan: "Cite both vendors' published runtime docs; verified dates on claims."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: ""
+    depends_on: []
+    internal_link_targets: ["ai-coding-sandbox-vs-local"]
+
+  # ── Cluster pages (medium) ──────────────────────────────────────────
+  - id: "q_008"
+    title: "What Is Vibe Coding?"
+    blog_type: "how_to"
+    content_type: "cluster"
+    cluster_id: "tc_vibe_coding"
+    target_keywords: ["what is vibe coding"]
+    target_features: ["feat_prompt_to_app"]
+    unique_angle: "Tie the term back to Karpathy's coinage and map it to today's tooling — most existing answers stop at a vague definition."
+    priority: "medium"
+    priority_reason: "Definitional entry point that feeds the pillar."
+    status: "planned"
+    estimated_word_count: 1500
+    eeat_plan: "Quote primary source; show one concrete prompt → preview example."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: ""
+    depends_on: ["q_001"]
+    internal_link_targets: ["vibe-coding"]
+
+  - id: "q_009"
+    title: "Best AI Coding Platforms in 2026"
+    blog_type: "listicle"
+    content_type: "cluster"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["best ai coding platform"]
+    target_features: ["feat_prompt_to_app"]
+    unique_angle: "Group recommendations by persona (solo, startup, agency) instead of generic ranking — gives readers a clear reason to pick one."
+    priority: "high"
+    priority_reason: "Heavily searched listicle keyword."
+    status: "planned"
+    estimated_word_count: 3200
+    eeat_plan: "Disclose SprintBuild affiliation up top; cite each platform's docs for claims."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: ""
+    depends_on: ["q_002"]
+    internal_link_targets: ["ai-coding-platform"]
+
+  - id: "q_010"
+    title: "How to Generate an App with AI in Under 10 Minutes"
+    blog_type: "how_to"
+    content_type: "cluster"
+    cluster_id: "tc_ai_app_generator"
+    target_keywords: ["how to generate apps with ai"]
+    target_features: ["feat_prompt_to_app", "feat_live_preview"]
+    unique_angle: "End-to-end run with timestamps; show the prompt, the preview, and the deploy."
+    priority: "medium"
+    priority_reason: "Strong how-to entry into the funnel."
+    status: "planned"
+    estimated_word_count: 1700
+    eeat_plan: "Real shipped output, time-to-preview metric."
+    serp_analyzed: false
+    cannibalization_check: "passed"
+    notes: ""
+    depends_on: ["q_003"]
+    internal_link_targets: ["ai-app-generator"]

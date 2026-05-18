@@ -1,0 +1,380 @@
+project: "SprintBuild"
+last_updated: "2026-05-18"
+generated_from: "README.md, SETUP.md, app/, ai/, components/"
+
+categories:
+  - id: "cat_agent"
+    name: "AI Agent"
+    description: "The conversational AI that turns prompts into running applications."
+    subcategories:
+      - id: "sub_agent_chat"
+        name: "Agent chat"
+        features:
+          - id: "feat_prompt_to_app"
+            name: "Prompt to app"
+            description: "Describe an app in plain English; the agent scaffolds the project, writes the files, and runs it inside a sandbox."
+            status: "available"
+            doc_refs:
+              - path: "README.md"
+                section: "Features"
+              - path: "app/api/chat/prompt.md"
+                section: "Agent system prompt"
+            blog_refs: []
+            tags: ["agent", "vibe-coding", "prompt-to-app"]
+            notes: ""
+
+          - id: "feat_multi_model"
+            name: "Multi-model support"
+            description: "Choose between Claude Opus 4.6, Claude Sonnet 4.6, GPT-5.3 Codex, and Grok 4.1 Reasoning. Routed through the Vercel AI Gateway."
+            status: "available"
+            doc_refs:
+              - path: "ai/constants.ts"
+                section: "SUPPORTED_MODELS"
+              - path: "ai/gateway.ts"
+                section: "getModelOptions"
+            blog_refs: []
+            tags: ["models", "claude", "gpt", "grok", "ai-gateway"]
+            notes: ""
+
+          - id: "feat_reasoning_effort"
+            name: "Reasoning effort control"
+            description: "Toggle reasoning effort (low / medium) for compatible models like GPT-5 Codex."
+            status: "available"
+            doc_refs:
+              - path: "components/settings/reasoning-effort.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["reasoning", "settings"]
+            notes: ""
+
+      - id: "sub_agent_tools"
+        name: "Agent tools"
+        features:
+          - id: "feat_tool_create_sandbox"
+            name: "Create Sandbox tool"
+            description: "Agent boots an isolated, ephemeral Vercel Sandbox with configurable timeout and exposed ports."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/create-sandbox.ts"
+                section: ""
+            blog_refs: []
+            tags: ["tooling", "sandbox"]
+            notes: ""
+
+          - id: "feat_tool_generate_files"
+            name: "Generate Files tool"
+            description: "Agent generates and uploads project files into the sandbox in one structured operation."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/generate-files.ts"
+                section: ""
+            blog_refs: []
+            tags: ["files", "scaffolding"]
+            notes: ""
+
+          - id: "feat_tool_run_command"
+            name: "Run Command tool"
+            description: "Agent runs shell commands (foreground or background) inside the sandbox and streams logs back."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/run-command.ts"
+                section: ""
+            blog_refs: []
+            tags: ["commands", "shell"]
+            notes: ""
+
+          - id: "feat_tool_get_sandbox_url"
+            name: "Get Sandbox URL tool"
+            description: "Resolves the public preview URL for a running sandbox so users can interact with the live app."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/get-sandbox-url.ts"
+                section: ""
+            blog_refs: []
+            tags: ["preview", "url"]
+            notes: ""
+
+  - id: "cat_runtime"
+    name: "Sandbox Runtime"
+    description: "Where generated apps actually run, build, and serve."
+    subcategories:
+      - id: "sub_vercel_sandbox"
+        name: "Vercel Sandbox"
+        features:
+          - id: "feat_sandbox_execution"
+            name: "Vercel Sandbox execution"
+            description: "Each session spins up an ephemeral Vercel Sandbox so the agent can install dependencies, run scripts, and start a dev server safely."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/create-sandbox.ts"
+                section: ""
+              - path: "README.md"
+                section: "Features"
+            blog_refs: []
+            tags: ["sandbox", "vercel"]
+            notes: ""
+
+          - id: "feat_session_timeout"
+            name: "Configurable session timeout"
+            description: "Sessions live for 10–45 minutes; the sandbox tears itself down when the timeout is reached."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/create-sandbox.ts"
+                section: "inputSchema.timeout"
+            blog_refs: []
+            tags: ["session", "timeout"]
+            notes: ""
+
+          - id: "feat_port_exposure"
+            name: "Port exposure"
+            description: "Expose up to 2 network ports per sandbox so dev servers, APIs, and tools running inside can be reached externally."
+            status: "available"
+            doc_refs:
+              - path: "ai/tools/create-sandbox.ts"
+                section: "inputSchema.ports"
+            blog_refs: []
+            tags: ["networking", "preview"]
+            notes: ""
+
+  - id: "cat_workspace"
+    name: "Workspace UI"
+    description: "The IDE-like surface around the agent."
+    subcategories:
+      - id: "sub_panels"
+        name: "Resizable panels"
+        features:
+          - id: "feat_live_preview"
+            name: "Live preview"
+            description: "An iframe panel that streams the running app from the sandbox the moment a dev server boots."
+            status: "available"
+            doc_refs:
+              - path: "components/preview/preview.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["preview", "iframe"]
+            notes: ""
+
+          - id: "feat_file_explorer"
+            name: "File explorer"
+            description: "Browse the generated source tree and read any file the agent has written."
+            status: "available"
+            doc_refs:
+              - path: "components/file-explorer/file-explorer.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["files", "navigation"]
+            notes: ""
+
+          - id: "feat_syntax_highlighting"
+            name: "Syntax-highlighted file viewer"
+            description: "react-syntax-highlighter powers the in-app code viewer for any file in the sandbox."
+            status: "available"
+            doc_refs:
+              - path: "components/file-explorer/syntax-highlighter.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["syntax", "viewer"]
+            notes: ""
+
+          - id: "feat_command_logs"
+            name: "Streaming command logs"
+            description: "Live stdout and stderr from every command the agent runs, with stderr highlighting."
+            status: "available"
+            doc_refs:
+              - path: "components/commands-logs/commands-logs-stream.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["logs", "stdout", "stderr"]
+            notes: ""
+
+          - id: "feat_responsive_layout"
+            name: "Responsive layout"
+            description: "Resizable horizontal and vertical panels on desktop, tabbed layout on mobile."
+            status: "available"
+            doc_refs:
+              - path: "components/layout/panels.tsx"
+                section: ""
+              - path: "app/dashboard/page.tsx"
+                section: "Mobile / Desktop layouts"
+            blog_refs: []
+            tags: ["layout", "responsive"]
+            notes: ""
+
+  - id: "cat_recovery"
+    name: "Recovery & Quality"
+    description: "Features that catch and fix problems automatically."
+    subcategories:
+      - id: "sub_error_monitor"
+        name: "Error monitor"
+        features:
+          - id: "feat_error_monitor"
+            name: "Error monitor"
+            description: "Surfaces runtime and build errors from the sandbox in real time."
+            status: "available"
+            doc_refs:
+              - path: "components/error-monitor/error-monitor.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["errors", "monitoring"]
+            notes: ""
+
+          - id: "feat_auto_fix_errors"
+            name: "Auto-fix errors"
+            description: "Build failures and runtime errors stream back to the agent, which patches the code without manual intervention."
+            status: "available"
+            doc_refs:
+              - path: "components/settings/auto-fix-errors.tsx"
+                section: ""
+              - path: "app/api/errors/route.ts"
+                section: ""
+            blog_refs: []
+            tags: ["auto-fix", "agent-loop"]
+            notes: ""
+
+          - id: "feat_bot_protection"
+            name: "Bot protection"
+            description: "Vercel BotID guards the chat API to block automated abuse without affecting humans."
+            status: "available"
+            doc_refs:
+              - path: "instrumentation-client.ts"
+                section: ""
+              - path: "app/api/chat/route.ts"
+                section: "checkBotId"
+            blog_refs: []
+            tags: ["security", "botid"]
+            notes: ""
+
+  - id: "cat_accounts"
+    name: "Accounts & Persistence"
+    description: "Auth and data layers backed by Supabase."
+    subcategories:
+      - id: "sub_auth"
+        name: "Authentication"
+        features:
+          - id: "feat_email_password_auth"
+            name: "Email + password auth"
+            description: "Sign up and sign in with email and password through Supabase Auth."
+            status: "available"
+            doc_refs:
+              - path: "app/login/actions.ts"
+                section: "signInWithPassword / signUpWithPassword"
+              - path: "lib/supabase/server.ts"
+                section: ""
+            blog_refs: []
+            tags: ["auth", "supabase", "email"]
+            notes: ""
+
+          - id: "feat_github_oauth"
+            name: "GitHub OAuth"
+            description: "One-tap sign-in with GitHub using Supabase Auth."
+            status: "available"
+            doc_refs:
+              - path: "app/login/actions.ts"
+                section: "signInWithGitHub"
+            blog_refs: []
+            tags: ["auth", "oauth", "github"]
+            notes: ""
+
+          - id: "feat_session_proxy"
+            name: "Edge session proxy"
+            description: "Next.js 16 proxy refreshes Supabase sessions and gates protected routes."
+            status: "available"
+            doc_refs:
+              - path: "proxy.ts"
+                section: ""
+              - path: "lib/supabase/middleware.ts"
+                section: "updateSession"
+            blog_refs: []
+            tags: ["proxy", "middleware", "session"]
+            notes: ""
+
+      - id: "sub_account"
+        name: "Account management"
+        features:
+          - id: "feat_profile_editor"
+            name: "Profile editor"
+            description: "Edit display name on /account; changes write to public.profiles via RLS-protected server action."
+            status: "available"
+            doc_refs:
+              - path: "app/account/actions.ts"
+                section: "updateProfile"
+            blog_refs: []
+            tags: ["profile", "account"]
+            notes: ""
+
+          - id: "feat_avatar_upload"
+            name: "Avatar upload"
+            description: "Upload PNG/JPEG/WebP up to 2MB to the public 'avatars' bucket; per-user folder is enforced by storage RLS."
+            status: "available"
+            doc_refs:
+              - path: "app/account/actions.ts"
+                section: "uploadAvatar"
+              - path: "supabase/migrations/20260518000000_init_sprintbuild.sql"
+                section: "avatars bucket policies"
+            blog_refs: []
+            tags: ["storage", "avatars", "rls"]
+            notes: ""
+
+      - id: "sub_projects"
+        name: "Projects"
+        features:
+          - id: "feat_project_history"
+            name: "Project history"
+            description: "Each sandbox the agent creates is recorded in public.projects so you can see, rename, or delete past sprints from /dashboard/projects."
+            status: "available"
+            doc_refs:
+              - path: "app/dashboard/projects/page.tsx"
+                section: ""
+              - path: "app/dashboard/projects-recorder.tsx"
+                section: ""
+              - path: "app/dashboard/projects/actions.ts"
+                section: ""
+            blog_refs: []
+            tags: ["projects", "history", "supabase"]
+            notes: ""
+
+          - id: "feat_project_files_storage"
+            name: "Per-user project files bucket"
+            description: "Private 'project-files' Supabase bucket with owner-only RLS, scoped by user id and project id; ready for future file-archive features."
+            status: "available"
+            doc_refs:
+              - path: "supabase/migrations/20260518000000_init_sprintbuild.sql"
+                section: "project-files bucket policies"
+            blog_refs: []
+            tags: ["storage", "rls"]
+            notes: ""
+
+  - id: "cat_marketing"
+    name: "Marketing & SEO surface"
+    description: "Public-facing pages and metadata."
+    subcategories:
+      - id: "sub_pages"
+        name: "Pages"
+        features:
+          - id: "feat_landing_page"
+            name: "Landing page"
+            description: "Hero with autoplay video, features grid, how-it-works, models lineup, FAQ, final CTA, and footer."
+            status: "available"
+            doc_refs:
+              - path: "app/page.tsx"
+                section: ""
+              - path: "components/marketing/"
+                section: "All section components"
+            blog_refs: []
+            tags: ["marketing", "landing"]
+            notes: ""
+
+          - id: "feat_dynamic_og_icons"
+            name: "Generated icons + OG card"
+            description: "Build-time generated favicon, Apple touch icon, and 1200x630 OG image in the brand colorway."
+            status: "available"
+            doc_refs:
+              - path: "app/icon.tsx"
+                section: ""
+              - path: "app/apple-icon.tsx"
+                section: ""
+              - path: "app/opengraph-image.tsx"
+                section: ""
+            blog_refs: []
+            tags: ["seo", "og", "branding"]
+            notes: ""

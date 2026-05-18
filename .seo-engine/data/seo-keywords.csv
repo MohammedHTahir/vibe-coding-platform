@@ -1,0 +1,26 @@
+keyword,search_volume,keyword_difficulty,cpc,intent,funnel_stage,serp_features,content_format_needed,mapped_feature_ids,mapped_blog_slugs,cluster_id,content_type,priority,status,last_updated,source,notes
+ai coding platform,0,0,0,commercial,consideration,,,feat_prompt_to_app,,tc_ai_coding_platform,pillar,high,planned,2026-05-18,seed,Primary topic from config
+best ai coding platform,0,0,0,commercial,decision,,,feat_prompt_to_app,,tc_ai_coding_platform,cluster,high,planned,2026-05-18,seed,Listicle for top of funnel decisions
+ai coding platform for startups,0,0,0,commercial,consideration,,,feat_prompt_to_app|feat_sandbox_execution,,tc_ai_coding_platform,cluster,medium,planned,2026-05-18,seed,Audience-specific cluster page
+ai app generator,0,0,0,commercial,consideration,,,feat_prompt_to_app|feat_tool_generate_files,,tc_ai_app_generator,pillar,high,planned,2026-05-18,seed,Primary topic from config
+how to generate apps with ai,0,0,0,informational,awareness,,,feat_prompt_to_app,,tc_ai_app_generator,cluster,medium,planned,2026-05-18,seed,How-to entry point
+ai app generator for non technical founders,0,0,0,commercial,consideration,,,feat_prompt_to_app,,tc_ai_app_generator,cluster,medium,planned,2026-05-18,seed,Persona angle
+vibe coding,0,0,0,informational,awareness,,,feat_prompt_to_app,,tc_vibe_coding,pillar,high,planned,2026-05-18,seed,Primary topic from config
+what is vibe coding,0,0,0,informational,awareness,,,feat_prompt_to_app,,tc_vibe_coding,cluster,medium,planned,2026-05-18,seed,Definitional entry
+vibe coding tools,0,0,0,commercial,consideration,,,feat_prompt_to_app|feat_multi_model,,tc_vibe_coding,cluster,medium,planned,2026-05-18,seed,Comparison cluster page
+vibe coding workflow,0,0,0,informational,awareness,,,feat_prompt_to_app|feat_auto_fix_errors,,tc_vibe_coding,cluster,low,planned,2026-05-18,seed,Process article
+prompt to app,0,0,0,informational,awareness,,,feat_prompt_to_app,,tc_prompt_to_app,pillar,high,planned,2026-05-18,seed,Primary topic from config
+prompt to full stack app,0,0,0,commercial,consideration,,,feat_prompt_to_app|feat_sandbox_execution,,tc_prompt_to_app,cluster,high,planned,2026-05-18,seed,Stack-specific angle
+prompt engineering for app generation,0,0,0,informational,awareness,,,feat_prompt_to_app|feat_multi_model,,tc_prompt_to_app,cluster,medium,planned,2026-05-18,seed,Educational depth
+nextjs ai agent,0,0,0,informational,awareness,,,feat_prompt_to_app|feat_session_proxy,,tc_nextjs_ai_agent,pillar,high,planned,2026-05-18,seed,Primary topic from config
+build ai agent with nextjs,0,0,0,informational,awareness,,,feat_prompt_to_app,,tc_nextjs_ai_agent,cluster,medium,planned,2026-05-18,seed,Tutorial angle
+nextjs ai sandbox,0,0,0,informational,awareness,,,feat_sandbox_execution,,tc_nextjs_ai_agent,cluster,medium,planned,2026-05-18,seed,Sandbox sub-topic
+sprintbuild vs lovable,0,0,0,commercial,decision,,,feat_prompt_to_app|feat_sandbox_execution,,,supporting,high,planned,2026-05-18,seed,Competitor comparison
+sprintbuild vs bolt new,0,0,0,commercial,decision,,,feat_prompt_to_app|feat_sandbox_execution,,,supporting,high,planned,2026-05-18,seed,Competitor comparison
+sprintbuild vs replit agent,0,0,0,commercial,decision,,,feat_prompt_to_app|feat_sandbox_execution,,,supporting,medium,planned,2026-05-18,seed,Competitor comparison
+sprintbuild vs base44,0,0,0,commercial,decision,,,feat_prompt_to_app,,,supporting,medium,planned,2026-05-18,seed,Competitor comparison
+sprintbuild vs v0,0,0,0,commercial,decision,,,feat_prompt_to_app|feat_live_preview,,,supporting,medium,planned,2026-05-18,seed,Competitor comparison
+lovable alternative,0,0,0,commercial,decision,,,feat_prompt_to_app,,,supporting,medium,planned,2026-05-18,seed,Alternative-style query
+bolt new alternative,0,0,0,commercial,decision,,,feat_prompt_to_app,,,supporting,medium,planned,2026-05-18,seed,Alternative-style query
+replit agent alternative,0,0,0,commercial,decision,,,feat_prompt_to_app,,,supporting,low,planned,2026-05-18,seed,Alternative-style query
+v0 alternative,0,0,0,commercial,decision,,,feat_prompt_to_app|feat_live_preview,,,supporting,low,planned,2026-05-18,seed,Alternative-style query

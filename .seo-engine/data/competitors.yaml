@@ -1,0 +1,423 @@
+last_updated: "2026-05-18"
+last_verified: "2026-05-18"
+
+competitors:
+  - id: "comp_lovable"
+    name: "Lovable"
+    website: "https://lovable.dev"
+    category: "AI app generator"
+    pricing_model: "unknown"
+    strengths: ""
+    weaknesses: ""
+    notes: "Not yet verified."
+
+  - id: "comp_bolt"
+    name: "Bolt.new"
+    website: "https://bolt.new"
+    category: "Browser-based AI dev environment"
+    pricing_model: "unknown"
+    strengths: ""
+    weaknesses: ""
+    notes: "Not yet verified."
+
+  - id: "comp_replit_agent"
+    name: "Replit Agent"
+    website: "https://replit.com"
+    category: "AI coding agent inside Replit"
+    pricing_model: "unknown"
+    strengths: ""
+    weaknesses: ""
+    notes: "Not yet verified."
+
+  - id: "comp_base44"
+    name: "Base44"
+    website: "https://base44.com"
+    category: "AI app generator"
+    pricing_model: "unknown"
+    strengths: ""
+    weaknesses: ""
+    notes: "Not yet verified."
+
+  - id: "comp_v0"
+    name: "v0 by Vercel"
+    website: "https://v0.dev"
+    category: "AI UI generator / app builder"
+    pricing_model: "unknown"
+    strengths: ""
+    weaknesses: ""
+    notes: "Not yet verified."
+
+# Feature matrix — every feature in features.yaml must have a row here.
+# Competitor cells are intentionally `null` until verified against their own
+# documentation. Confidence values: unverified | from_blog | from_docs |
+# from_review | confirmed.
+feature_matrix:
+  - feature_id: "feat_prompt_to_app"
+    our_project:
+      supported: true
+      details: "Native — every session begins with a natural-language prompt that triggers the agent."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_multi_model"
+    our_project:
+      supported: true
+      details: "Claude Opus 4.6, Claude Sonnet 4.6, GPT-5.3 Codex, Grok 4.1 Reasoning via Vercel AI Gateway."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_sandbox_execution"
+    our_project:
+      supported: true
+      details: "Each session runs in an ephemeral Vercel Sandbox isolated per user."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_live_preview"
+    our_project:
+      supported: true
+      details: "Built-in iframe preview pane streaming from the sandbox dev server."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_file_explorer"
+    our_project:
+      supported: true
+      details: "Browse the generated source tree and read any file."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_command_logs"
+    our_project:
+      supported: true
+      details: "Streaming stdout/stderr logs for every command the agent runs."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_auto_fix_errors"
+    our_project:
+      supported: true
+      details: "Errors stream back to the agent, which patches the code automatically."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_email_password_auth"
+    our_project:
+      supported: true
+      details: "Supabase email/password sign-in."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_github_oauth"
+    our_project:
+      supported: true
+      details: "GitHub OAuth via Supabase."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+
+  - feature_id: "feat_project_history"
+    our_project:
+      supported: true
+      details: "Per-user history of past sprints with rename/delete and resumable links."
+      tier: "all"
+    competitors:
+      comp_lovable:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_bolt:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_replit_agent:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_base44:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""
+      comp_v0:
+        supported: null
+        details: ""
+        tier: "unknown"
+        confidence: "unverified"
+        last_verified: ""

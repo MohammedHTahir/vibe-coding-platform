@@ -1,0 +1,64 @@
+# Frontmatter template for SprintBuild blog posts.
+# CMS: Next.js 16 (App Router) consuming MDX from src/content/blog/*.mdx.
+# Content rendered by app/blog/[slug]/page.tsx.
+
+required:
+  title:
+    type: string
+    max_chars: 60
+    description: Page title and <h1>. Primary keyword belongs here.
+  description:
+    type: string
+    max_chars: 160
+    description: Meta description. Must include primary keyword once.
+  date:
+    type: string
+    format: "YYYY-MM-DD"
+    description: Publish date.
+  slug:
+    type: string
+    style: kebab-case
+    max_words: 5
+    description: URL slug. Lives at /blog/{slug}.
+
+optional:
+  author:
+    type: string
+    default: "Mohammed Tahir"
+  tags:
+    type: list
+    default: []
+  category:
+    type: string
+    default: ""
+  image:
+    type: string
+    description: Public path to hero image. Auto-generated OG card is used if omitted.
+  draft:
+    type: boolean
+    default: false
+  canonical:
+    type: string
+    description: Override canonical URL. Default is https://sprintbuild.ai/blog/{slug}.
+  cluster_id:
+    type: string
+    description: tc_* id from topic-clusters.yaml. Required for pillar/cluster posts.
+  blog_type:
+    type: enum
+    values: ["comparison", "listicle", "tutorial", "how_to", "review", "thought_leadership"]
+  content_type:
+    type: enum
+    values: ["pillar", "cluster", "supporting", "standalone"]
+
+example: |
+  ---
+  title: "Vibe Coding: A Practical Guide to AI-Driven Build Sessions"
+  description: "Vibe coding is the prompt → preview → fix workflow that turns ideas into shipped apps. Here's how it works and how to do it well."
+  date: "2026-05-25"
+  slug: "vibe-coding"
+  author: "Mohammed Tahir"
+  tags: ["vibe-coding", "ai-coding-platform", "agentic"]
+  blog_type: "thought_leadership"
+  content_type: "pillar"
+  cluster_id: "tc_vibe_coding"
+  ---

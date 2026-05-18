@@ -1,0 +1,49 @@
+# SprintBuild local Supabase configuration.
+# Run `supabase start` to launch the local stack (requires Docker).
+# See https://supabase.com/docs/guides/cli/config for the full reference.
+
+project_id = "sprintbuild"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/auth/callback"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = false
+
+# Enable GitHub OAuth in your hosted project; leave disabled locally unless
+# you've created a GitHub OAuth app pointing at http://localhost:54321/auth/v1/callback
+[auth.external.github]
+enabled = false
+client_id = ""
+secret = ""
+redirect_uri = ""

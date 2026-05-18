@@ -1,0 +1,111 @@
+# SprintBuild SEO Content Engine — Project Configuration
+# Auto-generated. Edit anything here anytime — Claude Code (or any AI agent)
+# reads this before every blog/SEO task.
+
+project:
+  name: "SprintBuild"
+  tagline: "Sprint from idea to running app, powered by AI and a real sandbox."
+  description: "End-to-end AI coding platform where you describe what you want and an agent generates a full-stack application in a sandboxed environment with live preview, file explorer, and command logs."
+  website: "https://sprintbuild.ai"
+  target_audience:
+    primary: "Builders, indie hackers, and engineers who want to ship full-stack apps from a prompt"
+    secondary: "Product teams prototyping internal tools and agencies running sprints"
+    technical_level: "mixed"
+
+author:
+  name: "Mohammed Tahir"
+  title: "Founder, SprintBuild"
+  bio: "Founder of SprintBuild. Building tools that turn prompts into production apps."
+  website: "https://sprintbuild.ai"
+  email: "hero@sprintbuild.ai"
+  social_links: {}
+
+trust_signals:
+  review_links:
+    g2: ""
+    trustpilot: ""
+    capterra: ""
+    product_hunt: ""
+    rightfeature: ""
+    canny: ""
+    other: []
+  testimonials: []
+  metrics: []
+
+cms:
+  type: "next"
+  framework_version: "16"
+  blog_directory: "src/content/blog"
+  blog_route: "app/blog"
+  docs_directory: ""
+  frontmatter_format: "yaml"
+  date_format: "YYYY-MM-DD"
+  slug_style: "kebab-case"
+  slug_max_words: 5
+  image_directory: "public/blog"
+  frontmatter_schema:
+    required:
+      - title
+      - description
+      - date
+      - slug
+    optional:
+      - author
+      - tags
+      - category
+      - image
+      - draft
+      - canonical
+      - cluster_id
+
+competitors:
+  - name: "Lovable"
+    website: "https://lovable.dev"
+    id: "comp_lovable"
+  - name: "Bolt.new"
+    website: "https://bolt.new"
+    id: "comp_bolt"
+  - name: "Replit Agent"
+    website: "https://replit.com"
+    id: "comp_replit_agent"
+  - name: "Base44"
+    website: "https://base44.com"
+    id: "comp_base44"
+  - name: "v0 by Vercel"
+    website: "https://v0.dev"
+    id: "comp_v0"
+
+seo:
+  primary_topics:
+    - "AI coding platform"
+    - "AI app generator"
+    - "vibe coding"
+    - "prompt to app"
+    - "Next.js AI agent"
+  brand_terms: ["SprintBuild", "sprintbuild"]
+  avoid_terms: []
+  target_regions: ["Global"]
+  language: "en"
+
+content:
+  min_word_count: 1500
+  max_word_count: 4000
+  default_author: "Mohammed Tahir"
+  tone: "professional-conversational"
+  include_faq: true
+  include_toc: true
+  cta_text: "Try SprintBuild free"
+  cta_url: "https://sprintbuild.ai/signup"
+  max_posts_per_month: 8
+  requires_human_review: true
+
+technical_seo:
+  meta_description_max_chars: 160
+  title_tag_max_chars: 60
+  image_alt_text_required: true
+  canonical_url_pattern: "https://sprintbuild.ai/blog/{slug}"
+
+integrations:
+  seo_tool: "none"
+  analytics: "none"
+  search_console: false
