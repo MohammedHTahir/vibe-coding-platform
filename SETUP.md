@@ -28,7 +28,7 @@ Copy `.env.example` to `.env.local` and fill in:
 | `NEXT_PUBLIC_SUPABASE_URL` | Yes for auth | Project REST URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Yes for auth | Anon (publishable) key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Yes | Used server-side to record cookie consent and Terms/Privacy acceptance audit rows |
-| `NEXT_PUBLIC_SITE_URL` | Yes | Public origin used by auth redirects (`http://localhost:3000` locally, `https://sprintbuild.ai` in prod) |
+| `NEXT_PUBLIC_SITE_URL` | Yes | Public origin used by auth redirects (`http://localhost:3000` locally, `https://trendweaver.ai` in prod) |
 
 The marketing site renders even when Supabase env vars are empty — the layout
 gates auth checks behind a presence test. Hitting `/dashboard` without env vars
@@ -77,7 +77,7 @@ supabase gen types typescript --local > types/supabase.ts
 ### Option B · Hosted Supabase project (production)
 
 1. Create a project at https://supabase.com.
-2. In the Auth settings, set the Site URL to `https://sprintbuild.ai` and add `https://sprintbuild.ai/auth/callback` as an additional redirect URL.
+2. In the Auth settings, set the Site URL to `https://trendweaver.ai` and add `https://trendweaver.ai/auth/callback` as an additional redirect URL.
 3. Enable the GitHub provider (optional) with `https://<project>.supabase.co/auth/v1/callback` as the OAuth callback URL on GitHub.
 4. From the project root, link the CLI and push the migrations:
 
@@ -112,7 +112,7 @@ AI_GATEWAY_API_KEY
 NEXT_PUBLIC_SUPABASE_URL
 NEXT_PUBLIC_SUPABASE_ANON_KEY
 SUPABASE_SERVICE_ROLE_KEY
-NEXT_PUBLIC_SITE_URL=https://sprintbuild.ai
+NEXT_PUBLIC_SITE_URL=https://trendweaver.ai
 ```
 
 Then `vc deploy` (or `vercel --prod`).

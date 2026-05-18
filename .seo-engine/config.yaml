@@ -6,7 +6,7 @@ project:
   name: "SprintBuild"
   tagline: "Sprint from idea to running app, powered by AI and a real sandbox."
   description: "End-to-end AI coding platform where you describe what you want and an agent generates a full-stack application in a sandboxed environment with live preview, file explorer, and command logs."
-  website: "https://sprintbuild.ai"
+  website: "https://trendweaver.ai"
   target_audience:
     primary: "Builders, indie hackers, and engineers who want to ship full-stack apps from a prompt"
     secondary: "Product teams prototyping internal tools and agencies running sprints"
@@ -16,8 +16,8 @@ author:
   name: "Mohammed Tahir"
   title: "Founder, SprintBuild"
   bio: "Founder of SprintBuild. Building tools that turn prompts into production apps."
-  website: "https://sprintbuild.ai"
-  email: "hero@sprintbuild.ai"
+  website: "https://trendweaver.ai"
+  email: "hero@trendweaver.ai"
   social_links: {}
 
 trust_signals:
@@ -95,7 +95,7 @@ content:
   include_faq: true
   include_toc: true
   cta_text: "Try SprintBuild free"
-  cta_url: "https://sprintbuild.ai/signup"
+  cta_url: "https://trendweaver.ai/signup"
   max_posts_per_month: 8
   requires_human_review: true
 
@@ -103,7 +103,7 @@ technical_seo:
   meta_description_max_chars: 160
   title_tag_max_chars: 60
   image_alt_text_required: true
-  canonical_url_pattern: "https://sprintbuild.ai/blog/{slug}"
+  canonical_url_pattern: "https://trendweaver.ai/blog/{slug}"
 
 integrations:
   seo_tool: "none"

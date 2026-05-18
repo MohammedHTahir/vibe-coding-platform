@@ -6,24 +6,28 @@ import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
+import { BRAND_NAME, siteUrl } from '@/lib/site'
 import './globals.css'
 
-const title = 'SprintBuild'
-const description = `SprintBuild is an end-to-end AI coding platform where you describe what you want and an agent ships a full-stack application. It uses Vercel's AI Cloud services like Sandbox for secure code execution, AI Gateway for Claude, GPT, and other model support, Fluid Compute for efficient rendering and streaming, and it's built with Next.js and the AI SDK.`
+const title = BRAND_NAME
+const description = `${BRAND_NAME} is an end-to-end AI coding platform where you describe what you want and an agent ships a full-stack application. It uses Vercel's AI Cloud services like Sandbox for secure code execution, AI Gateway for Claude, GPT, and other model support, Fluid Compute for efficient rendering and streaming, and it's built with Next.js and the AI SDK.`
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sprintbuild.ai'
+const url = siteUrl()
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(url),
   title: {
     default: title,
     template: `%s · ${title}`,
   },
   description,
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title,
     description,
-    url: siteUrl,
+    url,
     siteName: title,
     type: 'website',
   },

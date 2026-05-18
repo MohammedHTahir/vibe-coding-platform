@@ -5,13 +5,14 @@ import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import { createClient } from '@/lib/supabase/server'
 import { recordLegalAcceptance } from '@/lib/legal-server'
+import { siteUrl } from '@/lib/site'
 
 interface ActionState {
   error?: string
 }
 
 function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
+  return siteUrl()
 }
 
 /**

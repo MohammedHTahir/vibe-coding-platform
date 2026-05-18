@@ -3,12 +3,13 @@ import { Models } from './constants'
 import type { JSONValue } from 'ai'
 import type { OpenAIResponsesProviderOptions } from '@ai-sdk/openai'
 import type { LanguageModelV3 } from '@ai-sdk/provider'
+import { BRAND_NAME, siteUrl } from '@/lib/site'
 
 const gateway = createGatewayProvider({
   baseURL: process.env.AI_GATEWAY_BASE_URL,
   headers: {
-    'http-referer': 'https://sprintbuild.ai/',
-    'x-title': 'SprintBuild',
+    'http-referer': `${siteUrl()}/`,
+    'x-title': BRAND_NAME,
   },
 })
 

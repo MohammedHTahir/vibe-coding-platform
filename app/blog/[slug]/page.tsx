@@ -11,6 +11,7 @@ import { SprintBuildWordmark } from '@/components/marketing/logo'
 import { Footer } from '@/components/marketing/footer'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon } from 'lucide-react'
+import { siteUrl } from '@/lib/site'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -28,8 +29,7 @@ export async function generateMetadata({
   if (!post) return {}
 
   const fm = post.frontmatter
-  const canonical =
-    fm.canonical ?? `https://sprintbuild.ai/blog/${fm.slug}`
+  const canonical = fm.canonical ?? `${siteUrl()}/blog/${fm.slug}`
 
   return {
     title: fm.title,

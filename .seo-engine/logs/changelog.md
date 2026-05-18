@@ -22,7 +22,7 @@ features across 6 categories; seeded 5 competitors (Lovable, Bolt.new,
 Replit Agent, Base44, v0) with `unverified` status; built 5 topic clusters
 from the user's primary topics; queued 10 ideas (5 pillars + 2 high-priority
 competitor comparisons + 3 mid-priority cluster pages). Author set to
-"Mohammed Tahir &lt;hero@sprintbuild.ai&gt;". Blog scaffold to be added at
+"Mohammed Tahir &lt;hero@trendweaver.ai&gt;". Blog scaffold to be added at
 `app/blog` with content under `src/content/blog/`. Pillar pages await real
 SERP data before their structures are finalised — see CLAUDE.md SERP rule.
 **Triggered by:** user (`seo-engine-setup-prompt.md`)

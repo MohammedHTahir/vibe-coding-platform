@@ -2,6 +2,7 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { SprintBuildWordmark } from '@/components/marketing/logo'
 import { Footer } from '@/components/marketing/footer'
+import { CONTACT_EMAILS } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -217,10 +218,10 @@ export default function PrivacyPage() {
               personal information, to object to or restrict certain
               processing, and to withdraw consent. Email{' '}
               <a
-                href="mailto:privacy@sprintbuild.ai"
+                href={`mailto:${CONTACT_EMAILS.privacy}`}
                 className="text-blue-500 hover:text-blue-600 transition-colors"
               >
-                privacy@sprintbuild.ai
+                {CONTACT_EMAILS.privacy}
               </a>{' '}
               to exercise any of these rights. We will respond within the
               timeframe required by applicable law.
@@ -262,10 +263,10 @@ export default function PrivacyPage() {
               you believe a child has provided us with personal information,
               email{' '}
               <a
-                href="mailto:privacy@sprintbuild.ai"
+                href={`mailto:${CONTACT_EMAILS.privacy}`}
                 className="text-blue-500 hover:text-blue-600 transition-colors"
               >
-                privacy@sprintbuild.ai
+                {CONTACT_EMAILS.privacy}
               </a>{' '}
               and we will delete it.
             </p>
@@ -290,10 +291,10 @@ export default function PrivacyPage() {
             <p>
               Questions or privacy requests? Email{' '}
               <a
-                href="mailto:privacy@sprintbuild.ai"
+                href={`mailto:${CONTACT_EMAILS.privacy}`}
                 className="text-blue-500 hover:text-blue-600 transition-colors"
               >
-                privacy@sprintbuild.ai
+                {CONTACT_EMAILS.privacy}
               </a>
               .
             </p>
