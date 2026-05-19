@@ -20,13 +20,14 @@ export function stripe(): Stripe {
     )
   }
   cached = new Stripe(key, {
-    // Pin the API version to keep us from getting silently broken by
-    // Stripe API changes. Bump deliberately when upgrading.
-    apiVersion: '2026-03-25.basil' as Stripe.LatestApiVersion,
+    // Pin to whatever the installed SDK considers latest. Bump the SDK
+    // (and re-run typegen) to move forward; don't hand-edit a date string
+    // here or we'll desync from the runtime version check.
+    apiVersion: Stripe.DEFAULT_API_VERSION,
     typescript: true,
     appInfo: {
       name: 'SprintBuild',
-      url: 'https://trendweaver.ai',
+      url: 'https://sprintbuild.ai',
     },
   })
   return cached
