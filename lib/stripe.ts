@@ -20,10 +20,10 @@ export function stripe(): Stripe {
     )
   }
   cached = new Stripe(key, {
-    // Pin to whatever the installed SDK considers latest. Bump the SDK
-    // (and re-run typegen) to move forward; don't hand-edit a date string
-    // here or we'll desync from the runtime version check.
-    apiVersion: Stripe.DEFAULT_API_VERSION,
+    // Pin to the SDK's latest known version. The string must match
+    // `Stripe.LatestApiVersion`, so a future SDK upgrade will surface as
+    // a typecheck error here forcing a deliberate bump.
+    apiVersion: '2025-08-27.basil',
     typescript: true,
     appInfo: {
       name: 'SprintBuild',
