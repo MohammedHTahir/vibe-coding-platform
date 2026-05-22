@@ -10,6 +10,15 @@ last_updated: "2026-05-23"
 # entry was rewritten in Phase 2 to cover all six platforms grouped by
 # persona and to deep-link into all 5 /blog/sprintbuild-vs-* posts and
 # the /vs hub. The four new comparison posts shipped 2026-05-23 in
+# Phase 2. Phase 4 (2026-05-23) shipped the cornerstone pillar
+# `ai-coding-platform` plus four cluster pages: `vibe-coding-tools`,
+# `sandboxed-vs-local-ai-coding`, `ai-coding-platforms-for-startups`,
+# and `are-ai-generated-apps-production-ready`. Note: this Phase 4
+# branch references Phase 3 slugs (`what-is-an-ai-app-generator`,
+# `what-is-prompt-to-app`, `how-to-generate-apps-with-ai`, and the
+# refreshed `what-is-vibe-coding`) that exist on the
+# feat/seo-phase-3 branch. Phase 3 should be merged to main before
+# Phase 4 so all internal links resolve correctly in production.
 # Phase 2. Phase 3 (2026-05-23) refreshed `what-is-vibe-coding` into
 # the formal pillar for tc_vibe_coding and added three new definitional
 # posts: `what-is-an-ai-app-generator`, `what-is-prompt-to-app`, and
@@ -357,3 +366,114 @@ programmatic_pages:
     target_keywords: ["ai crud app builder", "generate crud app with ai", "crud app from prompt"]
     cluster_id: "tc_ai_app_generator"
     last_verified: "2026-05-23"
+
+
+  # ── Phase 4 cornerstone pillar + cluster pages (2026-05-23) ────────
+  - slug: "ai-coding-platform"
+    title: "AI Coding Platform: How They Work and How to Choose One in 2026"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "pillar"
+    target_keywords:
+      - "ai coding platform"
+      - "ai coding platform comparison"
+      - "ai coding platforms 2026"
+      - "ai coding platforms how to choose"
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://posthog.com/newsletter/inside-bolt-dot-new"
+      - "https://docs.replit.com/core-concepts/agent"
+      - "https://v0.dev/pricing"
+      - "https://bolt.new/pricing"
+      - "https://lovable.dev/pricing"
+      - "https://replit.com/pricing"
+      - "https://base44.com/pricing"
+    queue_id: "q_002"
+
+  - slug: "vibe-coding-tools"
+    title: "Vibe Coding Tools: A 2026 Comparison Across Every Execution Model"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_vibe_coding"
+    blog_type: "comparison"
+    target_keywords:
+      - "vibe coding tools"
+      - "vibe coding tools 2026"
+      - "best vibe coding tools"
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://x.com/karpathy/status/1886192184808149383"
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://posthog.com/newsletter/inside-bolt-dot-new"
+      - "https://docs.replit.com/core-concepts/agent"
+    queue_id: "q_011"
+
+  - slug: "sandboxed-vs-local-ai-coding"
+    title: "Sandboxed vs Local AI Coding: Why Execution Matters in 2026"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "sandboxed ai coding"
+      - "ai coding sandbox"
+      - "local vs cloud ai coding"
+      - "vercel sandbox vs webcontainer"
+    target_features: ["feat_sandbox_execution"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://posthog.com/newsletter/inside-bolt-dot-new"
+      - "https://docs.replit.com/core-concepts/agent"
+    queue_id: "q_012"
+
+  - slug: "ai-coding-platforms-for-startups"
+    title: "AI Coding Platforms for Startups: A 2026 Buyer's Guide"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "guide"
+    target_keywords:
+      - "ai coding platform for startups"
+      - "ai coding tools for startups"
+      - "best ai for startups"
+      - "ai tools for startups"
+    target_features: ["feat_prompt_to_app", "feat_multi_model"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://v0.dev/pricing"
+      - "https://bolt.new/pricing"
+      - "https://lovable.dev/pricing"
+      - "https://replit.com/pricing"
+      - "https://base44.com/pricing"
+    queue_id: "q_013"
+
+  - slug: "are-ai-generated-apps-production-ready"
+    title: "Are AI-Generated Apps Production-Ready? A 2026 Honest Assessment"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_app_generator"
+    blog_type: "guide"
+    target_keywords:
+      - "are ai generated apps production ready"
+      - "ai code production ready"
+      - "ai app production"
+      - "ai coding security"
+    target_features: ["feat_prompt_to_app", "feat_auto_fix_errors"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://supabase.com/docs/guides/auth/row-level-security"
+      - "https://docs.stripe.com/webhooks/signatures"
+      - "https://vercel.com/docs/security"
+      - "https://owasp.org/www-project-top-ten/"
+    queue_id: "q_014"

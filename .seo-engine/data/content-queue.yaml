@@ -36,19 +36,21 @@ queue:
     blog_type: "thought_leadership"
     content_type: "pillar"
     cluster_id: "tc_ai_coding_platform"
-    target_keywords: ["ai coding platform"]
+    target_keywords: ["ai coding platform", "ai coding platform comparison"]
     target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
     unique_angle: "Group platforms by execution model (sandbox vs local vs hosted) — a buyer-relevant lens existing pillar pages don't lead with."
     priority: "high"
     priority_reason: "Cluster pillar covering broadest keyword in the topic set."
-    status: "planned"
+    status: "published"
+    published_slug: "ai-coding-platform"
+    published_at: "2026-05-23"
     estimated_word_count: 2600
     eeat_plan: "Side-by-side execution-model comparison table; concrete example deploy from SprintBuild."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: "Requires SERP data before structure is finalised."
+    notes: "Phase 4 ship. Cornerstone pillar for tc_ai_coding_platform. Structured around the 4 architectural axes (execution model, model choice, deploy target, pricing shape) with a verdict per platform on each axis. Cross-links every comparison post and every cluster page in the cluster. Sources verified 2026-05-23."
     depends_on: []
-    internal_link_targets: ["best-ai-coding-platforms", "ai-coding-platforms-startups", "ai-coding-sandbox-vs-local"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "vibe-coding-tools", "sandboxed-vs-local-ai-coding", "ai-coding-platforms-for-startups", "are-ai-generated-apps-production-ready", "what-is-an-ai-app-generator", "what-is-vibe-coding", "what-is-prompt-to-app", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
 
   - id: "q_003"
     title: "AI App Generators: Turn Prompts into Production Apps"
@@ -292,4 +294,95 @@ queue:
     cannibalization_check: "passed"
     notes: "Phase 3 ship. Timestamped 0:00–10:00 walkthrough of generating a SaaS prompt; explicit pre-launch verification checklist; honest treatment of what's complete vs partial at the 10-minute mark; suggested next prompts. Cluster page for tc_ai_app_generator."
     depends_on: ["q_003"]
+    internal_link_targets: ["ai-app-generator"]
+
+
+  # ── Phase 4 cluster pages (2026-05-23) ──────────────────────────────
+  # Four cluster pages added retroactively to cover the satellite slots
+  # in topic-clusters.yaml. Each one supports the cornerstone pillar
+  # (q_002) and the Phase 3 definitional pillars.
+
+  - id: "q_011"
+    title: "Vibe Coding Tools: A 2026 Comparison Across Every Execution Model"
+    blog_type: "comparison"
+    content_type: "cluster"
+    cluster_id: "tc_vibe_coding"
+    target_keywords: ["vibe coding tools", "vibe coding tools 2026"]
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution"]
+    unique_angle: "Classify vibe-coding tools by execution model (the most architecturally consequential axis) instead of feature checklist."
+    priority: "medium"
+    priority_reason: "Comparative roundup feeding the tc_vibe_coding pillar."
+    status: "published"
+    published_slug: "vibe-coding-tools"
+    published_at: "2026-05-23"
+    estimated_word_count: 1700
+    eeat_plan: "Verified pricing per tool; sources cited."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 4 ship. Vibe-coding-specific lens on the same six tools covered in q_009. Cross-links every comparison post and the cornerstone pillar."
+    depends_on: ["q_001"]
+    internal_link_targets: ["what-is-vibe-coding", "ai-coding-platform", "best-ai-coding-tools-2026", "sandboxed-vs-local-ai-coding", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
+
+  - id: "q_012"
+    title: "Sandboxed vs Local AI Coding: Why Execution Matters"
+    blog_type: "comparison"
+    content_type: "cluster"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["sandboxed ai coding", "ai coding sandbox", "local vs cloud ai coding"]
+    target_features: ["feat_sandbox_execution"]
+    unique_angle: "Three-bucket framing (cloud sandbox / browser WebContainer / local runtime) with production-fidelity as the deciding factor."
+    priority: "medium"
+    priority_reason: "Argues SprintBuild's category positioning at the architectural level."
+    status: "published"
+    published_slug: "sandboxed-vs-local-ai-coding"
+    published_at: "2026-05-23"
+    estimated_word_count: 1900
+    eeat_plan: "Cite Vercel Sandbox docs, Bolt PostHog deep dive, Replit docs."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 4 ship. The architectural argument for cloud sandbox; deeply technical but readable for buyers."
+    depends_on: ["q_002"]
+    internal_link_targets: ["ai-coding-platform", "best-ai-coding-tools-2026", "vibe-coding-tools", "sprintbuild-vs-bolt-new", "sprintbuild-vs-replit-agent"]
+
+  - id: "q_013"
+    title: "AI Coding Platforms for Startups: A 2026 Buyer's Guide"
+    blog_type: "guide"
+    content_type: "cluster"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["ai coding platform for startups", "ai coding tools for startups", "best ai for startups"]
+    target_features: ["feat_prompt_to_app", "feat_multi_model"]
+    unique_angle: "Five-bar framework (prod parity, code portability, predictable pricing, multi-seat, frontier model access) plus picks per startup persona."
+    priority: "medium"
+    priority_reason: "High-intent commercial keyword with persona overlay."
+    status: "published"
+    published_slug: "ai-coding-platforms-for-startups"
+    published_at: "2026-05-23"
+    estimated_word_count: 2100
+    eeat_plan: "Score every platform against the framework with verified facts."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 4 ship. Startup-specific buyer's guide derived from the cornerstone pillar."
+    depends_on: ["q_002"]
+    internal_link_targets: ["ai-coding-platform", "best-ai-coding-tools-2026", "sandboxed-vs-local-ai-coding", "are-ai-generated-apps-production-ready", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
+
+  - id: "q_014"
+    title: "Are AI-Generated Apps Production-Ready? A 2026 Honest Assessment"
+    blog_type: "guide"
+    content_type: "cluster"
+    cluster_id: "tc_ai_app_generator"
+    target_keywords: ["are ai generated apps production ready", "ai code production ready", "ai app production"]
+    target_features: ["feat_prompt_to_app", "feat_auto_fix_errors"]
+    unique_angle: "Production-readiness as a 10-item checklist with the most common AI-generated bug (tenant isolation in RLS) called out explicitly."
+    priority: "medium"
+    priority_reason: "Reassurance content that addresses the biggest objection in the AI-coding category."
+    status: "published"
+    published_slug: "are-ai-generated-apps-production-ready"
+    published_at: "2026-05-23"
+    estimated_word_count: 2300
+    eeat_plan: "Real pre-launch checklist; cite OWASP, Stripe webhook docs, Supabase RLS docs."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 4 ship. The 10-item checklist + 15-step worked example. Cross-links the AI app generator pillar."
+    depends_on: ["q_003"]
+    internal_link_targets: ["ai-coding-platform", "what-is-an-ai-app-generator", "how-to-generate-apps-with-ai", "ai-coding-platforms-for-startups", "best-ai-coding-tools-2026"]
     internal_link_targets: ["best-ai-coding-tools-2026", "what-is-an-ai-app-generator", "what-is-vibe-coding", "what-is-prompt-to-app", "build-saas"]

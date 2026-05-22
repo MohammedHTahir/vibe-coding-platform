@@ -1,0 +1,191 @@
+---
+title: "Sandboxed vs Local AI Coding: Why Execution Matters in 2026"
+description: "The difference between sandboxed AI coding (Vercel Sandbox, Replit) and local-runtime alternatives (WebContainer, IDE plugins) decides whether your prompt-to-app build will ever ship to production."
+date: "2026-05-23"
+slug: "sandboxed-vs-local-ai-coding"
+author: "Mohammed Tahir"
+tags: ["sandboxed ai coding", "ai coding sandbox", "local vs cloud ai coding", "vercel sandbox", "ai coding platform"]
+category: "guides"
+cluster_id: "tc_ai_coding_platform"
+blog_type: "comparison"
+---
+
+## The framing most posts miss
+
+When people compare AI coding tools they usually compare features: model support, GitHub export, deploy story, pricing. Important, but it skips the most architecturally consequential axis: **where the generated code actually runs while the agent is working on it**.
+
+The choices fall into three buckets:
+
+1. **Cloud sandbox** — a real virtual machine the platform provisions per session
+2. **Browser WebContainer** — a Node.js runtime running inside your browser tab via WebAssembly
+3. **Local runtime** — code lives on your machine; the agent edits files in your local repo
+
+(There's a fourth, hosted runtime, that's adjacent to sandbox but distinct enough to deserve its own treatment in [our cornerstone pillar](/blog/ai-coding-platform).)
+
+This post argues that the difference between these three buckets is the most important factor in whether a prompt-to-app build will ever ship to production. The first 80% looks identical across all three. The last 20% — and the work between v1 and a real launch — depends almost entirely on which runtime model you picked.
+
+## Bucket 1: Cloud sandbox
+
+A cloud sandbox is a real virtual machine, isolated per session, that runs in a data centre. SprintBuild uses [Vercel Sandbox](https://vercel.com/docs/vercel-sandbox), which boots a Firecracker microVM per session — the same isolation primitive AWS Lambda is built on.
+
+What you get:
+
+- Full Linux. `/usr/bin`, package managers, native binaries, systemd processes — everything that runs on a real Linux box
+- Real networking. The agent can hit external APIs, your database, your auth provider
+- Up to two exposed ports per session, so the dev server is publicly reachable and the preview pane attaches via a real URL
+- Real shell access for the agent to run any command
+- Time-bounded sessions (10–45 minutes by design) so resources don't leak
+
+What you give up:
+
+- Cold-start is slower than WebContainer. A few seconds to provision a real VM rather than sub-second WebAssembly boot
+- The sandbox lives in the platform's cloud, so the privacy story is "we hold your code in memory during the session" rather than "the code never leaves your machine"
+
+Replit Agent uses a similar model with one big difference: Repls are **long-lived** rather than session-scoped. You come back tomorrow and the same shell is still there. Both approaches give you a real Linux box; they're optimised for different patterns of work (tight iteration loops vs continuous projects).
+
+## Bucket 2: Browser WebContainer
+
+WebContainer is a virtualisation layer that runs Node.js inside the browser using WebAssembly. PostHog's [deep dive on Bolt's architecture](https://posthog.com/newsletter/inside-bolt-dot-new) is the best public explanation. The short version: when you load Bolt, your browser boots a Node-compatible VM, the agent emits files into it, runs `npm install`, and starts a dev server — all without leaving your tab.
+
+What you get:
+
+- Sub-second cold-start. Genuinely instant
+- Privacy. Code stays on your machine
+- Offline-friendly once the project is loaded
+- Zero infrastructure to provision
+
+What you give up:
+
+- No native binaries. WebContainer can't load arbitrary `.so` or `.node` files
+- Tighter resource ceilings. You're running in a browser tab; memory and CPU are bounded by what the tab gets
+- Some npm packages with native dependencies don't work or work weirdly
+- Long-running processes (workers, queues, websockets that need real listeners) strain the model
+- The deploy story forks: what runs in WebContainer is **not** byte-for-byte what runs on Netlify or anywhere else. Code that worked locally can break on deploy in non-obvious ways
+
+If your build is "Node + a database via API + maybe Tailwind", WebContainer covers it cleanly. If your build is "anything that needs a real Linux service", WebContainer can't help.
+
+## Bucket 3: Local runtime
+
+The third option: the agent edits files in your local repo, you run them with `npm run dev` on your machine, the agent watches your terminal output for errors. This is the loop Cursor, Continue, and other AI code editors use.
+
+What you get:
+
+- Maximum privacy. Code never leaves your machine
+- Native everything. Whatever runs on your laptop runs in dev
+- Full editor integration with your existing tools (debugger, profiler, language server)
+- No sandbox to provision
+
+What you give up:
+
+- The auto-fix loop is weaker. The agent has to ask you for the error output rather than seeing it streamed automatically
+- The preview is whatever your local browser shows — there's no public preview URL for sharing
+- Setup time is real. You need Node, your package manager, your environment variables, your database, the works
+- Your laptop becomes a dependency. Closing the lid pauses the loop
+
+Local runtime is great for developers working on their own existing codebases. It's a poor fit for "I want to ship from a prompt with no setup" — the setup is the whole problem, and local-runtime tools don't solve it.
+
+## Side-by-side
+
+| Aspect | Cloud sandbox | Browser WebContainer | Local runtime |
+| --- | --- | --- | --- |
+| Cold-start | Seconds | Sub-second | Already running |
+| Real Linux | Yes | No | Yes |
+| Native binaries | Yes | No | Yes |
+| Long-running processes | Yes | Limited | Yes |
+| Production fidelity | High | Low | Highest |
+| Auto-fix loop quality | Strong | Strong | Weaker (depends on tool) |
+| Privacy | Code in platform cloud | Code in browser | Code on your laptop |
+| Public preview URL | Yes | Yes | No (without ngrok) |
+| Setup overhead | None | None | Real (env, deps, etc.) |
+| Examples | [SprintBuild](/blog/sprintbuild-vs-bolt-new), [Replit Agent](/blog/sprintbuild-vs-replit-agent) | [Bolt.new](/blog/sprintbuild-vs-bolt-new) | Cursor, Continue |
+
+## Why "production fidelity" is the deciding factor
+
+The single biggest reason a prompt-to-app build fails between v1 and launch is **environmental drift**: the thing that ran beautifully in the agent's preview behaves differently on the real deploy target.
+
+Cloud sandbox keeps drift small because the sandbox is a real Linux microVM and your production target is also a real Linux microVM (Vercel, AWS, etc.). The gap is narrow.
+
+WebContainer makes drift larger because the WebContainer Node environment isn't byte-for-byte identical to a real Linux Node environment. Most things work fine; some packages with native dependencies don't. You'll occasionally hit a bug that only surfaces on deploy, and "works on Bolt" doesn't help debug it.
+
+Local runtime keeps drift small in *one* direction (matches your laptop) but introduces it in another (your laptop is not the production server). Most engineers compensate with Docker, but at that point you've reinvented the cloud sandbox in a more painful way.
+
+For prototypes that won't grow past prototype, this doesn't matter. For builds that *will* go to production, the cloud sandbox is the safest choice.
+
+## When each model wins
+
+### Cloud sandbox wins when
+
+- The build will eventually ship to production
+- You need real Linux services (workers, queues, native binaries, exotic deps)
+- You want public preview URLs for sharing during the build
+- You don't want infrastructure setup to be the bottleneck
+- You're prompt-driven, not codebase-driven
+
+### Browser WebContainer wins when
+
+- You're prototyping fast and don't need a real backend
+- Privacy is a hard constraint (regulated industry, sensitive data)
+- You want to work on a flight or a train with limited connectivity
+- The deploy target is Netlify or a static host where WebContainer's compatibility profile is fine
+
+### Local runtime wins when
+
+- You're working on an existing codebase the agent can't generate from scratch
+- You have a deep tooling stack (debugger, profiler, custom language servers) you don't want to give up
+- You're 80% of the way through a build and just want autocomplete
+
+These are real distinctions, not preferences. Picking the wrong runtime for your build pattern is a real cost.
+
+## What this means for picking a tool
+
+If you've made it through this post, the practical takeaway is short: **decide where you actually want to ship**, then pick a runtime that minimises drift between dev and that destination.
+
+- Shipping to a real cloud (Vercel, AWS, etc.)? Cloud sandbox is the lowest-friction path. SprintBuild or Replit Agent.
+- Shipping to a static host or staying in prototype? Browser WebContainer is fine. Bolt.new.
+- Working in an existing codebase? Skip prompt-to-app entirely; use Cursor or Continue against your local repo.
+
+The full pillar comparison is in [our 2026 listicle](/blog/best-ai-coding-tools-2026). For startup-specific guidance, see [AI coding platforms for startups](/blog/ai-coding-platforms-for-startups). For the production-readiness checklist, see [are AI-generated apps production-ready](/blog/are-ai-generated-apps-production-ready).
+
+## Frequently asked questions
+
+### Is sandboxed AI coding always more secure than local?
+
+Mostly yes during dev, but with caveats. A cloud sandbox is isolated from your laptop, so a compromised dependency can't reach your local files. But the code does live in the platform's cloud during the session, so if you're handling truly sensitive data, run a local-runtime tool instead.
+
+### Can I run my own self-hosted sandbox?
+
+Yes if you're willing to operate it. Vercel Sandbox is the platform-as-a-service version; you can also run Firecracker microVMs yourself or use alternatives like gVisor. The cost is real (provisioning, orchestration, security) and only makes sense at scale.
+
+### How does WebContainer handle Postgres or Redis?
+
+WebContainer doesn't run native database servers. The standard pattern is to point the generated app at a managed Postgres (Supabase, Neon) and a managed Redis (Upstash) — both work over network connections, which WebContainer handles fine. Anything that needs a *local* database during development is a poor fit for WebContainer.
+
+### Does cloud sandbox cost more than WebContainer?
+
+Yes — every session provisions real compute, which costs the platform money. Most cloud sandbox products charge credits per agent turn rather than per minute of sandbox time, but the underlying cost is real and shapes the pricing.
+
+### Why don't more platforms use cloud sandbox?
+
+Operating sandboxes at scale is genuinely hard. Provisioning, isolation, networking, teardown, and abuse prevention all need to work. Vercel Sandbox is recent (shipped at scale in 2025); before it, providers had to roll their own, which is why most pre-2025 platforms went the WebContainer or hosted-runtime route instead.
+
+### Will cloud sandbox replace local runtime entirely?
+
+Probably not for everyone. Local runtime keeps winning for engineers in deep existing codebases. Cloud sandbox keeps winning for prompt-driven greenfield work. The two workflows have started to converge — Replit and Cursor both add elements of the other — but they'll likely stay distinct for a while.
+
+## Sources
+
+- [vercel.com/docs/vercel-sandbox](https://vercel.com/docs/vercel-sandbox) — Vercel Sandbox runtime + Firecracker
+- [posthog.com/newsletter/inside-bolt-dot-new](https://posthog.com/newsletter/inside-bolt-dot-new) — Bolt WebContainer deep dive
+- [docs.replit.com/core-concepts/agent](https://docs.replit.com/core-concepts/agent) — Replit Agent architecture
+
+## Related reading
+
+- [AI coding platform: how they work and how to choose one](/blog/ai-coding-platform) — cornerstone pillar
+- [Vibe coding tools: a 2026 comparison](/blog/vibe-coding-tools)
+- [Best AI coding tools in 2026](/blog/best-ai-coding-tools-2026)
+- [What is vibe coding?](/blog/what-is-vibe-coding)
+- [What is prompt to app?](/blog/what-is-prompt-to-app)
+- [SprintBuild vs Bolt.new](/blog/sprintbuild-vs-bolt-new) — the most direct comparison of cloud sandbox vs WebContainer
+- [SprintBuild vs Replit Agent](/blog/sprintbuild-vs-replit-agent) — session-scoped vs long-lived sandbox
+
+_Last reviewed: May 23, 2026._
