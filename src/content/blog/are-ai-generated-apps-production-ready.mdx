@@ -1,0 +1,222 @@
+---
+title: "Are AI-Generated Apps Production-Ready? A 2026 Honest Assessment"
+description: "AI-generated apps in 2026 ship working code in real frameworks. Whether they're production-ready depends on the same checklist that applies to any prototype — auth, RLS, observability, secrets. Here's the full list."
+date: "2026-05-23"
+slug: "are-ai-generated-apps-production-ready"
+author: "Mohammed Tahir"
+tags: ["are ai generated apps production ready", "ai code production ready", "ai app production", "ai coding security", "ai app readiness"]
+category: "guides"
+cluster_id: "tc_ai_app_generator"
+blog_type: "guide"
+---
+
+## The short answer
+
+**Conditionally yes**, with the same conditions that apply to any prototype-class build. The output of a modern AI app generator ([SprintBuild](/), [Lovable](https://lovable.dev), [Bolt.new](https://bolt.new), [v0](https://v0.dev), [Replit Agent](https://replit.com), [Base44](https://base44.com)) is real code that runs. It's not magic and it's not pre-broken. It's a credible v1, and the work between v1 and launch is the same work you'd do on any prototype.
+
+The longer answer is that "production-ready" isn't a single bar — it depends on what you're shipping, who's going to use it, and what failure modes you can tolerate. A side project for ten friends has a much lower production bar than a SaaS handling payments. This post walks through the checklist in two parts: the bits AI app generators get right by default, and the bits you have to verify yourself before launch.
+
+## What AI app generators get right by default
+
+The current generation of platforms ships code that is *credibly* produced by an experienced developer. Specifically, you can usually count on:
+
+- **Reasonable framework choice.** Next.js 15 or 16, Tailwind v4, shadcn/ui, Supabase or platform-native auth — the defaults are well-chosen.
+- **Working auth flows.** Sign up, sign in, password reset, OAuth callback all work out of the box.
+- **Reasonable file layout.** App Router conventions are followed. Components are organised. Types exist.
+- **A first-pass database schema.** Migrations exist. Foreign keys exist. Indices on the obvious columns exist.
+- **Default RLS policies on Supabase tables.** Tenants see their own data; users see their own rows.
+- **Form validation with zod or equivalent.** Required fields, basic type checks, error states.
+- **Basic loading and error states.** Suspense boundaries, error boundaries, sensible 404 pages.
+- **Tailwind theming that doesn't look generic.** shadcn/ui defaults are competitive with hand-designed UIs for most use cases.
+
+That's a lot. It's the boilerplate that engineers spend 4–8 hours on at the start of every greenfield project. The agent does it in a few minutes.
+
+## What you have to verify yourself
+
+The list below is the same list any senior engineer runs through before shipping a prototype. AI generation doesn't shorten it; if anything, it makes the list more important because some of the checks are easier to skip when you didn't write the code yourself.
+
+### 1. Auth correctness
+
+Read every auth flow line by line. Specifically:
+
+- Sign up creates a user record with the correct fields and defaults
+- Sign in correctly checks the password (or OAuth state) before issuing a session
+- Password reset sends the email *and* invalidates old sessions
+- OAuth callbacks validate the state parameter to prevent CSRF
+- Session storage is httpOnly + Secure + SameSite cookies
+- Sessions expire and refresh correctly
+
+The agent usually gets this right. Verify anyway. A bug here is a security incident.
+
+### 2. Authorization (RLS / policies)
+
+This is the highest-risk area for AI-generated code. The agent will scaffold RLS policies that *look* right and sometimes *aren't*. Specifically:
+
+- Open two browser windows. Sign in as user A in one, user B in the other.
+- Try to access B's data from A's session by manipulating URLs, IDs, request bodies.
+- If the data shows up, the policy is wrong. Read it. Fix it.
+- Do the same for every endpoint that returns user-scoped data.
+
+The most common failure: the policy checks `user_id = auth.uid()` on a child table but doesn't enforce tenant isolation on the parent table. Result: A can read B's "shifts" via B's "tenants" → B's "shifts" through API ID guessing. This is a real bug that's shipped on every major AI app platform at some point in 2025–2026.
+
+### 3. Input validation
+
+Server-side validation is non-negotiable. Client-side zod is a UX nicety; if it's not also enforced server-side, an attacker just calls the API directly. Verify:
+
+- Every API route validates its inputs with zod (or equivalent) on the server
+- Maximum lengths enforced on text fields
+- File upload size limits enforced
+- Enum values strictly enforced (no "accept any string and hope for the best")
+
+### 4. Error handling
+
+Try to break the app:
+
+- Submit forms with empty fields, malformed dates, oversized strings
+- Visit non-existent routes
+- Trigger network failures (Chrome devtools → Network → Offline)
+- Submit duplicate requests rapidly
+
+Each failure should produce sensible UX, not a stack trace. If a stack trace shows up in the browser, you have a `production` flag set wrong somewhere.
+
+### 5. Logging and observability
+
+This is what AI app generators *don't* do by default. You'll need to add:
+
+- An error tracker like Sentry, configured with the right DSN
+- Request-level logging through Vercel Analytics, Logtail, or equivalent
+- Web vitals monitoring (Vercel Speed Insights is one click)
+- A simple uptime check (Better Stack, Pingdom)
+
+Without observability, your first production incident is also your first time learning anything broke. Add this before launch, not after.
+
+### 6. Secrets management
+
+Search the generated source for any string that looks like a key. Specifically grep for:
+
+- `sk-` (OpenAI, Anthropic)
+- `pk_test_` and `pk_live_` (Stripe publishable)
+- `sk_test_` and `sk_live_` (Stripe secret)
+- `whsec_` (Stripe webhook secrets)
+- `eyJ` (any JWT — could be a hardcoded auth token)
+- `service_role` (Supabase service role — never client-side)
+
+Anything that matches should be coming from `process.env.SOMETHING`, not literal strings. If it's literal in the generated code, fix it before you push to GitHub. The agent generally gets this right but does occasionally inline values during fast iteration.
+
+### 7. Stripe webhook signatures
+
+If the app uses Stripe (and most generated SaaS apps do), the single most common security gotcha is webhook signature verification. The webhook handler must:
+
+1. Read the raw request body (not the parsed JSON)
+2. Verify the `Stripe-Signature` header against your webhook secret
+3. Reject unsigned or invalid requests
+
+The Stripe SDK does this for you with `stripe.webhooks.constructEvent` — check the generated code uses it. A webhook handler that accepts unsigned requests can be triggered by anyone who finds the URL.
+
+### 8. Deploy pipeline hygiene
+
+Before flipping the DNS to production:
+
+- Environment variables are set on the deploy target for every required key
+- The build runs cleanly in CI, not just locally
+- Custom domain has a valid SSL cert
+- Rate limiting is in place on auth endpoints (Vercel rate limits, Upstash, etc.)
+- Backups are configured on the database
+- A rollback plan exists
+
+### 9. Dependency hygiene
+
+`npm audit` the generated project. Most low-severity issues are noise; high or critical issues should be patched before launch. Also worth checking:
+
+- No packages with single-letter names or names that look like typosquatting
+- No packages installed from non-npm registries
+- The lockfile is committed
+
+### 10. Performance budgets
+
+Run Lighthouse on the production deploy. The targets that matter:
+
+- Largest Contentful Paint < 2.5s
+- Total Blocking Time < 200ms
+- Cumulative Layout Shift < 0.1
+
+The agent's default code usually clears these on a small SaaS. They get worse as you add bundles, third-party scripts, and unoptimised images. Run Lighthouse before launch, then weekly after.
+
+## A real example
+
+Here's the actual sequence I'd run before launching an AI-generated SaaS:
+
+1. Sign up as user A. Create a record. Sign out.
+2. Sign up as user B. Try to access A's record by guessing the URL. Confirm 404.
+3. Open browser devtools, look at the Network tab. Confirm no API call returns A's data when B is signed in.
+4. Submit the create form with empty required fields. Confirm sensible error.
+5. Submit the create form with an oversized string (10,000 chars). Confirm sensible error.
+6. Sign in. Sign out. Sign in again. Confirm sessions behave correctly.
+7. Submit a Stripe Checkout. Use the [test card 4242 4242 4242 4242](https://docs.stripe.com/testing). Confirm the webhook fires and the user state updates.
+8. Hit the webhook URL directly without a signature. Confirm a 400.
+9. Run `npm audit`. Triage anything high or critical.
+10. Search source for `sk-`, `whsec_`, `service_role`. Confirm no literal values.
+11. Run Lighthouse on the production deploy URL. Note baseline numbers.
+12. Add Sentry. Trigger a deliberate error to confirm it's reporting.
+13. Add Vercel Analytics. Open the dashboard.
+14. Test the app on a phone. Test the app on Safari.
+15. Send a real user the URL and watch them use it.
+
+Steps 1–5 catch the auth/auth bugs. Steps 6–8 catch the Stripe gotchas. Steps 9–10 catch the dependency and secrets risks. Step 11 establishes a performance baseline. Steps 12–13 wire up observability. Steps 14–15 catch the bugs the previous 13 steps missed.
+
+This list takes about 90 minutes if everything passes and longer if it doesn't. It's the same list whether the app was AI-generated or hand-written. The discipline is the same; only the source of the code differs.
+
+## When AI generation is not yet production-grade
+
+There are still a few categories of work where AI-generated output isn't ready to ship without substantial rework:
+
+- **Compliance-sensitive code** (HIPAA, PCI, SOC 2 controls). Every line needs to be defensible during audit. AI-generated code is fine, but reviewing it line-by-line is non-negotiable, and the time savings shrink.
+- **Regulated payment flows beyond Stripe.** Direct ACH integrations, KYC/AML flows, anything that touches the FedNow rails. These need specialist code, not generated code.
+- **Anything safety-critical.** Medical, financial advice, legal advice in jurisdictions where the practice of those professions is regulated. AI generation is the wrong source here.
+- **Complex algorithmic or numerical code.** Pricing engines, financial calculations, optimisation algorithms. The agent will write something that compiles and is sometimes silently wrong.
+
+For these cases, an AI app generator is the wrong starting point. Pair-program on the boring parts; write the regulated/algorithmic parts by hand with full review.
+
+## Frequently asked questions
+
+### Is the code AI app generators ship secure?
+
+The default output is roughly as secure as a careful first draft from a competent developer. Auth flows are usually fine. RLS scaffolding is usually fine. The bits that bite — input validation in every code path, rate limiting, secret hygiene, supply-chain — need a security review before production. The checklist above is the shortest version of that review.
+
+### Will the code pass a SOC 2 audit?
+
+The code itself can pass; the *process* around it usually doesn't without work. SOC 2 is mostly about controls (access reviews, change management, deployment approvals, incident response), not code quality per se. AI-generated code is fine for SOC 2 if the process around shipping it has the controls SOC 2 expects.
+
+### How do I catch RLS bugs?
+
+Two-account testing. Sign in as user A, sign in as user B in another window, try to access A's data from B's session. Try every endpoint. If anything leaks across the boundary, the policy is wrong. There's no shortcut to this.
+
+### What's the most common bug in AI-generated code?
+
+Tenant isolation gaps in RLS policies, by a wide margin. The agent gets the user-level policy right (`user_id = auth.uid()`) but sometimes misses the tenant-level policy on the parent table, so you can leak data sideways across tenants by guessing IDs. Always test with two accounts in two tenants.
+
+### Can I use AI-generated code in a regulated industry?
+
+Yes, with full review. Financial services, healthcare, insurance — all have shipped AI-generated prototypes successfully. The constraint isn't "AI generation is forbidden", it's "every line needs to be reviewed by someone qualified to defend it under audit". That review takes the time the AI generation saved, in many cases.
+
+### Should I write tests for AI-generated code?
+
+Yes. The agent will write tests if you ask, and they're as good as the rest of the output. Specifically ask for integration tests covering the auth flow, the RLS policies, and any payment flow. These are the highest-risk areas; they're worth the time.
+
+## Sources
+
+- [supabase.com/docs/guides/auth/row-level-security](https://supabase.com/docs/guides/auth/row-level-security) — RLS reference
+- [docs.stripe.com/webhooks/signatures](https://docs.stripe.com/webhooks/signatures) — webhook signature verification
+- [vercel.com/docs/security](https://vercel.com/docs/security) — production security defaults
+- [owasp.org/www-project-top-ten/](https://owasp.org/www-project-top-ten/) — the canonical web security checklist
+
+## Related reading
+
+- [AI coding platform: how they work and how to choose one](/blog/ai-coding-platform)
+- [What is an AI app generator?](/blog/what-is-an-ai-app-generator)
+- [How to generate an app with AI in under 10 minutes](/blog/how-to-generate-apps-with-ai)
+- [AI coding platforms for startups](/blog/ai-coding-platforms-for-startups)
+- [Sandboxed vs local AI coding](/blog/sandboxed-vs-local-ai-coding)
+- [Best AI coding tools in 2026](/blog/best-ai-coding-tools-2026)
+
+_Last reviewed: May 23, 2026._
