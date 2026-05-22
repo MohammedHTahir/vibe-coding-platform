@@ -6,8 +6,10 @@ import { SprintBuildWordmark } from './logo'
 const links = [
   { label: 'Features', href: '/#features' },
   { label: 'How it works', href: '/#how' },
+  { label: 'Use cases', href: '/build' },
   { label: 'Models', href: '/#models' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Compare', href: '/vs' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/about' },

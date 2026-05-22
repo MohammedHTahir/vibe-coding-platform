@@ -79,3 +79,107 @@ blogs:
     target_features: ["feat_prompt_to_app", "feat_live_preview"]
     needs_refresh: true
     refresh_reason: "Mapped to tc_vibe_coding because vibe coding is the entry point for non-devs. Could move to tc_ai_app_generator if SERP analysis shows the 'non-technical founders' query clusters with 'app generator' rather than 'vibe coding'. Refresh to add concrete persona-driven examples and a downloadable starter prompt."
+
+
+# ── Phase 1 programmatic pages ─────────────────────────────────────────
+# These render from typed data in `lib/competitors.ts` and
+# `lib/use-cases.ts`, so the SEO engine treats them as pages but
+# doesn't need separate MDX files. Update both this list and the
+# corresponding TS file when adding a new comparison or use case.
+
+programmatic_pages:
+  - kind: "comparison"
+    path: "/vs/lovable"
+    target_keywords: ["sprintbuild vs lovable", "lovable comparison"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "comparison"
+    path: "/vs/bolt-new"
+    target_keywords: ["sprintbuild vs bolt new", "bolt new comparison"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "comparison"
+    path: "/vs/v0"
+    target_keywords: ["sprintbuild vs v0", "v0 comparison"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "comparison"
+    path: "/vs/replit-agent"
+    target_keywords: ["sprintbuild vs replit agent", "replit agent comparison"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "comparison"
+    path: "/vs/base44"
+    target_keywords: ["sprintbuild vs base44", "base44 comparison"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "alternative"
+    path: "/alternatives/lovable"
+    target_keywords: ["lovable alternative", "lovable alternatives"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "alternative"
+    path: "/alternatives/bolt-new"
+    target_keywords: ["bolt new alternative", "bolt alternative"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "alternative"
+    path: "/alternatives/v0"
+    target_keywords: ["v0 alternative", "v0 alternatives"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "alternative"
+    path: "/alternatives/replit-agent"
+    target_keywords: ["replit agent alternative", "replit alternatives"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "alternative"
+    path: "/alternatives/base44"
+    target_keywords: ["base44 alternative", "base44 alternatives"]
+    cluster_id: "tc_ai_coding_platform"
+    last_verified: "2026-05-23"
+
+  - kind: "use_case"
+    path: "/build/saas"
+    target_keywords: ["ai saas builder", "ai saas generator", "build saas with ai"]
+    cluster_id: "tc_ai_app_generator"
+    last_verified: "2026-05-23"
+
+  - kind: "use_case"
+    path: "/build/dashboard"
+    target_keywords: ["ai dashboard generator", "ai dashboard builder", "generate dashboard with ai"]
+    cluster_id: "tc_ai_app_generator"
+    last_verified: "2026-05-23"
+
+  - kind: "use_case"
+    path: "/build/internal-tool"
+    target_keywords: ["ai internal tool builder", "internal tool generator", "ai retool alternative"]
+    cluster_id: "tc_ai_app_generator"
+    last_verified: "2026-05-23"
+
+  - kind: "use_case"
+    path: "/build/landing-page"
+    target_keywords: ["ai landing page generator", "landing page builder ai"]
+    cluster_id: "tc_ai_app_generator"
+    last_verified: "2026-05-23"
+
+  - kind: "use_case"
+    path: "/build/mvp"
+    target_keywords: ["ai mvp builder", "build mvp with ai", "fastest way to build mvp"]
+    cluster_id: "tc_ai_app_generator"
+    last_verified: "2026-05-23"
+
+  - kind: "use_case"
+    path: "/build/crud-app"
+    target_keywords: ["ai crud app builder", "generate crud app with ai", "crud app from prompt"]
+    cluster_id: "tc_ai_app_generator"
+    last_verified: "2026-05-23"
