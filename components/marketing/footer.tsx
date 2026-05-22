@@ -10,6 +10,7 @@ const links = [
   { label: 'Pricing', href: '/pricing' },
   { label: 'FAQ', href: '/#faq' },
   { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/about' },
   { label: 'Terms', href: '/terms' },
   { label: 'Privacy', href: '/privacy' },
   { label: 'Sign in', href: '/login' },

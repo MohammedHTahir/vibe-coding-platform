@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
     'How SprintBuild collects, uses, and protects your data, including details on cookies and third-party processors.',
+  alternates: { canonical: '/privacy' },
+  robots: { index: true, follow: true },
 }
 
 const LAST_UPDATED = 'May 18, 2026'

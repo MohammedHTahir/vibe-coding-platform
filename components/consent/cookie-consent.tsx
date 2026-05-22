@@ -66,13 +66,64 @@ export function CookieConsent() {
   useEffect(() => {
     setMounted(true)
     const existing = readConsent()
-    if (!existing) setOpen(true)
+    if (!existing) {
+      setOpen(true)
+      return
+    }
+    // Returning visitor with stored consent — replay it into Google
+    // Consent Mode so GA knows it can measure on this page load.
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const gtag = (window as any).gtag as
+        | ((...args: unknown[]) => void)
+        | undefined
+      gtag?.('consent', 'update', {
+        analytics_storage: existing.categories.analytics
+          ? 'granted'
+          : 'denied',
+        functionality_storage: existing.categories.preferences
+          ? 'granted'
+          : 'denied',
+        personalization_storage: existing.categories.preferences
+          ? 'granted'
+          : 'denied',
+      })
+    }
   }, [])
 
   const persist = useCallback((categories: ConsentCategories) => {
     writeConsent(categories)
     setOpen(false)
     setShowDetails(false)
+    // Update Google Consent Mode v2 if gtag is present (it's defaulted
+    // to denied in the GA bootstrap script). Storage flips happen here
+    // so accepting/rejecting in the banner immediately gates GA.
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const gtag = (window as any).gtag as
+        | ((...args: unknown[]) => void)
+        | undefined
+      if (gtag) {
+        gtag('consent', 'update', {
+          analytics_storage: categories.analytics ? 'granted' : 'denied',
+          functionality_storage: categories.preferences ? 'granted' : 'denied',
+          personalization_storage: categories.preferences
+            ? 'granted'
+            : 'denied',
+        })
+        if (categories.analytics) {
+          // First post-consent page_view so GA gets the current page
+          // rather than waiting for the next route change.
+          gtag('event', 'page_view', {
+            page_path:
+              window.location.pathname +
+              (window.location.search ?? ''),
+            page_location: window.location.href,
+            page_title: document.title,
+          })
+        }
+      }
+    }
     // Best-effort audit copy in the database. Banner state is governed by
     // the browser cookie above; this just gives us a server-side record.
     void fetch('/api/consent', {

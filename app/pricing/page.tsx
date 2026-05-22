@@ -4,10 +4,21 @@ import { CheckIcon } from 'lucide-react'
 import { SprintBuildWordmark } from '@/components/marketing/logo'
 import { Footer } from '@/components/marketing/footer'
 import { PlanCardActions } from './plan-card-actions'
+import { JsonLd, breadcrumbLd, productLd } from '@/lib/jsonld'
+import { absoluteUrl } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Pick a credit subscription that matches how you build.',
+  description:
+    'Pick a credit subscription that matches how you build. Free, Hobby, Pro, and Team tiers — all with the same models and the same Vercel Sandbox runtime.',
+  alternates: { canonical: '/pricing' },
+  openGraph: {
+    title: 'Pricing · SprintBuild',
+    description:
+      'Pick a credit subscription that matches how you build. Free, Hobby, Pro, and Team tiers.',
+    url: absoluteUrl('/pricing'),
+    type: 'website',
+  },
 }
 
 interface PlanRow {
@@ -79,8 +90,30 @@ const PLANS: PlanRow[] = [
 ]
 
 export default function PricingPage() {
+  const offers = PLANS.map((plan) => ({
+    name: plan.name,
+    // Pull the dollars out of the priceLabel ("$0", "$20", …). Free
+    // is emitted as a 0-priced offer rather than skipped so Google
+    // gets the full plan ladder.
+    price: Number(plan.priceLabel.replace(/[^0-9.]/g, '')) || 0,
+    priceCurrency: 'USD',
+    url: absoluteUrl('/pricing'),
+    description: plan.credits,
+    billingDuration: plan.cadence === 'forever' ? undefined : 'P1M',
+  }))
+
   return (
     <main className="min-h-screen bg-[#f0f0ee] flex flex-col">
+      <JsonLd
+        data={[
+          productLd(offers),
+          breadcrumbLd([
+            { name: 'Home', path: '/' },
+            { name: 'Pricing', path: '/pricing' },
+          ]),
+        ]}
+        id="pricing"
+      />
       <header className="px-6 sm:px-12 md:px-20 lg:px-28 pt-6 flex items-center justify-between">
         <Link href="/" aria-label="SprintBuild home">
           <SprintBuildWordmark size="md" />

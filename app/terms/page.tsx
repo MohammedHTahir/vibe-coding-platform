@@ -8,6 +8,8 @@ export const metadata: Metadata = {
   title: 'Terms and Conditions',
   description:
     'The terms and conditions that govern your use of SprintBuild and its services.',
+  alternates: { canonical: '/terms' },
+  robots: { index: true, follow: true },
 }
 
 const LAST_UPDATED = 'May 18, 2026'
