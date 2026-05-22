@@ -1,7 +1,9 @@
 import { Hero } from '@/components/marketing/hero'
 import { Features } from '@/components/marketing/features'
 import { HowItWorks } from '@/components/marketing/how-it-works'
+import { UseCases } from '@/components/marketing/use-cases'
 import { Models } from '@/components/marketing/models'
+import { CompareStrip } from '@/components/marketing/compare'
 import { Faq } from '@/components/marketing/faq'
 import { FinalCta } from '@/components/marketing/cta'
 import { Footer } from '@/components/marketing/footer'
@@ -28,7 +30,9 @@ export default async function LandingPage() {
       <Hero user={user} />
       <Features />
       <HowItWorks />
+      <UseCases />
       <Models />
+      <CompareStrip />
       <Faq />
       <FinalCta authed={!!user} />
       <Footer />

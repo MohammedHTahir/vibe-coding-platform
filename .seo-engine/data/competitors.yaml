@@ -1,56 +1,89 @@
-last_updated: "2026-05-18"
-last_verified: "2026-05-18"
+last_updated: "2026-05-23"
+last_verified: "2026-05-23"
+
+# Phase 1 verification pass: each competitor's public docs and pricing
+# page were checked on the date below. The runtime mirror at
+# `lib/competitors.ts` carries the typed copy of this data and is what
+# the /vs/[competitor] and /alternatives/[competitor] pages render.
+# Keep both files in sync.
 
 competitors:
   - id: "comp_lovable"
     name: "Lovable"
     website: "https://lovable.dev"
-    category: "AI app generator"
-    pricing_model: "unknown"
-    strengths: ""
-    weaknesses: ""
-    notes: "Not yet verified."
+    category: "AI app generator with hosted runtime"
+    pricing_model: "Free, Pro $25/mo, Business $50/mo. Credit-based with daily and monthly caps."
+    strengths: |
+      First-class Supabase integration, Dev Mode for direct code editing,
+      bidirectional GitHub sync, and a strong template gallery.
+    weaknesses: |
+      Hosted runtime rather than a real Linux sandbox, single internal
+      model with no per-turn choice, free tier capped at 5 daily / 30
+      monthly credits.
+    notes: "Verified against lovable.dev/pricing and docs.lovable.dev on 2026-05-23."
 
   - id: "comp_bolt"
     name: "Bolt.new"
     website: "https://bolt.new"
-    category: "Browser-based AI dev environment"
-    pricing_model: "unknown"
-    strengths: ""
-    weaknesses: ""
-    notes: "Not yet verified."
+    category: "Browser-based AI dev environment (StackBlitz)"
+    pricing_model: "Free trial, Pro from $20/mo, scales with token usage. Token-based, runs through Bolt's StackBlitz account."
+    strengths: |
+      WebContainer runtime in the browser tab means zero install and
+      instant time-to-preview. Strong template ecosystem, GitHub export,
+      and Netlify deploy.
+    weaknesses: |
+      WebContainer can't run native binaries, has tighter resource
+      ceilings, and behaves differently from a real Linux box. Token
+      consumption can be unpredictable.
+    notes: "Verified against bolt.new/pricing, support.bolt.new, and the Bolt PostHog newsletter on 2026-05-23."
 
   - id: "comp_replit_agent"
     name: "Replit Agent"
     website: "https://replit.com"
-    category: "AI coding agent inside Replit"
-    pricing_model: "unknown"
-    strengths: ""
-    weaknesses: ""
-    notes: "Not yet verified."
+    category: "AI coding agent inside Replit's cloud IDE"
+    pricing_model: "Free, Core $20/mo, Pro $100/mo. Subscription plus usage-based Agent credits."
+    strengths: |
+      Real Linux Repl per project with full shell access, native
+      one-click deploy, mobile app builds via Replit Mobile, and an
+      established community.
+    weaknesses: |
+      Pricing has multiple layers (subscription + Agent credits + deploy
+      compute), the IDE surface is broader than just an agent, and
+      internal model orchestration is opaque.
+    notes: "Verified against replit.com/pricing, replit.com/blog/pro-plan, and docs.replit.com on 2026-05-23."
 
   - id: "comp_base44"
     name: "Base44"
     website: "https://base44.com"
-    category: "AI app generator"
-    pricing_model: "unknown"
-    strengths: ""
-    weaknesses: ""
-    notes: "Not yet verified."
+    category: "AI app builder with managed hosting"
+    pricing_model: "Free, Starter from $16/mo (annual), up to Elite $160/mo. Credit-based; build prompts cost more than discussion."
+    strengths: |
+      Multi-model orchestration (Claude Sonnet, Gemini 2.5 Pro, GPT-5)
+      under the hood, one-click deploy on every plan including free,
+      and 20+ pre-built integrations.
+    weaknesses: |
+      GitHub export only on paid plans, hosted runtime rather than a
+      real Linux sandbox, and a smaller third-party ecosystem than
+      Replit or Lovable.
+    notes: "Verified against base44.com/pricing and docs.base44.com on 2026-05-23."
 
   - id: "comp_v0"
     name: "v0 by Vercel"
     website: "https://v0.dev"
-    category: "AI UI generator / app builder"
-    pricing_model: "unknown"
-    strengths: ""
-    weaknesses: ""
-    notes: "Not yet verified."
+    category: "AI UI generator and app builder by Vercel"
+    pricing_model: "Free ($5 monthly credits), Premium $20/mo, Team $30/user/mo, Business $100/user/mo. Credit-based; v0 Mini/Pro/Max consume different rates."
+    strengths: |
+      Tightest integration with Vercel hosting and preview URLs,
+      automatic GitHub branching with auto-commits, and multiple
+      in-house model tiers (Mini, Pro, Max, Max Fast).
+    weaknesses: |
+      Heavily Vercel-centric, no support for switching to Claude/GPT/Grok
+      per turn, and free credits are very limited ($5/month).
+    notes: "Verified against v0.dev/pricing, v0.dev/docs, and vercel.com/blog/improved-v0-pricing on 2026-05-23."
 
 # Feature matrix — every feature in features.yaml must have a row here.
-# Competitor cells are intentionally `null` until verified against their own
-# documentation. Confidence values: unverified | from_blog | from_docs |
-# from_review | confirmed.
+# Confidence values: unverified | from_blog | from_docs | from_review |
+# confirmed.
 feature_matrix:
   - feature_id: "feat_prompt_to_app"
     our_project:
@@ -59,35 +92,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Chat-driven build flow is the entry point."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "AI prompt is the primary input."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Replit Agent ships from a natural-language prompt; Agent 3 added more autonomy."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Native chat-to-app flow."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "v0 has matured from a UI generator into a full app builder driven by chat."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_multi_model"
     our_project:
@@ -96,35 +129,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Single internal model; no user-facing model picker."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Single backend model managed by Bolt."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Replit Agent composes multiple models internally; not user-selectable per turn."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Internal Claude Sonnet, Gemini 2.5 Pro, GPT-5 routing."
+        tier: "all"
+        confidence: "from_review"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "v0 Mini/Pro/Max are tiered v0 models; no Claude/GPT/Grok choice."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_sandbox_execution"
     our_project:
@@ -133,35 +166,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Hosted runtime, not a per-session Linux sandbox."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "WebContainer in the browser; no real Linux."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Full Linux Repl per project with shell access."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Managed runtime; not a real per-session VM."
+        tier: "all"
+        confidence: "from_review"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Cloud build pipeline; not a per-session sandbox."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_live_preview"
     our_project:
@@ -170,35 +203,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Live preview is part of the Build Mode."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Native; runs in the same tab via WebContainer."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Built-in webview / preview tab."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Live preview pane during builds."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Vercel preview URL on every change."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_file_explorer"
     our_project:
@@ -207,35 +240,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Available via Dev Mode."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Built-in file tree."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Full IDE."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Limited; full code visibility on paid plans only."
+        tier: "paid"
+        confidence: "from_review"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "File tree shown in chat-driven projects."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_command_logs"
     our_project:
@@ -244,35 +277,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Build logs only; no per-command stream."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Terminal panel for in-browser commands."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Native shell visible in the IDE."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Activity log, not raw stdout/stderr."
+        tier: "all"
+        confidence: "from_review"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: false
+        details: "Build logs only; no free-form shell."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_auto_fix_errors"
     our_project:
@@ -281,35 +314,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Auto-fix loop on errors."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Error feedback prompts the model."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Agent self-corrects on errors."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Automatic error correction is a marketed feature."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Auto-fix on build errors."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_email_password_auth"
     our_project:
@@ -318,35 +351,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can use Supabase Auth."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can wire Supabase or other providers."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can use any provider via env vars."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Auth available via integrations panel."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can use any provider; Vercel Marketplace integrations available."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_github_oauth"
     our_project:
@@ -355,35 +388,35 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Supabase OAuth setup is documented."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can wire GitHub OAuth."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can wire GitHub OAuth."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Auth options include OAuth providers."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Generated apps can wire GitHub OAuth."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
 
   - feature_id: "feat_project_history"
     our_project:
@@ -392,32 +425,32 @@ feature_matrix:
       tier: "all"
     competitors:
       comp_lovable:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Project workspace lists past chats and projects."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_bolt:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Past prompts and projects listed in dashboard."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_replit_agent:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Repls dashboard tracks every project."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_base44:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Workspace tracks past projects and credits."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
       comp_v0:
-        supported: null
-        details: ""
-        tier: "unknown"
-        confidence: "unverified"
-        last_verified: ""
+        supported: true
+        details: "Projects + Chats organisation introduced in 2026."
+        tier: "all"
+        confidence: "from_docs"
+        last_verified: "2026-05-23"
