@@ -5,11 +5,19 @@ import { SprintBuildWordmark } from '@/components/marketing/logo'
 import { Footer } from '@/components/marketing/footer'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon } from 'lucide-react'
+import { JsonLd, breadcrumbLd } from '@/lib/jsonld'
+import { absoluteUrl, BRAND_NAME } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description:
-    'Notes on AI coding platforms, vibe coding, and shipping apps from prompts. From the SprintBuild team.',
+  description: `Field notes from the ${BRAND_NAME} team on AI coding platforms, vibe coding workflows, and shipping full-stack apps from prompts.`,
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    title: `Blog · ${BRAND_NAME}`,
+    description: `Field notes from the ${BRAND_NAME} team on AI coding platforms, vibe coding workflows, and shipping full-stack apps from prompts.`,
+    url: absoluteUrl('/blog'),
+    type: 'website',
+  },
 }
 
 function formatDate(value: string) {
@@ -25,6 +33,13 @@ export default async function BlogIndex() {
 
   return (
     <main className="min-h-screen bg-[#f0f0ee] flex flex-col">
+      <JsonLd
+        data={breadcrumbLd([
+          { name: 'Home', path: '/' },
+          { name: 'Blog', path: '/blog' },
+        ])}
+        id="blog-index"
+      />
       <header className="px-6 sm:px-12 md:px-20 lg:px-28 pt-6 flex items-center justify-between">
         <Link href="/" aria-label="SprintBuild home">
           <SprintBuildWordmark size="md" />

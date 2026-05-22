@@ -12,6 +12,7 @@ import { Footer } from '@/components/marketing/footer'
 import { Button } from '@/components/ui/button'
 import { ArrowRightIcon } from 'lucide-react'
 import { siteUrl } from '@/lib/site'
+import { JsonLd, blogPostingLd, breadcrumbLd } from '@/lib/jsonld'
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -41,12 +42,16 @@ export async function generateMetadata({
       url: canonical,
       type: 'article',
       publishedTime: fm.date,
+      authors: fm.author ? [fm.author] : undefined,
+      tags: fm.tags,
     },
     twitter: {
       card: 'summary_large_image',
       title: fm.title,
       description: fm.description,
     },
+    authors: fm.author ? [{ name: fm.author }] : undefined,
+    keywords: fm.tags,
   }
 }
 
@@ -67,6 +72,25 @@ export default async function BlogPost({ params }: PageProps) {
 
   return (
     <main className="min-h-screen bg-[#f0f0ee] flex flex-col">
+      <JsonLd
+        data={[
+          blogPostingLd({
+            title: fm.title,
+            description: fm.description,
+            slug: fm.slug,
+            datePublished: fm.date,
+            authorName: fm.author,
+            imageUrl: fm.image,
+            tags: fm.tags,
+          }),
+          breadcrumbLd([
+            { name: 'Home', path: '/' },
+            { name: 'Blog', path: '/blog' },
+            { name: fm.title, path: `/blog/${fm.slug}` },
+          ]),
+        ]}
+        id={`post-${fm.slug}`}
+      />
       <header className="px-6 sm:px-12 md:px-20 lg:px-28 pt-6 flex items-center justify-between">
         <Link href="/" aria-label="SprintBuild home">
           <SprintBuildWordmark size="md" />

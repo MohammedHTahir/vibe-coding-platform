@@ -17,7 +17,7 @@ author:
   title: "Founder, SprintBuild"
   bio: "Founder of SprintBuild. Building tools that turn prompts into production apps."
   website: "https://trendweaver.ai"
-  email: "hero@trendweaver.ai"
+  email: "hello@trendweaver.ai"
   social_links: {}
 
 trust_signals:
@@ -107,5 +107,5 @@ technical_seo:
 
 integrations:
   seo_tool: "none"
-  analytics: "none"
+  analytics: "google-analytics"
   search_console: false

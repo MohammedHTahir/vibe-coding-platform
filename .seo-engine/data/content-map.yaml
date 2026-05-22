@@ -1,4 +1,81 @@
-last_updated: "2026-05-18"
+last_updated: "2026-05-23"
 
-# No published blog posts yet — register every published post here as it ships.
-blogs: []
+# Every published blog post must be registered here. The SEO engine uses
+# this map to track cannibalization risk, internal-link coverage, and
+# cluster completion. Cluster IDs MUST match topic-clusters.yaml.
+#
+# Backfilled 2026-05-23: the original 5 posts shipped before the SEO
+# engine was wired up and used legacy cluster IDs. They have been
+# remapped to canonical clusters during Phase 0 reconciliation. Each
+# entry below carries `needs_refresh: true` until the post is rewritten
+# to match the formal pillar/cluster structure (linking rules, FAQ,
+# E-E-A-T elements). The `published_at` is the original ship date.
+
+blogs:
+  - slug: "what-is-vibe-coding"
+    title: "What Is Vibe Coding? The AI-First Way to Build Apps in 2026"
+    published_at: "2026-05-15"
+    last_reviewed: ""
+    cluster_id: "tc_vibe_coding"
+    blog_type: "pillar"
+    target_keywords: ["what is vibe coding", "vibe coding"]
+    target_features: ["feat_prompt_to_app"]
+    needs_refresh: true
+    refresh_reason: "Originally written under legacy cluster vibe-coding-101. Needs the formal pillar treatment per content-queue.yaml q_001 (real worked example, time-to-preview metric, links to all tc_vibe_coding cluster pages once they exist)."
+
+  - slug: "best-ai-coding-tools-2026"
+    title: "Best AI Coding Tools in 2026: SprintBuild vs Lovable vs Bolt vs Replit"
+    published_at: "2026-05-12"
+    last_reviewed: ""
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "best ai coding platform"
+      - "best ai coding tools"
+      - "lovable alternative"
+      - "bolt new alternative"
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
+    needs_refresh: true
+    refresh_reason: "This is a strong fit for q_009 in content-queue.yaml. Refresh to persona-grouped recommendations (solo / startup / agency), add verified-date stamp on every claim, link to forthcoming /vs/[competitor] pages, and add Product schema for the comparison table."
+
+  - slug: "how-to-build-saas-with-ai"
+    title: "How to Build a SaaS App with AI in Under an Hour"
+    published_at: "2026-05-10"
+    last_reviewed: ""
+    cluster_id: "tc_ai_app_generator"
+    blog_type: "tutorial"
+    target_keywords:
+      - "build saas with ai"
+      - "how to generate apps with ai"
+      - "ai saas builder"
+    target_features: ["feat_prompt_to_app", "feat_live_preview", "feat_command_logs"]
+    needs_refresh: true
+    refresh_reason: "Solid foundation for q_010-style content. Refresh with annotated screenshots, time-to-preview metric, and a deploy step. Should link to the tc_ai_app_generator pillar once it ships."
+
+  - slug: "claude-vs-gpt-for-coding"
+    title: "Claude vs GPT for AI Coding: Which Model Should You Use?"
+    published_at: "2026-05-08"
+    last_reviewed: ""
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "claude vs gpt for coding"
+      - "best llm for coding"
+      - "ai models for coding"
+    target_features: ["feat_multi_model"]
+    needs_refresh: true
+    refresh_reason: "Mapped to tc_ai_coding_platform as a model-selection angle that supports the platform pillar. Refresh to add a model-selection decision matrix, real credit-cost data per model, and an internal link to the future tc_nextjs_ai_agent pillar where model choice matters most."
+
+  - slug: "ai-coding-for-non-developers"
+    title: "AI Coding for Non-Developers: Build Real Apps Without Learning to Code"
+    published_at: "2026-05-05"
+    last_reviewed: ""
+    cluster_id: "tc_vibe_coding"
+    blog_type: "guide"
+    target_keywords:
+      - "ai app generator for non technical founders"
+      - "no code ai app builder"
+      - "build apps without coding"
+    target_features: ["feat_prompt_to_app", "feat_live_preview"]
+    needs_refresh: true
+    refresh_reason: "Mapped to tc_vibe_coding because vibe coding is the entry point for non-devs. Could move to tc_ai_app_generator if SERP analysis shows the 'non-technical founders' query clusters with 'app generator' rather than 'vibe coding'. Refresh to add concrete persona-driven examples and a downloadable starter prompt."
