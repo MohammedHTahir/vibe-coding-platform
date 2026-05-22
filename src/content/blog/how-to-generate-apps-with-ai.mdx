@@ -1,0 +1,263 @@
+---
+title: "How to Generate an App With AI in Under 10 Minutes"
+description: "A timestamped walkthrough of going from a single prompt to a working SaaS in under 10 minutes, including the prompt I'd actually use, the auto-fix loop in action, and what I'd do next."
+date: "2026-05-23"
+slug: "how-to-generate-apps-with-ai"
+author: "Mohammed Tahir"
+tags: ["how to generate apps with ai", "ai app generator", "prompt to app", "vibe coding", "ai saas"]
+category: "tutorials"
+cluster_id: "tc_ai_app_generator"
+blog_type: "tutorial"
+---
+
+## The honest version
+
+You can generate a working app from a prompt in under 10 minutes in 2026. What you cannot do in 10 minutes is generate a *production-grade* app from a prompt. There's a real difference, and most tutorials in this category dodge it.
+
+This post is a timestamped walkthrough of the first 10 minutes — what you actually get, what's working, what's missing, what comes next. The example uses [SprintBuild](/) because that's what I work on; the same pattern works on [Lovable](/blog/sprintbuild-vs-lovable), [Bolt.new](/blog/sprintbuild-vs-bolt-new), [v0](/blog/sprintbuild-vs-v0), [Replit Agent](/blog/sprintbuild-vs-replit-agent), or [Base44](/blog/sprintbuild-vs-base44) with minor adaptations.
+
+I'm using "SaaS for restaurant shift scheduling" as the example because it's representative — auth, RLS, a real schedule view, role-based access, a Stripe subscription. Not so simple it doesn't exercise the agent, not so complex it doesn't fit in 10 minutes.
+
+## The prompt I'd actually use
+
+```text
+Build a B2B SaaS for restaurant managers that lets them schedule
+shifts. Use Next.js, Tailwind, shadcn/ui, Supabase, and Stripe.
+
+Requirements:
+- Email + GitHub auth
+- Two roles: manager and staff. Managers see all shifts; staff see only theirs
+- Schedule view showing the current week's shifts as a grid
+- Manager can create, edit, delete shifts
+- Staff can request a shift swap
+- Stripe-powered subscription with one $29/month "Pro" tier
+- RLS enforced so a tenant only ever sees its own data
+
+Default to clean defaults. Don't ask me about colour palette.
+```
+
+Three things make this a good prompt:
+
+1. **Stack is named.** The agent doesn't have to guess.
+2. **Roles are explicit.** "Manager and staff" with the access rules spelled out beats "with auth" by a wide margin.
+3. **Last line cuts the back-and-forth.** "Default to clean defaults" tells the agent to ship something instead of asking five clarifying questions.
+
+If you've never used an AI app generator before, the most common mistake is over-specifying. Save the specifics for the second prompt, when there's a running app to talk about. See [our /build/saas use-case page](/build/saas) for more starter templates.
+
+## The 10-minute timeline
+
+Here's what actually happens, minute by minute. Numbers are representative — your run will vary by 30–60 seconds either way.
+
+### 0:00–0:30 — Prompt accepted, sandbox provisioning
+
+You hit send. The agent reads the prompt, decides on tools, and emits a tool call to provision the sandbox.
+
+Behind the scenes (described in [our prompt-to-app primer](/blog/what-is-prompt-to-app)):
+- A Vercel Sandbox boots — a Firecracker microVM with full Linux
+- Two ports get exposed (one for the dev server, one for any auxiliary process the agent needs)
+- The session timeout is set to 30 minutes by default
+
+You see "Provisioning sandbox..." in the chat for ~20 seconds.
+
+### 0:30–2:30 — File generation and `npm install`
+
+The agent generates the project structure:
+
+```
+.
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx
+│   ├── (marketing)/
+│   ├── (app)/
+│   │   ├── schedule/
+│   │   ├── shifts/
+│   │   └── settings/
+│   └── api/
+│       └── stripe/
+├── components/ui/
+├── lib/
+│   ├── supabase/
+│   └── stripe.ts
+├── supabase/
+│   └── migrations/
+├── package.json
+└── ...
+```
+
+Then it runs `npm install`, which streams `npm` output back into the command-logs panel. About 90 seconds for a fresh Next.js + Tailwind + Supabase + Stripe project.
+
+This is where Bolt.new typically wins on cold-start (WebContainer is sub-second) and SprintBuild trades the latency for full Linux fidelity.
+
+### 2:30–4:00 — Dev server starts, preview attaches
+
+The agent runs `npm run dev`. The dev server boots, Tailwind compiles, and the iframe preview attaches to the sandbox URL. You see the empty Next.js shell.
+
+For the SaaS prompt above, what you see at 4:00 is approximately:
+
+- The marketing landing page with a hero, a features grid, and a pricing block (with the $29/month plan)
+- A login page
+- A protected `/schedule` route that redirects to login
+
+The schedule view itself isn't done yet because the agent is still working on the database side.
+
+### 4:00–6:00 — Database schema and RLS
+
+The agent generates a Supabase migration. For this prompt:
+
+```sql
+create table public.shifts (
+  id uuid primary key default gen_random_uuid(),
+  tenant_id uuid references public.tenants(id) not null,
+  staff_id uuid references auth.users(id),
+  start_at timestamptz not null,
+  end_at timestamptz not null,
+  role text,
+  status text default 'scheduled',
+  ...
+);
+
+alter table public.shifts enable row level security;
+
+create policy "Tenants see their own shifts only"
+  on public.shifts for select
+  using (tenant_id = (select tenant_id from public.profiles
+                      where id = auth.uid()));
+...
+```
+
+This is the part of the output most worth reading carefully. Auth and RLS scaffolding is the most common place for "the agent shipped something subtly wrong" failures — wrong role check, missing tenant isolation, etc. We'll come back to this in the verification section.
+
+### 6:00–8:00 — Auto-fix loop kicks in
+
+For this exact prompt, the agent typically hits one or two errors during build. The auto-fix loop catches them:
+
+1. A Stripe webhook handler imports a function that doesn't exist yet → agent generates it
+2. A schedule page references a column the migration didn't create → agent updates the migration
+
+You see the build error scroll past in the command-logs panel and a few seconds later the agent has patched the file. This is the part of the workflow most non-engineers find magical. It's also the part most prone to silent failure if the agent's auto-fix is weak — the auto-fix layer needs to see real error output to do its job, and tools without proper command-log streaming are flying blind here.
+
+### 8:00–9:00 — Final polish
+
+Now you can prompt for specific changes. Some that work well at this stage:
+
+- *"Use shadcn dialog for the delete confirmation"*
+- *"Add a 404 page that matches the app theme"*
+- *"Set the metadata title and description for the marketing landing page"*
+- *"Show the manager's name in the top-right of the schedule view"*
+
+Each of these is a 10–30 second turn. By 9:00 the app feels like a real product, not a generated mock.
+
+### 9:00–10:00 — Verification and share
+
+Click through every page. Try logging in as a manager and as a staff user. Confirm RLS is doing what it should — manager sees all shifts, staff sees only theirs. Click "Subscribe" and confirm the Stripe checkout actually opens.
+
+Then grab the public sandbox URL and send it to one real user. Watch them try to use it. Their first three confused looks tell you what to prompt next.
+
+## What you actually have at 10 minutes
+
+For the prompt above, on a typical run, what's working:
+
+- ✅ Marketing landing page with hero, features, pricing
+- ✅ Email + GitHub auth via Supabase
+- ✅ Protected `/schedule` route with role-based gates
+- ✅ Schedule view rendering shifts from the database
+- ✅ Manager CRUD on shifts
+- ✅ Stripe Checkout for the $29/month tier
+- ✅ RLS scaffolded with tenant + role policies
+- ✅ Mobile-responsive layout
+
+What's missing or partial:
+
+- ⚠️ Stripe subscription state isn't fully reflected in the app yet (the webhook is wired but the user state hasn't been refreshed yet)
+- ⚠️ No tests
+- ⚠️ No observability (Sentry, Vercel Analytics, etc.)
+- ⚠️ Email notifications aren't wired
+- ⚠️ The "shift swap request" flow exists but isn't fully end-to-end yet
+- ⚠️ Edge cases (overlapping shifts, deleting a shift with attached requests) haven't been thought through
+
+The honest read: at 10 minutes you have a credible v1 you can show a real user. You do not have a production app. The remaining work — security review, observability, edge-case handling, real testing — is your job, and it's the same work you'd do on any prototype.
+
+## Verification: the 7-item pre-launch checklist
+
+Before this app sees a real user, run through the same list you'd run through on any prototype. (See [our /verification skill notes](/blog/what-is-prompt-to-app#frequently-asked-questions) for the longer version.)
+
+1. **Auth flows.** Sign up, sign in, password reset, OAuth callback — try each one. Try them on mobile.
+2. **RLS / authorization.** Open two browser windows, sign in as user A and user B. Confirm A cannot see B's data anywhere.
+3. **Error handling.** Submit a form with bad input. Visit a missing route. Confirm both produce sensible UX, not stack traces.
+4. **Logging and observability.** Wire up Sentry or your monitoring of choice before launch. The agent doesn't do this by default.
+5. **Deploy pipeline.** Verify environment variables, custom domain, SSL, rate limiting on the deploy target.
+6. **Secrets management.** Search the source for any string that looks like an API key. Confirm everything is coming from `process.env`.
+7. **Stripe webhook signature.** This is the single most common gotcha — make sure the webhook validates signatures and rejects unsigned requests.
+
+This checklist is the same on every AI-generated app, regardless of which tool generated it. The agent gets you to a credible v1 fast. The verification work between v1 and launch is yours.
+
+## What to prompt next
+
+After the 10-minute window, the most productive prompts in roughly priority order:
+
+1. **"Write integration tests for the auth flow and the RLS policies."** Tests come back fast and pay off forever.
+2. **"Wire up Sentry and Vercel Analytics."** Five minutes of setup, lifelong value.
+3. **"Add a settings page where managers can update the team name and invite staff."** Fills out the most common missing feature.
+4. **"Add an email-on-shift-create notification through Resend."** First real third-party integration.
+5. **"Write a README with the local dev setup and environment variables."** The version of yourself who picks this up in three months will thank you.
+
+Each of these is a 1–3 minute turn. By the 30-minute mark you have a noticeably more polished version of the same app.
+
+## What you can't do in 10 minutes
+
+Worth being explicit about the boundary.
+
+In 10 minutes you cannot:
+
+- Hand-tune complex business logic that needs domain knowledge the agent doesn't have
+- Optimise performance for an unusual workload
+- Write the kind of comprehensive test suite an enterprise audit would demand
+- Validate that auth and RLS are correct against every adversarial scenario
+- Migrate a large existing dataset
+- Set up a complex CI/CD pipeline with multiple environments and gated deployments
+
+Most of these aren't fundamental limits — you can do them, you just can't do them in 10 minutes. They're the work between "generated v1" and "production".
+
+## Frequently asked questions
+
+### Can I really get a SaaS in 10 minutes?
+
+A *credible v1* of a SaaS, yes. Not a production app. The 10-minute output is good enough to demo to a user and decide whether the idea is worth pursuing further.
+
+### Which tool gives the best 10-minute output?
+
+For a real-Linux SaaS prompt, [SprintBuild](/) tends to produce the most production-shape output because the runtime matches production. For a hosted-runtime SaaS, [Lovable](/blog/sprintbuild-vs-lovable) tends to produce the most polished UX. For an instant-prototype landing page, [Bolt.new](/blog/sprintbuild-vs-bolt-new) is hard to beat. The [2026 listicle](/blog/best-ai-coding-tools-2026) has the side-by-side.
+
+### What if the agent produces wrong code?
+
+Read it and prompt the fix. The agent's code is a starting point, not gospel. The more specific your follow-up prompt, the faster the fix. *"The schedule view crashes when the date is undefined — handle that case"* is much more useful than *"fix it"*.
+
+### Do I have to use the platform's hosting?
+
+No. Almost every output is portable. SprintBuild emits standard Next.js code that runs anywhere. Lovable has bidirectional GitHub sync. Bolt and v0 have GitHub export. Some platforms make the export easier than others (Base44 only allows export on paid plans), but every tool's output is real code you can take with you.
+
+### How does the agent know which stack to pick?
+
+You either tell it (in the prompt) or it picks based on heuristics. Most tools default to Next.js + Tailwind + shadcn/ui + a database (Supabase or platform-native). The defaults are well-chosen for the typical web SaaS but not always optimal — if your app needs something specific (Postgres extensions, Python alongside Node, an unusual ORM), name it in the prompt.
+
+### Will I outgrow this approach?
+
+Probably. The right way to think about prompt-to-app is "the first 80% is fast; the last 20% is real engineering". Once your app has nuanced business logic, ongoing maintenance, and a team contributing to it, the workflow shifts from "prompt the agent" to "engineers using AI tools inside the codebase". Both are valid; they're different phases of the same project.
+
+## Sources
+
+- [vercel.com/docs/vercel-sandbox](https://vercel.com/docs/vercel-sandbox) — Vercel Sandbox runtime
+- [supabase.com/docs/guides/auth/row-level-security](https://supabase.com/docs/guides/auth/row-level-security) — RLS reference
+- [stripe.com/docs/webhooks/signatures](https://docs.stripe.com/webhooks/signatures) — webhook signature verification
+
+## Related reading
+
+- [Best AI coding tools in 2026](/blog/best-ai-coding-tools-2026)
+- [What is vibe coding?](/blog/what-is-vibe-coding)
+- [What is prompt to app?](/blog/what-is-prompt-to-app)
+- [What is an AI app generator?](/blog/what-is-an-ai-app-generator)
+- Use cases: [SaaS](/build/saas), [Dashboard](/build/dashboard), [Internal tool](/build/internal-tool), [Landing page](/build/landing-page), [MVP](/build/mvp), [CRUD app](/build/crud-app)
+- [SprintBuild vs Lovable](/blog/sprintbuild-vs-lovable), [vs Bolt.new](/blog/sprintbuild-vs-bolt-new), [vs v0](/blog/sprintbuild-vs-v0), [vs Replit Agent](/blog/sprintbuild-vs-replit-agent), [vs Base44](/blog/sprintbuild-vs-base44)
+
+_Last reviewed: May 23, 2026._

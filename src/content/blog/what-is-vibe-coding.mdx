@@ -1,47 +1,175 @@
 ---
-title: "What Is Vibe Coding? The AI-First Way to Build Apps in 2026"
-description: "Vibe coding lets you describe what you want in plain English and an AI agent writes the code. Learn how it works, why it's taking off, and how to get started."
+title: "Vibe Coding: A Practical Guide to AI-Driven Build Sessions in 2026"
+description: "Vibe coding is a workflow, not a slogan. Learn what Karpathy actually meant, how the prompt → preview → auto-fix → ship loop works, and which tools support it today."
 date: "2026-05-15"
 slug: "what-is-vibe-coding"
 author: "Mohammed Tahir"
-tags: ["vibe coding", "ai coding", "no-code", "low-code"]
+tags: ["vibe coding", "what is vibe coding", "ai coding", "prompt to app", "vibe coding workflow"]
 category: "guides"
 cluster_id: "tc_vibe_coding"
 blog_type: "pillar"
 ---
 
-## The shift from writing code to describing intent
+## Vibe coding is a workflow, not a slogan
 
-For decades, building software meant learning a programming language, memorising framework APIs, and fighting with build tools. **Vibe coding** flips that model: you describe what you want in natural language — a "vibe" — and an AI agent generates, runs, and iterates on the code for you in real time.
+Andrej Karpathy [coined the term "vibe coding"](https://x.com/karpathy/status/1886192184808149383) in February 2025. The original tweet was almost glib:
 
-The term was coined by Andrej Karpathy in early 2025 and has since exploded into an entire product category. Tools like SprintBuild, Lovable, Bolt, and Replit Agent all implement versions of it.
+> There's a new kind of coding I call "vibe coding", where you fully give in to the vibes, embrace exponentials, and forget that the code even exists.
 
-## How vibe coding works on SprintBuild
+A year later it's a full product category. Lovable, Bolt.new, Replit Agent, v0, Base44, and SprintBuild all ship versions of the same idea. But most explanations of the term get stuck on Karpathy's original framing — the playful "forget the code exists" line — and miss what's actually new.
 
-1. **You describe your app** — "Build me a habit tracker with streaks, dark mode, and a weekly summary email."
-2. **The agent picks a stack** — Next.js, Tailwind, Supabase, whatever fits the brief.
-3. **Code is generated in a sandbox** — you watch files appear in a live file explorer.
-4. **A preview renders instantly** — the running app shows up beside the chat.
-5. **You iterate conversationally** — "Make the streak badge pulse when it hits 7 days."
+What's new is the **feedback loop**. Vibe coding isn't "AI writes code while you watch". It's **prompt → run → preview → auto-fix → ship**, repeated tightly, with the human directing intent at the prompt level and the agent handling everything below.
 
-No terminal commands. No dependency hell. No context-switching between docs tabs.
+This post is the long version of that argument. I'll walk through how the loop actually works, why each piece matters, what the current tools look like, and where the workflow holds up vs falls apart.
 
-## Who is vibe coding for?
+## The five-step loop
 
-- **Founders** who want to validate an idea in hours, not sprints.
-- **Designers** who can describe UI but don't want to fight CSS.
-- **Developers** who use it as a turbo-scaffold, then take over the code.
-- **Students** learning by seeing real code generated from intent.
+Every serious vibe-coding session looks something like this:
 
-## When NOT to use it
+1. **Describe** the thing you want, in natural language. Not a technical spec — an intent.
+2. **Run.** The agent boots a real environment, scaffolds the project, installs dependencies, starts a dev server.
+3. **Preview.** A live iframe streams the running app. You click through it like a real user.
+4. **Auto-fix.** Build errors and runtime exceptions stream back into the agent loop. Most regressions get patched without human escalation.
+5. **Ship.** Deploy to a public URL, or take the source and ship it elsewhere.
 
-Vibe coding excels at greenfield apps, prototypes, and internal tools. It's not a replacement for careful architecture on large-scale systems where you need deterministic control over every line. Think of it as a pair-programmer that's incredibly fast at first drafts.
+If any of these steps is missing or weak, you're not really vibe coding. You're prompting + manual setup, prompting + local dev, or prompting + paste-into-an-IDE. Those workflows existed before; what makes vibe coding different is that all five steps live in one tight loop the human doesn't have to context-switch between.
 
-## Getting started
+## Step 1 — Describe, not specify
 
-1. [Sign up for free](/signup) — you get 50 credits a month on the free tier.
-2. Pick a model (Claude, GPT, or Grok).
-3. Type what you want to build.
-4. Ship it.
+The hardest part of the loop for engineers is unlearning the urge to over-specify.
 
-That's the vibe.
+A good vibe-coding prompt is closer to a product brief than a ticket: "Build a SaaS for restaurant managers that lets them schedule shifts. Auth, role-based access, mobile-friendly. Default stack is fine." A bad one is the same prompt with twelve paragraphs about table schemas, route handler shapes, and library choices.
+
+The reason is leverage: an agent given intent can pick a reasonable scaffolding and iterate. An agent given a 12-paragraph spec spends most of its first turn trying to satisfy your spec and then often misses the actual goal. Save the specifics for the **second** turn, when there's a running app and you can talk about it concretely.
+
+This is what Karpathy was actually pointing at. "Forget the code exists" isn't an instruction to be careless — it's an instruction to operate at the level of intent and let the agent handle the layer below.
+
+## Step 2 — Run. Inside what, though?
+
+This is where vibe-coding tools genuinely diverge. The "run" step is the most architecturally important choice in the entire workflow:
+
+- **Browser WebContainer** ([Bolt.new](/blog/sprintbuild-vs-bolt-new)) — a Node.js environment runs inside your browser tab via WebAssembly. Cold-start is essentially instant. Trade-off: can't run native binaries, tighter resource ceilings.
+- **Cloud sandbox** ([SprintBuild](/blog/sprintbuild-vs-bolt-new)) — every session boots a real Firecracker microVM with full Linux. Cold-start is slower. Trade-off: most flexible runtime, matches production.
+- **Hosted runtime** ([Lovable](/blog/sprintbuild-vs-lovable), [Base44](/blog/sprintbuild-vs-base44)) — generated apps live on the platform's managed runtime. No environmental decisions. Trade-off: less control, harder to migrate.
+- **Cloud IDE** ([Replit Agent](/blog/sprintbuild-vs-replit-agent)) — full IDE around the agent with long-lived Linux Repls per project. Trade-off: heavier surface than just an agent.
+- **Managed app platform** ([v0](/blog/sprintbuild-vs-v0)) — Vercel build pipeline + preview URLs. Trade-off: tightly coupled to Vercel.
+
+If you're prototyping fast and don't need a real backend, WebContainer wins. If you're building toward production, you want one of the cloud-sandbox or cloud-IDE options because the dev environment matches what will actually ship.
+
+## Step 3 — Preview, not screenshot
+
+A real preview is a live iframe streaming from whatever environment is running the app. You click through it like a real user. You catch styling problems, broken layouts, navigation dead-ends, broken forms.
+
+A *fake* preview is a model-generated screenshot or a static HTML render that doesn't actually run the code. The current frontier models can produce realistic-looking screenshots that are completely disconnected from whether the code compiles. If your tool only shows you screenshots, it's not actually running anything — you're vibe *describing*, not vibe coding.
+
+The preview is also where the loop tightens: you describe a change, the agent patches files, the preview reloads, you see the result in a few seconds. The faster that cycle, the more vibe coding feels like a flow state rather than a chore.
+
+## Step 4 — Auto-fix is the underrated piece
+
+The single most powerful piece of the vibe-coding loop is the auto-fix layer. Build errors, type errors, runtime exceptions — these all get streamed back to the agent, which sees them and patches the code without human escalation.
+
+This is what separates vibe coding from "just use Cursor or Copilot". In Cursor you write code, you compile, you read the error, you ask the AI to fix it, you compile again. In a vibe-coding tool that loop is *automatic*. You don't see most errors at all because the agent has already patched them by the time you'd have noticed.
+
+The cost of a bad auto-fix layer is real: an agent stuck in a fix-loop burns credits and goes nowhere. The cost of *no* auto-fix is worse: every error breaks the flow and forces a context switch. All five major tools have an auto-fix layer in 2026, but the quality varies. The honest read is that this is a fast-moving area and most platforms ship a noticeable improvement every few months.
+
+## Step 5 — Ship without leaving the loop
+
+The final step is taking what you built and putting it somewhere users can hit it. The minimum bar is a publicly accessible URL the agent generates from the running sandbox. The maximum bar is a full deploy to your production target with a custom domain.
+
+Different tools sit at different points on this spectrum. v0 deploys natively to Vercel with a click. Bolt.new exports to Netlify with a click. Replit deploys to Replit Hosting with a click. Lovable hosts on Lovable Cloud. Base44 hosts on its own platform. SprintBuild gives you a public sandbox URL today and full Vercel deploy is on the roadmap.
+
+The right tool here depends on where you actually want the app to live. If your destination is "Vercel under our existing custom domain", v0 or SprintBuild fit cleanest. If your destination is "wherever, just give me a working ZIP", Bolt's deploy story is hard to beat.
+
+## What vibe coding is good for
+
+Vibe coding shines when:
+
+- The work is greenfield. You're scaffolding from zero.
+- The intent is clearer than the implementation. You know what you want, less so how it should be structured.
+- You'd otherwise spend the first 4–8 hours on boilerplate (auth, basic schema, layout, deploy).
+- You're building something concrete enough to demo to a user, but not yet stable enough to need the full engineering ceremony.
+
+This describes most prototypes, MVPs, internal tools, and a surprising number of side projects.
+
+## What vibe coding is bad for
+
+It's also worth being honest about where the workflow breaks down:
+
+- **Existing codebases.** Once a project has 50K+ lines of nuanced business logic, the agent's context window can't hold the whole thing. You're doing pair programming, not vibe coding.
+- **Performance-critical work.** If you're optimising hot paths, you want a tight feedback loop with profiling and benchmarks, not a prompt loop.
+- **Compliance-sensitive work.** When the auditor asks why a particular line exists, "the agent wrote it" is not an acceptable answer.
+- **Subtle algorithmic problems.** The agent can implement an algorithm but won't always notice when its implementation is subtly wrong. You still need to read what it ships.
+
+The honest framing: vibe coding is the right loop for the first 80% of most prototype-class projects. The last 20% — and most production-class engineering — still needs an engineer in the editor.
+
+## A worked example: 30 minutes to a working SaaS
+
+To make the loop concrete: here's roughly what 30 minutes of vibe coding looks like on SprintBuild for a typical "build me a SaaS" prompt. The numbers are representative, not benchmarked.
+
+| Time | What happens |
+| --- | --- |
+| 0:00 | Type the prompt: "Build a SaaS for restaurant shift scheduling. Auth, RLS, mobile-friendly, Stripe checkout." |
+| 0:00–0:30 | Agent boots a Vercel Sandbox. Picks Next.js + Tailwind + Supabase + Stripe. |
+| 0:30–4:00 | Generates files, runs `npm install`, starts the dev server. Preview renders the empty shell. |
+| 4:00–8:00 | Auto-fix loop catches a missing env var; agent patches it. Preview boots. |
+| 8:00–18:00 | Iterations: "make the schedule view show the current week", "add a manager-only delete action", "wire Stripe to a one-tier subscription". |
+| 18:00–25:00 | Polish: "use shadcn dialog for the delete confirmation", "add a 404 page", "set the metadata title". |
+| 25:00–30:00 | Public preview URL shared, walk through with a real user. |
+
+Not every prompt goes this smoothly. The point is the loop: 30 minutes of attention to a real running app, not 30 minutes of staring at code that may or may not compile.
+
+## The category in 2026
+
+The six tools at the centre of the vibe-coding category:
+
+- **[SprintBuild](/blog/sprintbuild-vs-lovable)** — cloud sandbox, multi-model (Claude / GPT / Grok per turn), credit pricing with rollover.
+- **[Lovable](/blog/sprintbuild-vs-lovable)** — hosted runtime, deep Supabase integration, smooth onboarding.
+- **[Bolt.new](/blog/sprintbuild-vs-bolt-new)** — browser WebContainer, fastest cold-start, best deploy story.
+- **[v0 by Vercel](/blog/sprintbuild-vs-v0)** — Vercel-native, automatic GitHub branching per chat.
+- **[Replit Agent](/blog/sprintbuild-vs-replit-agent)** — full cloud IDE with long-lived Repls, mobile app builds.
+- **[Base44](/blog/sprintbuild-vs-base44)** — managed app platform with 20+ pre-built integrations.
+
+For a side-by-side feature matrix, see [our 2026 listicle](/blog/best-ai-coding-tools-2026).
+
+## Frequently asked questions
+
+### Who coined "vibe coding"?
+
+[Andrej Karpathy](https://x.com/karpathy), in a February 2025 post on X. The original framing emphasised "embrace the vibes" — by 2026 the term has matured into a description of a specific tightly-looped workflow.
+
+### Is vibe coding the same as no-code?
+
+No. No-code tools (Webflow, Bubble, Airtable) hide the code completely. Vibe coding generates real code in real frameworks (Next.js, React, Tailwind, etc.) and lets you inspect it. The output is portable; the no-code output usually isn't.
+
+### Is vibe coding just AI autocomplete in a fancy wrapper?
+
+No. AI autocomplete (Cursor, Copilot) operates inside your existing editor on existing code. Vibe coding generates from intent, runs the result in a real environment, and closes the loop with auto-fix. It's a different layer of the workflow.
+
+### Can I trust AI-generated code in production?
+
+Conditionally yes. The output of a modern vibe-coding tool is real code that runs. Production-readiness depends on three things: auth and RLS done correctly, error handling in place, and the runtime matching production. Cloud-sandbox tools (SprintBuild, Replit) tend to produce code closer to production-ready because the dev environment matches a real Linux server.
+
+### Will vibe coding replace engineers?
+
+The same way calculators replaced mathematicians. The loop is great for the first 80% of prototype-class projects. The last 20%, and most production-class work, still needs an engineer who knows what good looks like and can review what the agent ships.
+
+### What's the best vibe-coding tool?
+
+[Depends on the build.](/blog/best-ai-coding-tools-2026) For real Linux + multi-model, SprintBuild. For non-technical first-time builders, Lovable. For instant prototyping, Bolt.new. For Vercel-native work, v0. For mobile + full IDE, Replit Agent. For managed hosting + integrations, Base44.
+
+## Sources
+
+- [karpathy on X](https://x.com/karpathy/status/1886192184808149383) — original "vibe coding" post (Feb 2025)
+- [vercel.com/docs/vercel-sandbox](https://vercel.com/docs/vercel-sandbox) — Vercel Sandbox runtime
+- [posthog.com/newsletter/inside-bolt-dot-new](https://posthog.com/newsletter/inside-bolt-dot-new) — WebContainer architecture
+- [docs.replit.com/core-concepts/agent](https://docs.replit.com/core-concepts/agent) — Replit Agent capabilities
+
+## Related reading
+
+- [Best AI coding tools in 2026](/blog/best-ai-coding-tools-2026) — full category roundup
+- [What is an AI app generator?](/blog/what-is-an-ai-app-generator) — adjacent definitional pillar
+- [What is prompt to app?](/blog/what-is-prompt-to-app) — adjacent definitional pillar
+- [How to generate an app with AI in under 10 minutes](/blog/how-to-generate-apps-with-ai) — the worked example
+- [SprintBuild vs Lovable](/blog/sprintbuild-vs-lovable), [vs Bolt.new](/blog/sprintbuild-vs-bolt-new), [vs v0](/blog/sprintbuild-vs-v0), [vs Replit Agent](/blog/sprintbuild-vs-replit-agent), [vs Base44](/blog/sprintbuild-vs-base44)
+
+_Last reviewed: May 23, 2026._
