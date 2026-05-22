@@ -4,12 +4,13 @@ last_updated: "2026-05-23"
 # this map to track cannibalization risk, internal-link coverage, and
 # cluster completion. Cluster IDs MUST match topic-clusters.yaml.
 #
-# Backfilled 2026-05-23: the original 5 posts shipped before the SEO
-# engine was wired up and used legacy cluster IDs. They have been
-# remapped to canonical clusters during Phase 0 reconciliation. Each
-# entry below carries `needs_refresh: true` until the post is rewritten
-# to match the formal pillar/cluster structure (linking rules, FAQ,
-# E-E-A-T elements). The `published_at` is the original ship date.
+# Backfilled 2026-05-23 (Phase 0): the original 5 posts shipped before
+# the SEO engine was wired up and used legacy cluster IDs. They have
+# been remapped to canonical clusters. The `best-ai-coding-tools-2026`
+# entry was rewritten in Phase 2 to cover all six platforms grouped by
+# persona and to deep-link into all 5 /blog/sprintbuild-vs-* posts and
+# the /vs hub. The four new comparison posts shipped 2026-05-23 in
+# Phase 2.
 
 blogs:
   - slug: "what-is-vibe-coding"
@@ -24,19 +25,120 @@ blogs:
     refresh_reason: "Originally written under legacy cluster vibe-coding-101. Needs the formal pillar treatment per content-queue.yaml q_001 (real worked example, time-to-preview metric, links to all tc_vibe_coding cluster pages once they exist)."
 
   - slug: "best-ai-coding-tools-2026"
-    title: "Best AI Coding Tools in 2026: SprintBuild vs Lovable vs Bolt vs Replit"
+    title: "Best AI Coding Tools in 2026: SprintBuild, Lovable, Bolt, Replit, v0, and Base44 Compared"
     published_at: "2026-05-12"
-    last_reviewed: ""
+    last_reviewed: "2026-05-23"
     cluster_id: "tc_ai_coding_platform"
     blog_type: "comparison"
     target_keywords:
       - "best ai coding platform"
       - "best ai coding tools"
+      - "ai coding platform comparison"
       - "lovable alternative"
       - "bolt new alternative"
     target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
-    needs_refresh: true
-    refresh_reason: "This is a strong fit for q_009 in content-queue.yaml. Refresh to persona-grouped recommendations (solo / startup / agency), add verified-date stamp on every claim, link to forthcoming /vs/[competitor] pages, and add Product schema for the comparison table."
+    needs_refresh: false
+    refresh_reason: "Refreshed in Phase 2 (2026-05-23) to cover all six platforms — SprintBuild, Lovable, Bolt.new, v0, Replit Agent, Base44 — with persona-grouped picks, a verified feature matrix, a cheapest-paid-tier table, and deep links into the five /blog/sprintbuild-vs-* posts plus the /vs hub. Sources cited at the bottom; verified 2026-05-23."
+
+  # ── Phase 2 comparison posts (2026-05-23) ──────────────────────────
+  - slug: "sprintbuild-vs-lovable"
+    title: "SprintBuild vs Lovable: Which AI App Generator Should You Pick in 2026?"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "sprintbuild vs lovable"
+      - "lovable alternative"
+      - "lovable comparison"
+    target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://lovable.dev/pricing"
+      - "https://docs.lovable.dev/integrations/cloud"
+      - "https://docs.lovable.dev/integrations/supabase"
+      - "https://lovable.dev/blog/lovable-2-0"
+    queue_id: "q_006"
+
+  - slug: "sprintbuild-vs-bolt-new"
+    title: "SprintBuild vs Bolt.new: Cloud Sandbox vs WebContainer in 2026"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "sprintbuild vs bolt new"
+      - "bolt new alternative"
+      - "bolt alternative"
+    target_features: ["feat_sandbox_execution", "feat_live_preview"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://bolt.new/pricing"
+      - "https://support.bolt.new/faqs/account-and-subscription/overview"
+      - "https://posthog.com/newsletter/inside-bolt-dot-new"
+      - "https://github.com/stackblitz/bolt.new"
+    queue_id: "q_007"
+
+  - slug: "sprintbuild-vs-v0"
+    title: "SprintBuild vs v0 by Vercel: Multi-Model AI Coding vs Vercel-Native"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "sprintbuild vs v0"
+      - "v0 alternative"
+      - "v0 by vercel comparison"
+    target_features: ["feat_prompt_to_app", "feat_multi_model", "feat_live_preview"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://v0.dev/pricing"
+      - "https://v0.dev/docs/faqs"
+      - "https://v0.app/docs/github"
+      - "https://vercel.com/blog/improved-v0-pricing"
+    queue_id: "q_006b"
+
+  - slug: "sprintbuild-vs-replit-agent"
+    title: "SprintBuild vs Replit Agent: Cloud Sandbox vs Cloud IDE in 2026"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "sprintbuild vs replit agent"
+      - "replit agent alternative"
+      - "replit alternatives"
+    target_features: ["feat_sandbox_execution", "feat_multi_model"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://replit.com/pricing"
+      - "https://replit.com/blog/pro-plan"
+      - "https://docs.replit.com/core-concepts/agent"
+      - "https://docs.replit.com/replitai/web-apps"
+    queue_id: "q_007b"
+
+  - slug: "sprintbuild-vs-base44"
+    title: "SprintBuild vs Base44: Cloud Sandbox vs Managed App Platform in 2026"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_coding_platform"
+    blog_type: "comparison"
+    target_keywords:
+      - "sprintbuild vs base44"
+      - "base44 alternative"
+      - "base44 alternatives"
+    target_features: ["feat_sandbox_execution", "feat_multi_model"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://base44.com/pricing"
+      - "https://base44.com/blog/how-much-does-base44-cost"
+      - "https://docs.base44.com/Getting-Started/Billing-and-plans"
+    queue_id: "q_007c"
 
   - slug: "how-to-build-saas-with-ai"
     title: "How to Build a SaaS App with AI in Under an Hour"
