@@ -10,19 +10,27 @@ last_updated: "2026-05-23"
 # entry was rewritten in Phase 2 to cover all six platforms grouped by
 # persona and to deep-link into all 5 /blog/sprintbuild-vs-* posts and
 # the /vs hub. The four new comparison posts shipped 2026-05-23 in
-# Phase 2.
+# Phase 2. Phase 3 (2026-05-23) refreshed `what-is-vibe-coding` into
+# the formal pillar for tc_vibe_coding and added three new definitional
+# posts: `what-is-an-ai-app-generator`, `what-is-prompt-to-app`, and
+# `how-to-generate-apps-with-ai`.
 
 blogs:
   - slug: "what-is-vibe-coding"
-    title: "What Is Vibe Coding? The AI-First Way to Build Apps in 2026"
+    title: "Vibe Coding: A Practical Guide to AI-Driven Build Sessions in 2026"
     published_at: "2026-05-15"
-    last_reviewed: ""
+    last_reviewed: "2026-05-23"
     cluster_id: "tc_vibe_coding"
     blog_type: "pillar"
-    target_keywords: ["what is vibe coding", "vibe coding"]
-    target_features: ["feat_prompt_to_app"]
-    needs_refresh: true
-    refresh_reason: "Originally written under legacy cluster vibe-coding-101. Needs the formal pillar treatment per content-queue.yaml q_001 (real worked example, time-to-preview metric, links to all tc_vibe_coding cluster pages once they exist)."
+    target_keywords:
+      - "vibe coding"
+      - "what is vibe coding"
+      - "vibe coding workflow"
+      - "vibe coding tools"
+    target_features: ["feat_prompt_to_app", "feat_auto_fix_errors", "feat_sandbox_execution"]
+    needs_refresh: false
+    refresh_reason: "Refreshed in Phase 3 (2026-05-23) into the formal cluster pillar for tc_vibe_coding. Now leads with the 5-step prompt→preview→auto-fix→ship loop, walks through the 5 runtime architectures (with deep links to all 5 /blog/sprintbuild-vs-* posts), covers per-turn model choice, and includes a 30-minute worked example. Cites Karpathy's original X post, Vercel Sandbox docs, the Bolt PostHog deep dive, and Replit docs."
+    queue_id: "q_001"
 
   - slug: "best-ai-coding-tools-2026"
     title: "Best AI Coding Tools in 2026: SprintBuild, Lovable, Bolt, Replit, v0, and Base44 Compared"
@@ -139,6 +147,70 @@ blogs:
       - "https://base44.com/blog/how-much-does-base44-cost"
       - "https://docs.base44.com/Getting-Started/Billing-and-plans"
     queue_id: "q_007c"
+
+  # ── Phase 3 definitional cluster posts (2026-05-23) ────────────────
+  - slug: "what-is-an-ai-app-generator"
+    title: "What Is an AI App Generator? A 2026 Primer for Builders"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_app_generator"
+    blog_type: "pillar"
+    target_keywords:
+      - "ai app generator"
+      - "what is an ai app generator"
+      - "ai app builder"
+    target_features: ["feat_prompt_to_app", "feat_tool_generate_files", "feat_live_preview"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://docs.lovable.dev/integrations/cloud"
+      - "https://posthog.com/newsletter/inside-bolt-dot-new"
+      - "https://v0.dev/pricing"
+      - "https://replit.com/pricing"
+      - "https://base44.com/pricing"
+      - "https://lovable.dev/pricing"
+      - "https://bolt.new/pricing"
+    queue_id: "q_003"
+
+  - slug: "what-is-prompt-to-app"
+    title: "What Is Prompt to App? The Loop Between Intent and a Live Preview"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_prompt_to_app"
+    blog_type: "pillar"
+    target_keywords:
+      - "prompt to app"
+      - "what is prompt to app"
+      - "prompt to full stack app"
+    target_features: ["feat_prompt_to_app", "feat_live_preview", "feat_command_logs"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://posthog.com/newsletter/inside-bolt-dot-new"
+      - "https://docs.replit.com/core-concepts/agent"
+      - "https://vercel.com/ai-gateway"
+    queue_id: "q_004"
+
+  - slug: "how-to-generate-apps-with-ai"
+    title: "How to Generate an App With AI in Under 10 Minutes"
+    published_at: "2026-05-23"
+    last_reviewed: "2026-05-23"
+    cluster_id: "tc_ai_app_generator"
+    blog_type: "tutorial"
+    target_keywords:
+      - "how to generate apps with ai"
+      - "build app with ai in 10 minutes"
+      - "generate saas with ai"
+    target_features: ["feat_prompt_to_app", "feat_live_preview"]
+    needs_refresh: false
+    refresh_reason: ""
+    sources:
+      - "https://vercel.com/docs/vercel-sandbox"
+      - "https://supabase.com/docs/guides/auth/row-level-security"
+      - "https://docs.stripe.com/webhooks/signatures"
+    queue_id: "q_010"
 
   - slug: "how-to-build-saas-with-ai"
     title: "How to Build a SaaS App with AI in Under an Hour"

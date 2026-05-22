@@ -14,19 +14,22 @@ queue:
     blog_type: "thought_leadership"
     content_type: "pillar"
     cluster_id: "tc_vibe_coding"
-    target_keywords: ["vibe coding"]
+    target_keywords: ["vibe coding", "what is vibe coding", "vibe coding workflow"]
     target_features: ["feat_prompt_to_app", "feat_auto_fix_errors", "feat_sandbox_execution"]
     unique_angle: "Treat vibe coding as a workflow with a feedback loop (prompt → preview → auto-fix → ship), grounded in a real shipped app, instead of a definitional explainer."
     priority: "high"
     priority_reason: "Cluster-defining pillar; vibe coding is a fast-emerging brand-friendly category."
-    status: "planned"
+    status: "published"
+    published_slug: "what-is-vibe-coding"
+    published_at: "2026-05-15"
+    last_refreshed_at: "2026-05-23"
     estimated_word_count: 2400
     eeat_plan: "Walk through the SprintBuild build itself as the worked example; cite Karpathy's coinage; include time-to-preview metric once measured."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: "Requires SERP data before structure is finalised."
+    notes: "Phase 3 refresh (2026-05-23): rewrote the original definitional post into the cluster pillar per the unique angle. Walks through the 5-step loop, the 5 runtime architectures, model choice, a 30-minute worked example. Consolidates q_001 + q_008 into a single canonical pillar at /blog/what-is-vibe-coding. Sources: karpathy on X, vercel.com/docs/vercel-sandbox, posthog.com/newsletter/inside-bolt-dot-new, docs.replit.com."
     depends_on: []
-    internal_link_targets: ["what-is-vibe-coding", "vibe-coding-tools", "vibe-coding-workflow"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "what-is-an-ai-app-generator", "what-is-prompt-to-app", "how-to-generate-apps-with-ai", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
 
   - id: "q_002"
     title: "AI Coding Platform: How They Work and How to Choose One"
@@ -52,38 +55,42 @@ queue:
     blog_type: "thought_leadership"
     content_type: "pillar"
     cluster_id: "tc_ai_app_generator"
-    target_keywords: ["ai app generator"]
+    target_keywords: ["ai app generator", "what is an ai app generator"]
     target_features: ["feat_prompt_to_app", "feat_tool_generate_files", "feat_live_preview"]
     unique_angle: "Frame production-readiness as a checklist (auth, RLS, deploy, error handling) — most existing posts dodge it."
     priority: "high"
     priority_reason: "Cluster pillar; high commercial intent."
-    status: "planned"
+    status: "published"
+    published_slug: "what-is-an-ai-app-generator"
+    published_at: "2026-05-23"
     estimated_word_count: 2400
     eeat_plan: "Reference Vercel Sandbox + Supabase combo; real shipped app screenshot."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: "Requires SERP data before structure is finalised."
+    notes: "Phase 3 ship. Pillar for tc_ai_app_generator with the production-readiness checklist (auth, RLS, deploy, observability, secrets, Stripe webhook signatures). Cross-links every cluster page and the 5 vs/* posts. Sources: vercel.com/docs/vercel-sandbox, docs.lovable.dev, posthog.com bolt deep dive, all 6 vendor pricing pages."
     depends_on: []
-    internal_link_targets: ["how-to-generate-apps-with-ai", "ai-app-generators-non-technical", "ai-generated-apps-production-ready"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "what-is-vibe-coding", "what-is-prompt-to-app", "how-to-generate-apps-with-ai", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
 
   - id: "q_004"
     title: "Prompt to App: From Idea to Live Preview"
     blog_type: "tutorial"
     content_type: "pillar"
     cluster_id: "tc_prompt_to_app"
-    target_keywords: ["prompt to app"]
+    target_keywords: ["prompt to app", "what is prompt to app"]
     target_features: ["feat_prompt_to_app", "feat_live_preview", "feat_command_logs"]
     unique_angle: "Walk through what's actually happening on every keystroke in the agent → sandbox → preview loop, not just the user-facing UI."
     priority: "high"
     priority_reason: "Cluster pillar."
-    status: "planned"
+    status: "published"
+    published_slug: "what-is-prompt-to-app"
+    published_at: "2026-05-23"
     estimated_word_count: 2200
     eeat_plan: "Annotated screenshots of the SprintBuild build pipeline."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: "Requires SERP data before structure is finalised."
+    notes: "Phase 3 ship. Pillar for tc_prompt_to_app explaining the four moving parts (prompt surface, agent, runtime, preview), the anatomy of a session, the execution-model decision matrix, and the 30-minute test. Sources: vercel.com/docs/vercel-sandbox, posthog.com bolt deep dive, docs.replit.com, vercel.com/ai-gateway."
     depends_on: []
-    internal_link_targets: ["prompt-to-full-stack-app", "prompt-engineering-for-app-generation", "prompt-templates-for-apps"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "what-is-vibe-coding", "what-is-an-ai-app-generator", "how-to-generate-apps-with-ai", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
 
   - id: "q_005"
     title: "Building an AI Agent with Next.js: Architecture and Patterns"
@@ -232,14 +239,17 @@ queue:
     unique_angle: "Tie the term back to Karpathy's coinage and map it to today's tooling — most existing answers stop at a vague definition."
     priority: "medium"
     priority_reason: "Definitional entry point that feeds the pillar."
-    status: "planned"
+    status: "published"
+    published_slug: "what-is-vibe-coding"
+    published_at: "2026-05-15"
+    last_refreshed_at: "2026-05-23"
     estimated_word_count: 1500
     eeat_plan: "Quote primary source; show one concrete prompt → preview example."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: ""
+    notes: "Phase 3: consolidated into q_001 — both items now point at the same canonical /blog/what-is-vibe-coding URL, refreshed to formal pillar treatment. Keeping q_008 as a tracking record of the original cluster-page intent so the SEO engine knows the keyword is covered."
     depends_on: ["q_001"]
-    internal_link_targets: ["vibe-coding"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "what-is-an-ai-app-generator", "what-is-prompt-to-app", "how-to-generate-apps-with-ai"]
 
   - id: "q_009"
     title: "Best AI Coding Platforms in 2026"
@@ -268,16 +278,18 @@ queue:
     blog_type: "how_to"
     content_type: "cluster"
     cluster_id: "tc_ai_app_generator"
-    target_keywords: ["how to generate apps with ai"]
+    target_keywords: ["how to generate apps with ai", "build app with ai"]
     target_features: ["feat_prompt_to_app", "feat_live_preview"]
     unique_angle: "End-to-end run with timestamps; show the prompt, the preview, and the deploy."
     priority: "medium"
     priority_reason: "Strong how-to entry into the funnel."
-    status: "planned"
-    estimated_word_count: 1700
+    status: "published"
+    published_slug: "how-to-generate-apps-with-ai"
+    published_at: "2026-05-23"
+    estimated_word_count: 2200
     eeat_plan: "Real shipped output, time-to-preview metric."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: ""
+    notes: "Phase 3 ship. Timestamped 0:00–10:00 walkthrough of generating a SaaS prompt; explicit pre-launch verification checklist; honest treatment of what's complete vs partial at the 10-minute mark; suggested next prompts. Cluster page for tc_ai_app_generator."
     depends_on: ["q_003"]
-    internal_link_targets: ["ai-app-generator"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "what-is-an-ai-app-generator", "what-is-vibe-coding", "what-is-prompt-to-app", "build-saas"]
