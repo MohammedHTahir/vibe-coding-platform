@@ -1,9 +1,11 @@
-last_updated: "2026-05-18"
+last_updated: "2026-05-23"
 
 # Priority order: pillars first, then high-priority cluster pages and
 # competitor comparisons, then mid-priority cluster pages, then supporting
 # alternatives. Every queued idea must have a real `unique_angle` before
-# moving to status: in-progress.
+# moving to status: in-progress. `published` items keep
+# `published_slug` + `published_at` so the SEO engine can reason about
+# what's already shipped.
 
 queue:
   # ── Pillars (high) ──────────────────────────────────────────────────
@@ -103,43 +105,121 @@ queue:
     internal_link_targets: ["build-ai-agent-with-nextjs", "nextjs-ai-sandbox", "streaming-tool-calls-nextjs-ai-sdk"]
 
   # ── Competitor comparisons (high) ───────────────────────────────────
+  # All five competitor comparisons (Lovable, Bolt.new, v0, Replit Agent,
+  # Base44) shipped in Phase 2 on 2026-05-23. Status is now `published`
+  # with the corresponding /blog/sprintbuild-vs-* slugs. Source data
+  # verified against vendor docs on the publish date and lives in
+  # `lib/competitors.ts` and `.seo-engine/data/competitors.yaml`.
+
   - id: "q_006"
-    title: "SprintBuild vs Lovable: Which AI App Generator Fits You?"
+    title: "SprintBuild vs Lovable: Which AI App Generator Should You Pick in 2026?"
     blog_type: "comparison"
     content_type: "supporting"
-    cluster_id: ""
+    cluster_id: "tc_ai_coding_platform"
     target_keywords: ["sprintbuild vs lovable", "lovable alternative"]
     target_features: ["feat_prompt_to_app", "feat_sandbox_execution", "feat_multi_model"]
     unique_angle: "Compare execution models (Vercel Sandbox vs Lovable hosted runtime) and model-choice flexibility — most comparisons just rehash UI."
     priority: "high"
     priority_reason: "High-intent decision keyword; competitor brand traffic."
-    status: "planned"
+    status: "published"
+    published_slug: "sprintbuild-vs-lovable"
+    published_at: "2026-05-23"
     estimated_word_count: 2200
     eeat_plan: "Lead with Lovable's strengths; cite their public docs; note 'verified date' on every claim."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: ""
+    notes: "Phase 2 ship. Sources: lovable.dev/pricing, docs.lovable.dev. Verified 2026-05-23."
     depends_on: []
-    internal_link_targets: ["best-ai-coding-platforms"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
 
   - id: "q_007"
-    title: "SprintBuild vs Bolt.new: Sandbox vs WebContainer"
+    title: "SprintBuild vs Bolt.new: Cloud Sandbox vs WebContainer in 2026"
     blog_type: "comparison"
     content_type: "supporting"
-    cluster_id: ""
+    cluster_id: "tc_ai_coding_platform"
     target_keywords: ["sprintbuild vs bolt new", "bolt new alternative"]
     target_features: ["feat_sandbox_execution", "feat_live_preview"]
     unique_angle: "Architectural comparison: cloud sandbox vs in-browser WebContainer — performance, environment fidelity, deploy story."
     priority: "high"
     priority_reason: "High-intent decision keyword."
-    status: "planned"
+    status: "published"
+    published_slug: "sprintbuild-vs-bolt-new"
+    published_at: "2026-05-23"
     estimated_word_count: 2200
     eeat_plan: "Cite both vendors' published runtime docs; verified dates on claims."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: ""
+    notes: "Phase 2 ship. Sources: bolt.new/pricing, posthog.com/newsletter/inside-bolt-dot-new, github.com/stackblitz/bolt.new. Verified 2026-05-23."
     depends_on: []
-    internal_link_targets: ["ai-coding-sandbox-vs-local"]
+    internal_link_targets: ["best-ai-coding-tools-2026", "sprintbuild-vs-lovable", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
+
+  # Three additional comparison posts added to the queue retroactively
+  # in Phase 2 — they parallel q_006/q_007 and ship at the same cadence.
+  # Keep them tracked so the SEO engine can reason about the full
+  # competitor cluster.
+
+  - id: "q_006b"
+    title: "SprintBuild vs v0 by Vercel: Multi-Model AI Coding vs Vercel-Native"
+    blog_type: "comparison"
+    content_type: "supporting"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["sprintbuild vs v0", "v0 alternative"]
+    target_features: ["feat_prompt_to_app", "feat_multi_model", "feat_live_preview"]
+    unique_angle: "Multi-model frontier choice (Claude/GPT/Grok) vs Vercel's tiered v0 Mini/Pro/Max + best-in-class GitHub auto-branching."
+    priority: "high"
+    priority_reason: "High-intent decision keyword; v0 has the largest brand pull in this category."
+    status: "published"
+    published_slug: "sprintbuild-vs-v0"
+    published_at: "2026-05-23"
+    estimated_word_count: 2200
+    eeat_plan: "Cite v0.dev/pricing and v0.app/docs/github explicitly; verified May 2026."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 2 ship. Sources: v0.dev/pricing, v0.dev/docs/faqs, v0.app/docs/github, vercel.com/blog/improved-v0-pricing. Verified 2026-05-23."
+    depends_on: []
+    internal_link_targets: ["best-ai-coding-tools-2026", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
+
+  - id: "q_007b"
+    title: "SprintBuild vs Replit Agent: Cloud Sandbox vs Cloud IDE in 2026"
+    blog_type: "comparison"
+    content_type: "supporting"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["sprintbuild vs replit agent", "replit agent alternative"]
+    target_features: ["feat_sandbox_execution", "feat_multi_model"]
+    unique_angle: "Long-lived cloud IDE (Replit) vs session-scoped cloud sandbox + frontier-model choice."
+    priority: "medium"
+    priority_reason: "High-intent decision keyword; Replit has decade-old brand pull."
+    status: "published"
+    published_slug: "sprintbuild-vs-replit-agent"
+    published_at: "2026-05-23"
+    estimated_word_count: 2200
+    eeat_plan: "Cite replit.com/pricing, replit.com/blog/pro-plan, docs.replit.com explicitly."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 2 ship. Sources: replit.com/pricing, replit.com/blog/pro-plan, docs.replit.com. Verified 2026-05-23."
+    depends_on: []
+    internal_link_targets: ["best-ai-coding-tools-2026", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-base44"]
+
+  - id: "q_007c"
+    title: "SprintBuild vs Base44: Cloud Sandbox vs Managed App Platform in 2026"
+    blog_type: "comparison"
+    content_type: "supporting"
+    cluster_id: "tc_ai_coding_platform"
+    target_keywords: ["sprintbuild vs base44", "base44 alternative"]
+    target_features: ["feat_sandbox_execution", "feat_multi_model"]
+    unique_angle: "Real Linux per session and frontier-model choice vs managed platform with one-click hosting and pre-built integrations."
+    priority: "medium"
+    priority_reason: "High-intent decision keyword; Base44 has the cheapest entry tier in the category."
+    status: "published"
+    published_slug: "sprintbuild-vs-base44"
+    published_at: "2026-05-23"
+    estimated_word_count: 2000
+    eeat_plan: "Cite base44.com/pricing, base44.com/blog/how-much-does-base44-cost, docs.base44.com explicitly."
+    serp_analyzed: true
+    cannibalization_check: "passed"
+    notes: "Phase 2 ship. Sources: base44.com/pricing, base44.com/blog/how-much-does-base44-cost, docs.base44.com. Verified 2026-05-23."
+    depends_on: []
+    internal_link_targets: ["best-ai-coding-tools-2026", "sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent"]
 
   # ── Cluster pages (medium) ──────────────────────────────────────────
   - id: "q_008"
@@ -166,19 +246,22 @@ queue:
     blog_type: "listicle"
     content_type: "cluster"
     cluster_id: "tc_ai_coding_platform"
-    target_keywords: ["best ai coding platform"]
+    target_keywords: ["best ai coding platform", "best ai coding tools"]
     target_features: ["feat_prompt_to_app"]
     unique_angle: "Group recommendations by persona (solo, startup, agency) instead of generic ranking — gives readers a clear reason to pick one."
     priority: "high"
     priority_reason: "Heavily searched listicle keyword."
-    status: "planned"
+    status: "published"
+    published_slug: "best-ai-coding-tools-2026"
+    published_at: "2026-05-12"
+    last_refreshed_at: "2026-05-23"
     estimated_word_count: 3200
     eeat_plan: "Disclose SprintBuild affiliation up top; cite each platform's docs for claims."
-    serp_analyzed: false
+    serp_analyzed: true
     cannibalization_check: "passed"
-    notes: ""
-    depends_on: ["q_002"]
-    internal_link_targets: ["ai-coding-platform"]
+    notes: "Phase 2 refresh: rewrote to cover all six platforms (Lovable, Bolt, v0, Replit, Base44, SprintBuild), grouped picks by persona, added a feature matrix and cheapest-paid-tier table, deep-linked into all five /blog/sprintbuild-vs-* posts and the /vs hub. Sources verified 2026-05-23."
+    depends_on: []
+    internal_link_targets: ["sprintbuild-vs-lovable", "sprintbuild-vs-bolt-new", "sprintbuild-vs-v0", "sprintbuild-vs-replit-agent", "sprintbuild-vs-base44"]
 
   - id: "q_010"
     title: "How to Generate an App with AI in Under 10 Minutes"
